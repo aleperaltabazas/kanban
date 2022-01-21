@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: kanban
+
+server:
+  http2:
+    enabled: true
+
+graphql:
+  playground:
+    enabled: true
