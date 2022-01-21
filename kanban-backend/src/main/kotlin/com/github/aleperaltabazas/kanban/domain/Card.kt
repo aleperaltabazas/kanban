@@ -7,4 +7,11 @@ data class Card(
     val title: String,
     val description: String?,
     val priority: Int,
+    val tasks: List<Task>,
+)
+
+data class Task(
+    val description: String,
+    val completed: Boolean,
+    val priority: Int,
 )

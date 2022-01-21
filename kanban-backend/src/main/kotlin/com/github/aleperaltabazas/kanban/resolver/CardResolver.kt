@@ -7,10 +7,16 @@ import java.util.*
 
 @Component
 class CardResolver : GraphQLQueryResolver {
-    fun card(id: UUID): Card = Card(
+
+    private val card = Card(
         title = "Test",
         description = "Test card",
         priority = 1,
-        id = id,
+        id = UUID.randomUUID(),
+        tasks = emptyList(),
     )
+
+    fun card(id: UUID): Card = card
+
+    fun cards(): List<Card> = listOf(card)
 }

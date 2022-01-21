@@ -1,0 +1,5 @@
+type Task {
+    description: String!
+    completed: Boolean!
+    priority: Int
+}

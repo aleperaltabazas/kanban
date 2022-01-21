@@ -3,4 +3,5 @@ type Card {
     title: String!
     description: String
     priority: Int!
+    tasks: [Task]
 }
