@@ -35,6 +35,7 @@ class CardMutation(
                 title = input.title,
                 description = input.description,
                 tasks = input.tasks.map { Task(it) },
+                labels = input.labels.map { Label(it) },
                 priority = input.priority,
             ).also { dao.update(it) }
         )

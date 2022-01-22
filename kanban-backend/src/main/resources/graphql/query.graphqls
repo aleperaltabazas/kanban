@@ -1,6 +1,6 @@
 type Query {
     card(id: ID): Card
-    cards: [Card!]!
+    cards: [Card]
 }
 
 type Card {
@@ -10,12 +10,18 @@ type Card {
     priority: Int!
     tasks: [Task]
     status: Status
+    labels: [Label]
 }
 
 type Task {
     description: String!
     completed: Boolean!
     priority: Int
+}
+
+type Label {
+    name: String!
+    color: String!
 }
 
 union Status = Backlog | WIP | Done

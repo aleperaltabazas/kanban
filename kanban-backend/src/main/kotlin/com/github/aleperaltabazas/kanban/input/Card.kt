@@ -7,6 +7,7 @@ data class CreateCardInput(
     val description: String?,
     val priority: Int,
     val tasks: List<TaskInput>,
+    val labels: List<LabelInput>,
 )
 
 data class TaskInput(
@@ -15,12 +16,18 @@ data class TaskInput(
     val priority: Int?,
 )
 
+data class LabelInput(
+    val name: String,
+    val color: String,
+)
+
 data class UpdateCardInput(
     val id: UUID,
     val title: String,
     val description: String?,
     val priority: Int,
     val tasks: List<TaskInput>,
+    val labels: List<LabelInput>,
 )
 
 data class MoveCardInput(

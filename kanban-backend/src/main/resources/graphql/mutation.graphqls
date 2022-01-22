@@ -12,13 +12,19 @@ input CreateCardInput {
     title: String!
     description: String
     priority: Int!
-    tasks: [TaskInput]
+    tasks: [TaskInput] = []
+    labels: [LabelInput] = []
 }
 
 input TaskInput {
     description: String!
     completed: Boolean!
     priority: Int
+}
+
+input LabelInput {
+    name: String!
+    color: String!
 }
 
 type UpdateCardPayload {
@@ -30,7 +36,8 @@ input UpdateCardInput {
     description: String
     title: String!
     priority: Int!
-    tasks: [TaskInput]!
+    tasks: [TaskInput] = []
+    labels: [LabelInput] = []
 }
 
 type MoveCardPayload {

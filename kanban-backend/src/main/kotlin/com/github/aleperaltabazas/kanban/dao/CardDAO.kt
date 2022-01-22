@@ -12,7 +12,8 @@ class CardDAO(
     private val cards: MongoCollection<Document>,
     private val objectMapper: ObjectMapper,
 ) {
-    fun findByID(id: UUID) = cards.find(Document("id", id.toString())).firstOrNull()
+    fun findByID(id: UUID) = cards.find(Document("id", id.toString()))
+        .firstOrNull()
         ?.let { objectMapper.convertValue(it, CARD_REF) }
 
     fun findAll(): List<Card> = cards.find()
