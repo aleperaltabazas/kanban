@@ -1,20 +1,49 @@
 type Mutation {
     createCard(input: CreateCardInput!): CreateCardPayload
+    updateCard(input: UpdateCardInput!): UpdateCardPayload
+    moveCard(input: MoveCardInput!): MoveCardPayload
 }
 
 type CreateCardPayload {
-    card: Card
+    card: Card!
 }
 
 input CreateCardInput {
     title: String!
     description: String
     priority: Int!
-    tasks: [CreateTaskInput]
+    tasks: [TaskInput]
 }
 
-input CreateTaskInput {
+input TaskInput {
     description: String!
     completed: Boolean!
     priority: Int
+}
+
+type UpdateCardPayload {
+    card: Card
+}
+
+input UpdateCardInput {
+    id: ID!
+    description: String
+    title: String!
+    priority: Int!
+    tasks: [TaskInput]!
+}
+
+type MoveCardPayload {
+    card: Card!
+}
+
+input MoveCardInput {
+    id: ID!
+    to: StatusInput!
+}
+
+enum StatusInput {
+    BACKLOG,
+    WIP,
+    DONE,
 }

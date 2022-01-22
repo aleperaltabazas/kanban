@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
+import org.bson.UuidRepresentation
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -14,6 +15,7 @@ class MongoConfig {
     fun mongo(): MongoClient = MongoClients.create(
         MongoClientSettings.builder()
             .applyConnectionString(ConnectionString("mongodb://localhost:27017/kanban"))
+            .uuidRepresentation(UuidRepresentation.STANDARD)
             .build()
     )
 

@@ -1,9 +1,11 @@
 package com.github.aleperaltabazas.kanban.domain
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.github.aleperaltabazas.kanban.input.CreateCardInput
-import com.github.aleperaltabazas.kanban.input.CreateTaskInput
+import com.github.aleperaltabazas.kanban.input.TaskInput
+import org.bson.types.ObjectId
 import java.time.LocalDateTime
 import java.util.*
 
@@ -33,7 +35,7 @@ data class Task(
     val completed: Boolean,
     val priority: Int?,
 ) {
-    constructor(input: CreateTaskInput) : this(
+    constructor(input: TaskInput) : this(
         description = input.description,
         completed = input.completed,
         priority = input.priority,
