@@ -18,7 +18,12 @@ class CardDAO(
         .map { objectMapper.convertValue(it, CARD_REF) }
         .toList()
 
+    fun insert(input: Card) {
+        cards.insertOne(Document(objectMapper.convertValue(input, MAP_REF)))
+    }
+
     companion object {
         private val CARD_REF = object : TypeReference<Card>() {}
+        private val MAP_REF = object : TypeReference<Map<String, Any?>>() {}
     }
 }

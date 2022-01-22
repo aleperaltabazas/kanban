@@ -1,0 +1,20 @@
+type Mutation {
+    createCard(input: CreateCardInput!): CreateCardPayload
+}
+
+type CreateCardPayload {
+    card: Card
+}
+
+input CreateCardInput {
+    title: String!
+    description: String
+    priority: Int!
+    tasks: [CreateTaskInput]
+}
+
+input CreateTaskInput {
+    description: String!
+    completed: Boolean!
+    priority: Int
+}

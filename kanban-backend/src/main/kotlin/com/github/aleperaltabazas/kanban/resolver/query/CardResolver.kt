@@ -1,4 +1,4 @@
-package com.github.aleperaltabazas.kanban.resolver
+package com.github.aleperaltabazas.kanban.resolver.query
 
 import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.domain.Card
