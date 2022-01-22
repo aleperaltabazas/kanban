@@ -23,6 +23,7 @@
         <arrow.version>1.0.1</arrow.version>
         <config.version>1.4.0</config.version>
         <mongo-driver.version>4.4.1</mongo-driver.version>
+        <jackson.version>2.13.0</jackson.version>
     </properties>
     <dependencies>
         <!-- Kotlin -->
@@ -73,6 +74,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>3.0.3.RELEASE</version>
+        </dependency>
         <!-- Spring -->
 
         <!-- GraphQL -->
@@ -99,13 +105,33 @@
         </dependency>
         <!-- Arrow -->
 
-        <!-- Typesafe Config -->
+        <!-- Jackson -->
         <dependency>
-            <groupId>com.typesafe</groupId>
-            <artifactId>config</artifactId>
-            <version>${config.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
-        <!-- Typesafe Config -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-afterburner</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!-- Jackson -->
     </dependencies>
 
     <build>
@@ -137,5 +163,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
