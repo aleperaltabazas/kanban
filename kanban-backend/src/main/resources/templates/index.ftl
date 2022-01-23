@@ -1,4 +1,4 @@
-<html>
+<html class="h-100 w-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport"
@@ -8,10 +8,10 @@
 
     <link rel="stylesheet" href="/kanban/versions/${version}/build/stylesheets/main.css"/>
 </head>
-<body>
+<body class="h-100 w-100">
 <header>
 </header>
-<div id="main">
+<div id="main" class="h-100 w-100">
 </div>
 <script type="text/javascript" src="/kanban/versions/${version}/build/vendor.chunk.bundle.js"></script>
 <script type="text/javascript" src="/kanban/versions/${version}/build/main.js"></script>

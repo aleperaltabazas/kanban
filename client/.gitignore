@@ -64,3 +64,4 @@ typings/
 **/*.iml
 
 src/generated/
+src/jss/padding.ts

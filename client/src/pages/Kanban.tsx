@@ -1,18 +1,32 @@
-import { Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import React from "react";
-import Loader from "../components/commons/Loader";
-import { useCardsQuery } from "../generated/graphql";
-import Columns from "./Columns";
+import { StatusInput } from "../generated/graphql";
+import Cards from "../context/Cards";
+import Column from "./Column";
 
 type KanbanPageProps = {};
 
 const KanbanPage = ({}: KanbanPageProps) => {
-  const [{ data, fetching }] = useCardsQuery();
-  console.log(data);
   return (
-    <Container className="h-100" maxWidth="xl">
-      {fetching ? <Loader full /> : <Columns cards={data.cards} />}
-    </Container>
+    <Cards>
+      <Container className="h-100" maxWidth="xl">
+        <Grid container spacing={2} className="h-100">
+          <Grid item xs={12} md={4} className="h-100">
+            <Column title="Backlog" moveTo={[StatusInput.Wip]} cards={[]} />
+          </Grid>
+          <Grid item xs={12} md={4} className="h-100">
+            <Column
+              title="WIP"
+              moveTo={[StatusInput.Backlog, StatusInput.Done]}
+              cards={[]}
+            />
+          </Grid>
+          <Grid item xs={12} md={4} className="h-100">
+            <Column title="Done" moveTo={[]} cards={[]} />
+          </Grid>
+        </Grid>
+      </Container>
+    </Cards>
   );
 };
 
