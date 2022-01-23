@@ -1,0 +1,21 @@
+mutation CreateCard(
+  $title: String!
+  $description: String
+  $priority: Int!
+  $tasks: [TaskInput!]!
+  $labels: [LabelInput!]!
+) {
+  createCard(
+    input: {
+      title: $title
+      priority: $priority
+      description: $description
+      tasks: $tasks
+      labels: $labels
+    }
+  ) {
+    card {
+      ...RegularCard
+    }
+  }
+}

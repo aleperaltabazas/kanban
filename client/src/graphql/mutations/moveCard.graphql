@@ -1,0 +1,7 @@
+mutation MoveCard($id: ID!, $to: StatusInput!) {
+  moveCard(input: { id: $id, to: $to }) {
+    card {
+      ...RegularCard
+    }
+  }
+}

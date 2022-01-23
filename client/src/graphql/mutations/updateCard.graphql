@@ -1,0 +1,23 @@
+mutation UpdateCard(
+  $id: ID!
+  $title: String!
+  $description: String
+  $priority: Int!
+  $tasks: [TaskInput!]!
+  $labels: [LabelInput!]!
+) {
+  updateCard(
+    input: {
+      id: $id
+      title: $title
+      priority: $priority
+      description: $description
+      tasks: $tasks
+      labels: $labels
+    }
+  ) {
+    card {
+      ...RegularCard
+    }
+  }
+}
