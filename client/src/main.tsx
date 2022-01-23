@@ -1,23 +1,15 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Loader from "./components/commons/Loader";
-import { useCardsQuery } from "./generated/graphql";
+import KanbanPage from "./pages/Kanban";
 
 const App = () => {
-  const [{ data, fetching }] = useCardsQuery();
-
-  if (fetching) {
-    return null;
-  }
-
-  console.log(data.cards);
-
   return (
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
         <Switch>
-          <Route exact path={["/kanban", "/", ""]} component={Loader} />
+          <Route exact path={["/kanban", "/", ""]} component={KanbanPage} />
         </Switch>
       </Suspense>
     </BrowserRouter>

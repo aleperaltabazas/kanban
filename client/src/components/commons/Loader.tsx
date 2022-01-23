@@ -1,9 +1,10 @@
+import { CircularProgress } from "@mui/material";
 import React from "react";
 
-type LoaderProps = {};
+type LoaderProps = { full?: boolean };
 
-const Loader = ({}: LoaderProps) => {
-  return <div>asd</div>;
+const Loader = (props: LoaderProps) => {
+  return <CircularProgress />;
 };
 
 export default Loader;
