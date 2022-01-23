@@ -1,10 +1,12 @@
-import { Divider, Typography } from "@mui/material";
+import { Container, Divider, Grid, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import { Card, StatusInput } from "../generated/graphql";
 import classnames from "classnames";
 import padding from "../jss/padding";
 import typography from "../jss/typography";
+import KanbanCard from "./KanbanCard";
+import baseStyles from "../styles";
 
 type ColumnProps = {
   title: string;
@@ -14,10 +16,10 @@ type ColumnProps = {
 
 const useStyles = makeStyles({
   root: {
-    backgroundColor: "white",
+    backgroundColor: "#efefef",
+    overflow: "scroll",
   },
-  ...padding,
-  ...typography,
+  ...baseStyles,
 });
 
 const Column = ({ title, moveTo, cards }: ColumnProps) => {
@@ -39,10 +41,15 @@ const Column = ({ title, moveTo, cards }: ColumnProps) => {
       >
         {title}
       </Typography>
-      <Divider orientation="horizontal" />
-      {cards.map((c, i) => (
-        <div key={i}>{c.title}</div>
-      ))}
+      <Container maxWidth="xl">
+        <Grid container rowSpacing={2}>
+          {cards.map((c, i) => (
+            <Grid item xs={12}>
+              <KanbanCard card={c} key={i} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
     </div>
   );
 };

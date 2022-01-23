@@ -65,3 +65,4 @@ typings/
 
 src/generated/
 src/jss/padding.ts
+src/jss/margin.ts
