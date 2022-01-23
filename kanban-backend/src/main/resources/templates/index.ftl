@@ -7,6 +7,7 @@
     <title>Kanban</title>
 
     <link rel="stylesheet" href="/kanban/versions/${version}/build/stylesheets/main.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 </head>
 <body class="h-100 w-100">
 <header>
