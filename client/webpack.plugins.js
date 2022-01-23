@@ -5,6 +5,7 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer");
 const Utils = require("./webpack.utils");
+const WebpackModules = require('webpack-modules');
 
 const version = Utils.getPomVersion();
 
@@ -18,7 +19,8 @@ const base = [
     ]}),
     new CleanWebpackPlugin(
         {cleanStaleWebpackAssets: false} //Skip cleaning files copied by CopyWebpackPlugin
-    )
+    ),
+    new WebpackModules()
 ];
 
 const development = [

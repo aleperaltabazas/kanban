@@ -1,0 +1,28 @@
+query Cards {
+  cards {
+    id
+    title
+    priority
+    tasks {
+      description
+      priority
+      completed
+    }
+    labels {
+      name
+      color
+    }
+    status {
+      ... on Backlog {
+        ref
+      }
+      ... on WIP {
+        ref
+      }
+      ... on Done {
+        ref
+        completionDate
+      }
+    }
+  }
+}

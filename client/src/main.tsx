@@ -2,8 +2,17 @@ import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Loader from "./components/commons/Loader";
+import { useCardsQuery } from "./generated/graphql";
 
 const App = () => {
+  const [{ data, fetching }] = useCardsQuery();
+
+  if (fetching) {
+    return null;
+  }
+
+  console.log(data.cards);
+
   return (
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
