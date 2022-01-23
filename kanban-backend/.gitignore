@@ -171,3 +171,4 @@ buildNumber.properties
 .classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,kotlin,java,maven,intellij+all
+src/main/resources/static/

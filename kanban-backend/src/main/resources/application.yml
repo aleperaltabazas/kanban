@@ -1,6 +1,14 @@
 spring:
   application:
     name: kanban
+  freemarker:
+    cache: false
+    suffix: .ftl
+  web:
+    resources:
+      static-locations:
+        - file:./src/main/resources/static/
+        - classpath:/static/
 
 server:
   http2:
