@@ -13,17 +13,13 @@ import com.github.aleperaltabazas.kanban.payload.UpdateCardPayload
 import graphql.kickstart.tools.GraphQLMutationResolver
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
-import java.util.*
 
 @Component
 class CardMutation(
     private val dao: CardDAO,
 ) : GraphQLMutationResolver {
     fun createCard(input: CreateCardInput): CreateCardPayload = CreateCardPayload(
-        Card(
-            id = UUID.randomUUID(),
-            input = input,
-        )
+        Card(input = input)
             .also { dao.insert(it) }
     )
 

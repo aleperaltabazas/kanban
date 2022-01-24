@@ -3,25 +3,23 @@ package com.github.aleperaltabazas.kanban.domain
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.github.aleperaltabazas.kanban.input.CreateCardInput
-import com.github.aleperaltabazas.kanban.input.LabelInput
 import com.github.aleperaltabazas.kanban.input.TaskInput
 import java.time.LocalDateTime
 import java.util.*
 
 data class Card(
-    val id: UUID,
+    override val id: UUID,
     val title: String,
     val description: String?,
     val priority: Int,
     val status: Status,
     val tasks: List<Task> = emptyList(),
     val labels: List<Label> = emptyList(),
-) {
+) : Entity {
     constructor(
-        id: UUID,
         input: CreateCardInput,
     ) : this(
-        id = id,
+        id = UUID.randomUUID(),
         title = input.title,
         description = input.description,
         priority = input.priority,
@@ -69,14 +67,4 @@ data class Done(
     val completionDate: LocalDateTime,
 ) : Status {
     override val ref: String = "DONE"
-}
-
-data class Label(
-    val name: String,
-    val color: String,
-) {
-    constructor(input: LabelInput) : this(
-        name = input.name,
-        color = input.color,
-    )
 }

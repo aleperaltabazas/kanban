@@ -1,0 +1,5 @@
+fragment RegularLabel on Label {
+  id
+  name
+  color
+}

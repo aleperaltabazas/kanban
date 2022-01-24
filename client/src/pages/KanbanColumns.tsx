@@ -1,7 +1,7 @@
 import { Container, Grid } from "@mui/material";
 import React, { useContext } from "react";
 import { StatusInput } from "../generated/graphql";
-import Cards, { CardsContext } from "../context/Cards";
+import Board, { BoardContext } from "../context/Board";
 import Column from "./Column";
 import classnames from "classnames";
 import { makeStyles } from "@mui/styles";
@@ -12,7 +12,7 @@ type KanbanColumnsProps = {};
 const useStyles = makeStyles(styles);
 
 const KanbanColumns = ({}: KanbanColumnsProps) => {
-  const { cards } = useContext(CardsContext);
+  const { cards } = useContext(BoardContext);
   const classes = useStyles();
 
   return (

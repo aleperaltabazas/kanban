@@ -1,0 +1,7 @@
+mutation UpdateLabel($id: ID!, $name: String!, $color: String!) {
+  updateLabel(input: { id: $id, name: $name, color: $color }) {
+    label {
+      ...RegularLabel
+    }
+  }
+}

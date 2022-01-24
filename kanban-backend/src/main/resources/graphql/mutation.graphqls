@@ -2,6 +2,8 @@ type Mutation {
     createCard(input: CreateCardInput!): CreateCardPayload
     updateCard(input: UpdateCardInput!): UpdateCardPayload
     moveCard(input: MoveCardInput!): MoveCardPayload
+    createLabel(input: CreateLabelInput): CreateLabelPayload
+    updateLabel(input: UpdateLabelInput): UpdateLabelPayload
 }
 
 type CreateCardPayload {
@@ -23,6 +25,7 @@ input TaskInput {
 }
 
 input LabelInput {
+    id: ID!
     name: String!
     color: String!
 }
@@ -53,4 +56,23 @@ enum StatusInput {
     BACKLOG,
     WIP,
     DONE,
+}
+
+input CreateLabelInput {
+    name: String!
+    color: String!
+}
+
+type CreateLabelPayload {
+    label: Label!
+}
+
+input UpdateLabelInput {
+    id: ID!
+    name: String!
+    color: String!
+}
+
+type UpdateLabelPayload {
+    label: Label!
 }

@@ -1,0 +1,8 @@
+query Init {
+  cards {
+    ...RegularCard
+  }
+  labels {
+    ...RegularLabel
+  }
+}

@@ -8,8 +8,7 @@ fragment RegularCard on Card {
     completed
   }
   labels {
-    name
-    color
+    ...RegularLabel
   }
   status {
     ... on Backlog {

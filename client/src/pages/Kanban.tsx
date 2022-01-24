@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import Cards from "../context/Cards";
+import Board from "../context/Board";
 import KanbanColumns from "./KanbanColumns";
 
 type KanbanPageProps = {};
@@ -9,9 +9,9 @@ const KanbanPage = ({}: KanbanPageProps) => {
   return (
     <>
       <Header />
-      <Cards>
+      <Board>
         <KanbanColumns />
-      </Cards>
+      </Board>
     </>
   );
 };

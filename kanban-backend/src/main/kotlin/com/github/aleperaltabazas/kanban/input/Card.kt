@@ -16,11 +16,6 @@ data class TaskInput(
     val priority: Int?,
 )
 
-data class LabelInput(
-    val name: String,
-    val color: String,
-)
-
 data class UpdateCardInput(
     val id: UUID,
     val title: String,

@@ -1,6 +1,7 @@
 type Query {
     card(id: ID): Card
     cards: [Card!]!
+    labels: [Label!]!
 }
 
 type Card {
@@ -20,6 +21,7 @@ type Task {
 }
 
 type Label {
+    id: ID!
     name: String!
     color: String!
 }
