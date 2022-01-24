@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 
 interface Props {
@@ -11,9 +11,11 @@ export interface ModalContextProps {
   hideModal: () => void;
 }
 
-export const ModalContext = React.createContext<ModalContextProps>(
+const ModalContext = React.createContext<ModalContextProps>(
   {} as ModalContextProps
 );
+
+export const useModal = () => useContext(ModalContext);
 
 const Modal = (props: Props): JSX.Element => {
   const { children } = props;

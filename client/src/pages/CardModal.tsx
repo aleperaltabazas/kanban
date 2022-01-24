@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { ModalContext } from "../context/Modal";
+import React from "react";
+import { useModal } from "../context/Modal";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -13,7 +13,7 @@ type CardModalProps = {
 };
 
 const CardModal = ({}: CardModalProps) => {
-  const { modalShow, hideModal } = useContext(ModalContext);
+  const { modalShow, hideModal } = useModal();
   return (
     <div>
       <Dialog

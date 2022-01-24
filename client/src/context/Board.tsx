@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Loader from "../components/commons/Loader";
 import { Card, Label, useCardsQuery, useInitQuery } from "../generated/graphql";
 
@@ -13,12 +13,14 @@ type BoardContextProps = {
   setLabels: (labels: Array<Label>) => void;
 };
 
-export const BoardContext = React.createContext<BoardContextProps>({
+const BoardContext = React.createContext<BoardContextProps>({
   cards: [],
   setCards: () => {},
   labels: [],
   setLabels: () => {},
 });
+
+export const useBoard = () => useContext(BoardContext);
 
 const Board = ({ children }: Props) => {
   const [{ data, fetching }] = useInitQuery();
