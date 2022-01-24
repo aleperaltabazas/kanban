@@ -8,12 +8,18 @@ import styles from "../styles";
 import classnames from "classnames";
 import { useModal } from "../context/Modal";
 import CardModal from "./CardModal";
+import Label from "../components/commons/Label";
 
 type KanbanCardProps = {
   card: Card;
 };
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles({
+  ...styles,
+  labels: {
+    overflow: "hidden",
+  },
+});
 
 const KanbanCard = ({ card }: KanbanCardProps) => {
   const classes = useStyles();
@@ -22,11 +28,16 @@ const KanbanCard = ({ card }: KanbanCardProps) => {
   return (
     <MuiCard
       sx={{ minWidth: 275 }}
-      className={classnames(classes.textAlignLeft)}
+      className={classnames(classes.textAlignLeft, "cursor-pointer")}
       onClick={() => showModal(<CardModal card={card} />)}
     >
       <CardContent>
-        <Typography variant="h5" component="div">
+        <div className={classnames(classes.labels)}>
+          {card.labels.map((l, idx) => (
+            <Label color={l.color} key={idx} />
+          ))}
+        </div>
+        <Typography variant="h6" component="div">
           {card.title}
         </Typography>
         {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -34,9 +45,6 @@ const KanbanCard = ({ card }: KanbanCardProps) => {
     </Typography> */}
         <Typography variant="body2">{card.description}</Typography>
       </CardContent>
-      {/* <CardActions>
-    <Button size="small">Learn More</Button>
-  </CardActions> */}
     </MuiCard>
   );
 };
