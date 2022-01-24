@@ -6,14 +6,49 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Card } from "../generated/graphql";
+import { Card, useUpdateCardMutation } from "../generated/graphql";
+import { useSnackbar } from "../context/Snackbar";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
 
 type CardModalProps = {
   card: Card;
 };
 
-const CardModal = ({}: CardModalProps) => {
+const CardModal = ({ card }: CardModalProps) => {
   const { modalShow, hideModal } = useModal();
+  const [, updateCard] = useUpdateCardMutation();
+  const { showSnackbar } = useSnackbar();
+
+  const saveChanges = async () => {
+    hideModal();
+    const response = await updateCard({
+      id: card.id,
+      title: card.title,
+      description: card.description,
+      tasks: card.tasks,
+      labels: card.labels.map((l) => ({
+        id: l.id,
+        color: l.color,
+        name: l.name,
+      })),
+      priority: card.priority,
+    });
+    console.log(response);
+
+    if (!response.error) {
+      showSnackbar({
+        text: "Changes saved correctly!",
+        actionChildren: <CheckCircleIcon style={{ color: "#23ae23" }} />,
+      });
+    } else {
+      showSnackbar({
+        text: "There was an error saving your changes",
+        actionChildren: <ErrorIcon style={{ color: "#e13333" }} />,
+      });
+    }
+  };
+
   return (
     <div>
       <Dialog
@@ -22,9 +57,7 @@ const CardModal = ({}: CardModalProps) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{card.title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Let Google help apps determine location. This means sending
@@ -32,9 +65,11 @@ const CardModal = ({}: CardModalProps) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={hideModal}>Disagree</Button>
-          <Button onClick={hideModal} autoFocus>
-            Agree
+          <Button onClick={hideModal} color="error">
+            Cancel
+          </Button>
+          <Button onClick={saveChanges} autoFocus color="primary">
+            Save
           </Button>
         </DialogActions>
       </Dialog>

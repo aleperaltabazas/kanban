@@ -1,12 +1,13 @@
 import { Container, Divider, Grid, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, StatusInput } from "../generated/graphql";
 import classnames from "classnames";
 import padding from "../jss/padding";
 import typography from "../jss/typography";
 import KanbanCard from "./KanbanCard";
 import baseStyles from "../styles";
+import { useSnackbar } from "../context/Snackbar";
 
 type ColumnProps = {
   title: string;
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 
 const Column = ({ title, moveTo, cards }: ColumnProps) => {
   const classes = useStyles();
+  const { showSnackbar } = useSnackbar();
 
   return (
     <div className={classnames("w-100", "h-100", classes.root)}>
