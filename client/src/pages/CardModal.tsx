@@ -10,6 +10,7 @@ import { Card, useUpdateCardMutation } from "../generated/graphql";
 import { useSnackbar } from "../context/Snackbar";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
+import { useBoard } from "../context/Board";
 
 type CardModalProps = {
   card: Card;
@@ -19,8 +20,10 @@ const CardModal = ({ card }: CardModalProps) => {
   const { modalShow, hideModal } = useModal();
   const [, updateCard] = useUpdateCardMutation();
   const { showSnackbar } = useSnackbar();
+  const { setLoading } = useBoard();
 
   const saveChanges = async () => {
+    setLoading(true);
     hideModal();
     const response = await updateCard({
       id: card.id,
@@ -34,8 +37,7 @@ const CardModal = ({ card }: CardModalProps) => {
       })),
       priority: card.priority,
     });
-    console.log(response);
-
+    setLoading(false);
     if (!response.error) {
       showSnackbar({
         text: "Changes saved correctly!",

@@ -11,6 +11,8 @@ type BoardContextProps = {
   setCards: (cards: Array<Card>) => void;
   labels: Array<Label>;
   setLabels: (labels: Array<Label>) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 };
 
 const BoardContext = React.createContext<BoardContextProps>({
@@ -18,6 +20,8 @@ const BoardContext = React.createContext<BoardContextProps>({
   setCards: () => {},
   labels: [],
   setLabels: () => {},
+  loading: false,
+  setLoading: () => {},
 });
 
 export const useBoard = () => useContext(BoardContext);
@@ -34,18 +38,12 @@ const Board = ({ children }: Props) => {
       setLabels(data.labels);
       setLoading(false);
     }
-  });
+  }, [fetching]);
+
+  const context = { cards, labels, setCards, setLabels, loading, setLoading };
 
   return (
-    <BoardContext.Provider value={{ cards, labels, setCards, setLabels }}>
-      {loading ? (
-        <div className="h-100 w-100 center">
-          <Loader />
-        </div>
-      ) : (
-        children
-      )}
-    </BoardContext.Provider>
+    <BoardContext.Provider value={context}>{children}</BoardContext.Provider>
   );
 };
 

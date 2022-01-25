@@ -6,14 +6,24 @@ import Column from "./Column";
 import classnames from "classnames";
 import { makeStyles } from "@mui/styles";
 import styles from "../styles";
+import Loader from "../components/commons/Loader";
 
 type KanbanColumnsProps = {};
 
 const useStyles = makeStyles(styles);
 
 const KanbanColumns = ({}: KanbanColumnsProps) => {
-  const { cards } = useBoard();
+  const { cards, loading } = useBoard();
   const classes = useStyles();
+  console.log(loading);
+
+  if (loading) {
+    return (
+      <div className="h-100 w-100 center">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <Container className={classnames("h-100", classes.mt3)} maxWidth="xl">
