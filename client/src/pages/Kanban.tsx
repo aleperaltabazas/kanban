@@ -3,6 +3,8 @@ import { useSnackbar } from "../context/Snackbar";
 import Header from "../components/Header";
 import Board from "../context/Board";
 import KanbanColumns from "./KanbanColumns";
+import Modal from "../context/Modal";
+import Snackbar from "../context/Snackbar";
 
 type KanbanPageProps = {};
 
@@ -11,7 +13,11 @@ const KanbanPage = ({}: KanbanPageProps) => {
     <>
       <Header />
       <Board>
-        <KanbanColumns />
+        <Snackbar>
+          <Modal>
+            <KanbanColumns />
+          </Modal>
+        </Snackbar>
       </Board>
     </>
   );
