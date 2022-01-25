@@ -23,6 +23,7 @@ data class UpdateCardInput(
     val priority: Int,
     val tasks: List<TaskInput>,
     val labels: List<LabelInput>,
+    val status: StatusInput?,
 )
 
 data class MoveCardInput(
@@ -35,3 +36,7 @@ enum class StatusInput {
     DONE,
     WIP,
 }
+
+data class DeleteCardInput(
+    val id: UUID,
+)

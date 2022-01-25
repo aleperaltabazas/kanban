@@ -3,6 +3,7 @@ package com.github.aleperaltabazas.kanban.domain
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.github.aleperaltabazas.kanban.input.CreateCardInput
+import com.github.aleperaltabazas.kanban.input.StatusInput
 import com.github.aleperaltabazas.kanban.input.TaskInput
 import java.time.LocalDateTime
 import java.util.*
@@ -53,6 +54,14 @@ data class Task(
 )
 sealed interface Status {
     val ref: String
+
+    companion object {
+        operator fun invoke(input: StatusInput) = when (input) {
+            StatusInput.BACKLOG -> Backlog
+            StatusInput.WIP -> WIP
+            StatusInput.DONE -> Done(LocalDateTime.now())
+        }
+    }
 }
 
 object Backlog : Status {

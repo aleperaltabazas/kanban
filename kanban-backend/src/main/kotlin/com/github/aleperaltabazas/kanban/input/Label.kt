@@ -18,3 +18,7 @@ data class UpdateLabelInput(
     val name: String,
     val color: String,
 )
+
+data class DeleteLabelInput(
+    val id: UUID,
+)

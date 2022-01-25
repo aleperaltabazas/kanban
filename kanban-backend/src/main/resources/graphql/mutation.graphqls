@@ -2,8 +2,10 @@ type Mutation {
     createCard(input: CreateCardInput!): CreateCardPayload
     updateCard(input: UpdateCardInput!): UpdateCardPayload
     moveCard(input: MoveCardInput!): MoveCardPayload
+    deleteCard(input: DeleteCardInput): DeleteCardPayload
     createLabel(input: CreateLabelInput): CreateLabelPayload
     updateLabel(input: UpdateLabelInput): UpdateLabelPayload
+    deleteLabel(input: DeleteLabelInput): DeleteLabelPayload
 }
 
 type CreateCardPayload {
@@ -41,6 +43,7 @@ input UpdateCardInput {
     priority: Int!
     tasks: [TaskInput] = []
     labels: [LabelInput] = []
+    status: StatusInput
 }
 
 type MoveCardPayload {
@@ -75,4 +78,20 @@ input UpdateLabelInput {
 
 type UpdateLabelPayload {
     label: Label!
+}
+
+input DeleteCardInput {
+    id: ID!
+}
+
+type DeleteCardPayload {
+    id: ID!
+}
+
+input DeleteLabelInput {
+    id: ID!
+}
+
+type DeleteLabelPayload {
+    id: ID!
 }

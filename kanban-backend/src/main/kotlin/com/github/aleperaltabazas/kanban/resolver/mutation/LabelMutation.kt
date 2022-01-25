@@ -5,8 +5,10 @@ import com.github.aleperaltabazas.kanban.dao.LabelDAO
 import com.github.aleperaltabazas.kanban.domain.Label
 import com.github.aleperaltabazas.kanban.exception.NotFoundException
 import com.github.aleperaltabazas.kanban.input.CreateLabelInput
+import com.github.aleperaltabazas.kanban.input.DeleteLabelInput
 import com.github.aleperaltabazas.kanban.input.UpdateLabelInput
 import com.github.aleperaltabazas.kanban.payload.CreateLabelPayload
+import com.github.aleperaltabazas.kanban.payload.DeleteLabelPayload
 import com.github.aleperaltabazas.kanban.payload.UpdateLabelPayload
 import graphql.kickstart.tools.GraphQLMutationResolver
 import org.springframework.stereotype.Component
@@ -28,9 +30,17 @@ class LabelMutation(
                 name = input.name,
                 color = input.color,
             ).also {
-                labelDao.update(it)
+                labelDao.replace(it)
                 cardsDao.updateCardLabels(it)
             }
+        )
+    }
+
+    fun deleteLabel(input: DeleteLabelInput): DeleteLabelPayload {
+        val label = labelDao.delete(input.id) ?: throw NotFoundException("No label found with ID ${input.id}")
+
+        return DeleteLabelPayload(
+            id = label.id,
         )
     }
 }
