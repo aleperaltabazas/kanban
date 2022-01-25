@@ -1,0 +1,5 @@
+mutation DeleteCard($id: ID!) {
+  deleteCard(input: { id: $id }) {
+    id
+  }
+}

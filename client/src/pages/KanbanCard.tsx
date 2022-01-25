@@ -2,7 +2,12 @@ import React from "react";
 import MuiCard from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Card, StatusInput, useMoveCardMutation } from "../generated/graphql";
+import {
+  Card,
+  StatusInput,
+  useDeleteCardMutation,
+  useMoveCardMutation,
+} from "../generated/graphql";
 import { makeStyles } from "@mui/styles";
 import styles from "../styles";
 import classnames from "classnames";
@@ -46,7 +51,19 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
   const { setLoading, cards, setCards } = useBoard();
   const [, moveMutation] = useMoveCardMutation();
   const { showSnackbar } = useSnackbar();
+  const [, deleteCard] = useDeleteCardMutation();
 
+  const handleDelete = async () => {
+    setLoading(true);
+    const response = await deleteCard({ id: card.id });
+
+    if (response.error) {
+      showSnackbar({ text: "There was an error deleting the card" });
+    } else {
+      setCards(cards.filter((c) => c.id != card.id));
+    }
+    setLoading(false);
+  };
   const handleSelect = async (
     event: React.MouseEvent<HTMLElement>,
     index: number
@@ -113,7 +130,9 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
                 </MenuItem>
               ))}
               <Divider />
-              <MenuItem className={classes.delete}>Delete</MenuItem>
+              <MenuItem onClick={handleDelete} className={classes.delete}>
+                Delete
+              </MenuItem>
             </Menu>
           </>
         }
