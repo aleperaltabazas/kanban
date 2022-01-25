@@ -26,7 +26,7 @@ const KanbanColumns = ({}: KanbanColumnsProps) => {
   }
 
   return (
-    <Container className={classnames("h-100", classes.mt3)} maxWidth="xl">
+    <Container className={classnames("h-100", classes.mt3)} maxWidth="lg">
       <Grid container spacing={2} className="h-100">
         <Grid item xs={12} md={4} className="h-100">
           <Column
@@ -45,7 +45,7 @@ const KanbanColumns = ({}: KanbanColumnsProps) => {
         <Grid item xs={12} md={4} className="h-100">
           <Column
             title="Done"
-            moveTo={[]}
+            moveTo={[StatusInput.Wip]}
             cards={cards.filter((c) => c.status.__typename == "Done")}
           />
         </Grid>

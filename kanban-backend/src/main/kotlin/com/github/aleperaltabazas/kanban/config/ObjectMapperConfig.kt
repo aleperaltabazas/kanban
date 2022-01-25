@@ -3,6 +3,8 @@ package com.github.aleperaltabazas.kanban.config
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.databind.json.JsonMapper
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.beans.factory.annotation.Qualifier
@@ -28,7 +30,9 @@ class ObjectMapperConfig {
         .propertyNamingStrategy(strategy)
         .addModules(
             AfterburnerModule(),
-            KotlinModule.Builder().build()
+            KotlinModule.Builder().build(),
+            Jdk8Module(),
+            JavaTimeModule(),
         )
         .build()
 }

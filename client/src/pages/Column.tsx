@@ -47,7 +47,7 @@ const Column = ({ title, moveTo, cards }: ColumnProps) => {
         <Grid container rowSpacing={2}>
           {cards.map((c, i) => (
             <Grid item xs={12} key={i}>
-              <KanbanCard card={c} />
+              <KanbanCard card={c} moveTo={moveTo} />
             </Grid>
           ))}
         </Grid>

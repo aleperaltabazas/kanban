@@ -48,6 +48,7 @@ class CardMutation(
             card = card.copy(
                 status = Status(input.to),
             )
+                .also { dao.replace(it) }
         )
     }
 
