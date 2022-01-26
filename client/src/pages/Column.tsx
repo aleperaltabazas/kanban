@@ -1,10 +1,8 @@
-import { Container, Divider, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React, { useEffect } from "react";
+import React from "react";
 import { Card, StatusInput } from "../generated/graphql";
 import classnames from "classnames";
-import padding from "../jss/padding";
-import typography from "../jss/typography";
 import KanbanCard from "./KanbanCard";
 import baseStyles from "../styles";
 import { useSnackbar } from "../context/Snackbar";

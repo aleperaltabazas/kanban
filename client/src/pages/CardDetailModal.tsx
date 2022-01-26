@@ -20,10 +20,10 @@ const CardDetailsModal = ({ card }: CardModalProps) => {
   const { modalShow, hideModal } = useModal();
   const [, updateCard] = useUpdateCardMutation();
   const { showSnackbar } = useSnackbar();
-  const { setLoading } = useBoard();
+  const { setDisabled } = useBoard();
 
   const saveChanges = async () => {
-    setLoading(true);
+    setDisabled(true);
     hideModal();
     const response = await updateCard({
       id: card.id,
@@ -37,7 +37,7 @@ const CardDetailsModal = ({ card }: CardModalProps) => {
       })),
       priority: card.priority,
     });
-    setLoading(false);
+    setDisabled(false);
     if (!response.error) {
       showSnackbar({
         text: "Changes saved correctly!",

@@ -13,7 +13,7 @@ type KanbanColumnsProps = {};
 const useStyles = makeStyles(styles);
 
 const KanbanColumns = ({}: KanbanColumnsProps) => {
-  const { cards, loading } = useBoard();
+  const { cards, loading, disabled } = useBoard();
   const classes = useStyles();
   console.log(loading);
 
@@ -26,23 +26,30 @@ const KanbanColumns = ({}: KanbanColumnsProps) => {
   }
 
   return (
-    <Container className={classnames("h-100", classes.mt3)} maxWidth="lg">
+    <Container
+      className={classnames(
+        "h-100",
+        classes.mt3,
+        disabled ? classes.disabled : undefined
+      )}
+      maxWidth="lg"
+    >
       <Grid container spacing={2} className="h-100">
-        <Grid item xs={12} md={4} className="h-100">
+        <Grid item xs={12} md={4}>
           <Column
             title="Backlog"
             moveTo={[StatusInput.Wip]}
             cards={cards.filter((c) => c.status.__typename == "Backlog")}
           />
         </Grid>
-        <Grid item xs={12} md={4} className="h-100">
+        <Grid item xs={12} md={4}>
           <Column
             title="WIP"
             moveTo={[StatusInput.Backlog, StatusInput.Done]}
             cards={cards.filter((c) => c.status.__typename == "WIP")}
           />
         </Grid>
-        <Grid item xs={12} md={4} className="h-100">
+        <Grid item xs={12} md={4}>
           <Column
             title="Done"
             moveTo={[StatusInput.Wip]}

@@ -6,14 +6,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import {
-  Card,
-  useDeleteCardMutation,
-  useUpdateCardMutation,
-} from "../generated/graphql";
+import { Card, useDeleteCardMutation } from "../generated/graphql";
 import { useSnackbar } from "../context/Snackbar";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ErrorIcon from "@mui/icons-material/Error";
 import { useBoard } from "../context/Board";
 
 type CardModalProps = {
@@ -23,12 +17,12 @@ type CardModalProps = {
 const DeleteCardModal = ({ card }: CardModalProps) => {
   const { modalShow, hideModal } = useModal();
   const { showSnackbar } = useSnackbar();
-  const { setLoading, setCards, cards } = useBoard();
+  const { disabled, setDisabled, setCards, cards } = useBoard();
   const [, deleteCard] = useDeleteCardMutation();
 
   const handleDelete = async () => {
     hideModal();
-    setLoading(true);
+    setDisabled(true);
     const response = await deleteCard({ id: card.id });
 
     if (response.error) {
@@ -36,7 +30,7 @@ const DeleteCardModal = ({ card }: CardModalProps) => {
     } else {
       setCards(cards.filter((c) => c.id != card.id));
     }
-    setLoading(false);
+    setDisabled(false);
   };
 
   return (
@@ -53,10 +47,15 @@ const DeleteCardModal = ({ card }: CardModalProps) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={hideModal} color="primary">
+        <Button disabled={disabled} onClick={hideModal} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleDelete} autoFocus color="error">
+        <Button
+          disabled={disabled}
+          onClick={handleDelete}
+          autoFocus
+          color="error"
+        >
           Delete
         </Button>
       </DialogActions>

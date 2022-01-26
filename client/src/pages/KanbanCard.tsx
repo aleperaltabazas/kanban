@@ -44,20 +44,23 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const { setLoading, cards, setCards } = useBoard();
+  const { disabled, setDisabled, cards, setCards } = useBoard();
   const [, moveMutation] = useMoveCardMutation();
   const { showSnackbar } = useSnackbar();
 
   const handleDelete = async () => {
+    closeMenu();
     showModal(<DeleteCardModal card={card} />);
   };
 
-  const handleSelect = async (
+  const closeMenu = () => setAnchorEl(null);
+
+  const moveCard = async (
     event: React.MouseEvent<HTMLElement>,
     index: number
   ) => {
-    setAnchorEl(null);
-    setLoading(true);
+    closeMenu();
+    setDisabled(true);
 
     const response = await moveMutation({ id: card.id, to: moveTo[index] });
 
@@ -67,12 +70,12 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
       setCards(
         cards.map((c) => (c.id == card.id ? response.data.moveCard.card : c))
       );
-      setLoading(false);
+      setDisabled(false);
     }
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    closeMenu();
   };
 
   return (
@@ -91,6 +94,7 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
               aria-expanded={open ? "true" : undefined}
               aria-haspopup="true"
               onClick={handleClick}
+              disabled={disabled}
             >
               <MoreVertIcon />
             </IconButton>
@@ -112,7 +116,7 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
               {moveTo.map((option, index) => (
                 <MenuItem
                   key={option}
-                  onClick={(event) => handleSelect(event, index)}
+                  onClick={(event) => moveCard(event, index)}
                 >
                   Move to {option}
                 </MenuItem>
@@ -127,7 +131,7 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
       ></CardHeader>
       <Divider orientation="horizontal" />
       <CardContent
-        className={classnames("cursor-pointer")}
+        className={classnames(!disabled ? "cursor-pointer" : undefined)}
         onClick={() => showModal(<CardDetailModal card={card} />)}
       >
         <div className={classnames(classes.labels)}>
