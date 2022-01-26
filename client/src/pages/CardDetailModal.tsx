@@ -16,7 +16,7 @@ type CardModalProps = {
   card: Card;
 };
 
-const CardModal = ({ card }: CardModalProps) => {
+const CardDetailsModal = ({ card }: CardModalProps) => {
   const { modalShow, hideModal } = useModal();
   const [, updateCard] = useUpdateCardMutation();
   const { showSnackbar } = useSnackbar();
@@ -52,31 +52,29 @@ const CardModal = ({ card }: CardModalProps) => {
   };
 
   return (
-    <div>
-      <Dialog
-        open={modalShow}
-        onClose={hideModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{card.title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={hideModal} color="error">
-            Cancel
-          </Button>
-          <Button onClick={saveChanges} autoFocus color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog
+      open={modalShow}
+      onClose={hideModal}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{card.title}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Let Google help apps determine location. This means sending anonymous
+          location data to Google, even when no apps are running.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={hideModal} color="error">
+          Cancel
+        </Button>
+        <Button onClick={saveChanges} autoFocus color="primary">
+          Save
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
-export default CardModal;
+export default CardDetailsModal;

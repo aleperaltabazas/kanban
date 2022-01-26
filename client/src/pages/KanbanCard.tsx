@@ -2,25 +2,21 @@ import React from "react";
 import MuiCard from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import {
-  Card,
-  StatusInput,
-  useDeleteCardMutation,
-  useMoveCardMutation,
-} from "../generated/graphql";
+import { Card, StatusInput, useMoveCardMutation } from "../generated/graphql";
 import { makeStyles } from "@mui/styles";
 import styles from "../styles";
 import classnames from "classnames";
 import { useModal } from "../context/Modal";
-import CardModal from "./CardModal";
+import CardDetailModal from "./CardDetailModal";
 import Label from "../components/commons/Label";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { CardHeader, Divider, Grid } from "@mui/material";
+import { CardHeader, Divider } from "@mui/material";
 import { useBoard } from "../context/Board";
 import { useSnackbar } from "../context/Snackbar";
+import DeleteCardModal from "./DeleteCardModal";
 
 type KanbanCardProps = {
   card: Card;
@@ -51,19 +47,11 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
   const { setLoading, cards, setCards } = useBoard();
   const [, moveMutation] = useMoveCardMutation();
   const { showSnackbar } = useSnackbar();
-  const [, deleteCard] = useDeleteCardMutation();
 
   const handleDelete = async () => {
-    setLoading(true);
-    const response = await deleteCard({ id: card.id });
-
-    if (response.error) {
-      showSnackbar({ text: "There was an error deleting the card" });
-    } else {
-      setCards(cards.filter((c) => c.id != card.id));
-    }
-    setLoading(false);
+    showModal(<DeleteCardModal card={card} />);
   };
+
   const handleSelect = async (
     event: React.MouseEvent<HTMLElement>,
     index: number
@@ -140,7 +128,7 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
       <Divider orientation="horizontal" />
       <CardContent
         className={classnames("cursor-pointer")}
-        onClick={() => showModal(<CardModal card={card} />)}
+        onClick={() => showModal(<CardDetailModal card={card} />)}
       >
         <div className={classnames(classes.labels)}>
           {card.labels.map((l, idx) => (
