@@ -1,6 +1,7 @@
 fragment RegularCard on Card {
   id
   title
+  description
   priority
   tasks {
     description

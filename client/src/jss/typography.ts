@@ -14,6 +14,12 @@ const typography = createStyles({
     boxOrient: "vertical",
     overflow: "hidden",
   },
+  textBlack: {
+    fontColor: "black",
+  },
+  textWhite: {
+    fontColor: "white",
+  },
 });
 
 export default typography;

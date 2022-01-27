@@ -15,7 +15,6 @@ const useStyles = makeStyles(styles);
 const KanbanColumns = ({}: KanbanColumnsProps) => {
   const { cards, loading, disabled } = useBoard();
   const classes = useStyles();
-  console.log(loading);
 
   if (loading) {
     return (

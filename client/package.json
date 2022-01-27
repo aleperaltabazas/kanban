@@ -30,14 +30,19 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "style-loader": "^1.2.1",
+    "tinycolor2": "^1.4.2",
     "url-loader": "^4.1.1",
     "urql": "^2.0.6",
     "webpack-modules": "^1.0.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.4.0",
+    "@graphql-codegen/typescript": "2.4.2",
+    "@graphql-codegen/typescript-operations": "2.2.2",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.20",
     "@types/prop-types": "^15.7.3",
+    "@types/tinycolor2": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.0",
@@ -60,9 +65,6 @@
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.44.0",
     "webpack-bundle-analyzer": "^3.9.0",
-    "webpack-cli": "^3.3.12",
-    "@graphql-codegen/typescript-operations": "2.2.2",
-    "@graphql-codegen/typescript": "2.4.2",
-    "@graphql-codegen/cli": "2.4.0"
+    "webpack-cli": "^3.3.12"
   }
 }

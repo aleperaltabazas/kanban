@@ -17,6 +17,7 @@ import { CardHeader, Divider } from "@mui/material";
 import { useBoard } from "../context/Board";
 import { useSnackbar } from "../context/Snackbar";
 import DeleteCardModal from "./DeleteCardModal";
+import { isTooDark } from "../functions/color";
 
 type KanbanCardProps = {
   card: Card;
@@ -79,13 +80,23 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
     closeMenu();
   };
 
+  const headerColor = card.labels.length > 0 ? card.labels[0].color : null;
+
   return (
     <MuiCard
       sx={{ minWidth: 275 }}
       className={classnames(classes.textAlignLeft)}
     >
       <CardHeader
-        title={<Typography variant="h6">{card.title}</Typography>}
+        style={{ backgroundColor: headerColor }}
+        title={
+          <Typography
+            variant="h6"
+            color={headerColor && isTooDark(headerColor) ? "white" : null}
+          >
+            {card.title}
+          </Typography>
+        }
         action={
           <>
             <IconButton
@@ -137,14 +148,18 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
           showModal(<CardDetailModal status={status} card={card} />)
         }
       >
+        <Typography
+          variant="body2"
+          display="block"
+          className={classnames(classes.clamp3)}
+        >
+          {card.description}
+        </Typography>
         <div className={classnames(classes.labels)}>
           {card.labels.map((l, idx) => (
             <Label color={l.color} key={idx} />
           ))}
         </div>
-        <Typography variant="body2" className={classnames(classes.clamp3)}>
-          {card.description}
-        </Typography>
       </CardContent>
     </MuiCard>
   );

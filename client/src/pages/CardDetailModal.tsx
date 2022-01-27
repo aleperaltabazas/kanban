@@ -71,8 +71,6 @@ const CardDetailsModal = ({ card, status }: CardModalProps) => {
     }
     if (!response.error) {
       const card = response.data as Card;
-      console.log(card);
-      console.log(cards);
       setCards(cards.map((c) => (c.id == card.id ? card : c)));
       const text = card ? "Changes saved correctly" : "Card created correctly";
       showSnackbar({
