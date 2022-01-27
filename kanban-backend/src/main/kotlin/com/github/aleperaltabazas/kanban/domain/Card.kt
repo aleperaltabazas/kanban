@@ -24,7 +24,7 @@ data class Card(
         title = input.title,
         description = input.description,
         priority = input.priority,
-        status = Backlog,
+        status = Status(input.status),
         tasks = input.tasks.map { Task(it) },
         labels = input.labels.map { Label(it) },
     )

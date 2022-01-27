@@ -4,6 +4,7 @@ mutation CreateCard(
   $priority: Int!
   $tasks: [TaskInput!]!
   $labels: [LabelInput!]!
+  $status: StatusInput!
 ) {
   createCard(
     input: {
@@ -12,6 +13,7 @@ mutation CreateCard(
       description: $description
       tasks: $tasks
       labels: $labels
+      status: $status
     }
   ) {
     card {

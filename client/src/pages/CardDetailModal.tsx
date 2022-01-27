@@ -1,46 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import { useModal } from "../context/Modal";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Card, useUpdateCardMutation } from "../generated/graphql";
+import {
+  Card,
+  useUpdateCardMutation,
+  useCreateCardMutation,
+  StatusInput,
+} from "../generated/graphql";
 import { useSnackbar } from "../context/Snackbar";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 import { useBoard } from "../context/Board";
+import { Grid, TextField } from "@mui/material";
 
 type CardModalProps = {
-  card: Card;
+  card?: Card;
+  status: StatusInput;
 };
 
-const CardDetailsModal = ({ card }: CardModalProps) => {
+const CardDetailsModal = ({ card, status }: CardModalProps) => {
   const { modalShow, hideModal } = useModal();
   const [, updateCard] = useUpdateCardMutation();
+  const [, createCard] = useCreateCardMutation();
   const { showSnackbar } = useSnackbar();
-  const { setDisabled } = useBoard();
+  const { cards, setCards, disabled, setDisabled } = useBoard();
+  const [title, setTitle] = useState(card?.title);
+  const [description, setDescription] = useState(card?.description);
+  const [tasks, setTasks] = useState(card?.tasks || []);
+  const [labels, setLabels] = useState(card?.labels || []);
+  const [priority, setPriority] = useState(card?.priority);
 
   const saveChanges = async () => {
     setDisabled(true);
     hideModal();
-    const response = await updateCard({
-      id: card.id,
-      title: card.title,
-      description: card.description,
-      tasks: card.tasks,
-      labels: card.labels.map((l) => ({
-        id: l.id,
-        color: l.color,
-        name: l.name,
-      })),
-      priority: card.priority,
-    });
-    setDisabled(false);
+    let response: any = {};
+    if (card) {
+      const res = await updateCard({
+        id: card.id,
+        title: title,
+        description: description,
+        tasks: card.tasks,
+        labels: card.labels.map((l) => ({
+          id: l.id,
+          color: l.color,
+          name: l.name,
+        })),
+        priority: card.priority,
+      });
+      response.errors = res.error;
+      response.data = res.data.updateCard.card;
+    } else {
+      const res = await createCard({
+        title: title,
+        description: description,
+        tasks: [],
+        labels: [].map((l) => ({
+          id: l.id,
+          color: l.color,
+          name: l.name,
+        })),
+        priority: 0,
+        status: status,
+      });
+      response.errors = res.error;
+      response.data = res.data.createCard.card;
+    }
     if (!response.error) {
+      const card = response.data as Card;
+      console.log(card);
+      console.log(cards);
+      setCards(cards.map((c) => (c.id == card.id ? card : c)));
+      const text = card ? "Changes saved correctly" : "Card created correctly";
       showSnackbar({
-        text: "Changes saved correctly!",
+        text: text,
         actionChildren: <CheckCircleIcon style={{ color: "#23ae23" }} />,
       });
     } else {
@@ -49,6 +85,7 @@ const CardDetailsModal = ({ card }: CardModalProps) => {
         actionChildren: <ErrorIcon style={{ color: "#e13333" }} />,
       });
     }
+    setDisabled(false);
   };
 
   return (
@@ -57,12 +94,47 @@ const CardDetailsModal = ({ card }: CardModalProps) => {
       onClose={hideModal}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      fullWidth
+      maxWidth="md"
     >
-      <DialogTitle id="alert-dialog-title">{card.title}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Let Google help apps determine location. This means sending anonymous
-          location data to Google, even when no apps are running.
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Title"
+                variant="standard"
+                value={title}
+                onChange={(e) => setTitle(e.currentTarget.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Description"
+                variant="standard"
+                value={description}
+                onChange={(e) => setDescription(e.currentTarget.value)}
+                multiline
+                rows={3}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Priority"
+                variant="standard"
+                value={priority}
+                defaultValue={0}
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                onChange={(e) => {
+                  const n = Number.parseInt(e.currentTarget.value);
+                  setPriority(Number.isNaN(n) ? 0 : n);
+                }}
+              />
+            </Grid>
+          </Grid>
         </DialogContentText>
       </DialogContent>
       <DialogActions>

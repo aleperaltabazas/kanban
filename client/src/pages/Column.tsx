@@ -11,6 +11,7 @@ type ColumnProps = {
   title: string;
   moveTo: StatusInput[];
   cards: Card[];
+  status: StatusInput;
 };
 
 const useStyles = makeStyles({
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
   ...baseStyles,
 });
 
-const Column = ({ title, moveTo, cards }: ColumnProps) => {
+const Column = ({ title, moveTo, cards, status }: ColumnProps) => {
   const classes = useStyles();
   const { showSnackbar } = useSnackbar();
 
@@ -45,7 +46,7 @@ const Column = ({ title, moveTo, cards }: ColumnProps) => {
         <Grid container rowSpacing={2}>
           {cards.map((c, i) => (
             <Grid item xs={12} key={i}>
-              <KanbanCard card={c} moveTo={moveTo} />
+              <KanbanCard status={status} card={c} moveTo={moveTo} />
             </Grid>
           ))}
         </Grid>

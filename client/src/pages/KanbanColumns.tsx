@@ -40,6 +40,7 @@ const KanbanColumns = ({}: KanbanColumnsProps) => {
             title="Backlog"
             moveTo={[StatusInput.Wip]}
             cards={cards.filter((c) => c.status.__typename == "Backlog")}
+            status={StatusInput.Backlog}
           />
         </Grid>
         <Grid item xs={12} md={4}>
@@ -47,6 +48,7 @@ const KanbanColumns = ({}: KanbanColumnsProps) => {
             title="WIP"
             moveTo={[StatusInput.Backlog, StatusInput.Done]}
             cards={cards.filter((c) => c.status.__typename == "WIP")}
+            status={StatusInput.Wip}
           />
         </Grid>
         <Grid item xs={12} md={4}>
@@ -54,6 +56,7 @@ const KanbanColumns = ({}: KanbanColumnsProps) => {
             title="Done"
             moveTo={[StatusInput.Wip]}
             cards={cards.filter((c) => c.status.__typename == "Done")}
+            status={StatusInput.Done}
           />
         </Grid>
       </Grid>

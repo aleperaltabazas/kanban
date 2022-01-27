@@ -21,6 +21,7 @@ import DeleteCardModal from "./DeleteCardModal";
 type KanbanCardProps = {
   card: Card;
   moveTo: StatusInput[];
+  status: StatusInput;
 };
 
 const useStyles = makeStyles({
@@ -36,7 +37,7 @@ const useStyles = makeStyles({
 
 const ITEM_HEIGHT = 48;
 
-const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
+const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
   const classes = useStyles();
   const { showModal } = useModal();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -132,14 +133,18 @@ const KanbanCard = ({ card, moveTo }: KanbanCardProps) => {
       <Divider orientation="horizontal" />
       <CardContent
         className={classnames(!disabled ? "cursor-pointer" : undefined)}
-        onClick={() => showModal(<CardDetailModal card={card} />)}
+        onClick={() =>
+          showModal(<CardDetailModal status={status} card={card} />)
+        }
       >
         <div className={classnames(classes.labels)}>
           {card.labels.map((l, idx) => (
             <Label color={l.color} key={idx} />
           ))}
         </div>
-        <Typography variant="body2">{card.description}</Typography>
+        <Typography variant="body2" className={classnames(classes.clamp3)}>
+          {card.description}
+        </Typography>
       </CardContent>
     </MuiCard>
   );

@@ -8,6 +8,7 @@ data class CreateCardInput(
     val priority: Int,
     val tasks: List<TaskInput>,
     val labels: List<LabelInput>,
+    val status: StatusInput = StatusInput.BACKLOG,
 )
 
 data class TaskInput(

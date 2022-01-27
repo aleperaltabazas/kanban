@@ -7,6 +7,13 @@ const typography = createStyles({
   textAlignLeft: {
     textAlign: "left",
   },
+  clamp3: {
+    textOverflow: "ellipsis",
+    lineClamp: 4,
+    display: "-webkit-box",
+    boxOrient: "vertical",
+    overflow: "hidden",
+  },
 });
 
 export default typography;

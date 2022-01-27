@@ -18,6 +18,7 @@ input CreateCardInput {
     priority: Int!
     tasks: [TaskInput] = []
     labels: [LabelInput] = []
+    status: StatusInput = BACKLOG
 }
 
 input TaskInput {
