@@ -80,7 +80,7 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
     closeMenu();
   };
 
-  const headerColor = card.labels.length > 0 ? card.labels[0].color : null;
+  const headerColor = card.labels.length > 0 ? card.labels[0].color : "#ffffff";
 
   return (
     <MuiCard
@@ -92,7 +92,7 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
         title={
           <Typography
             variant="h6"
-            color={headerColor && isTooDark(headerColor) ? "white" : null}
+            color={isTooDark(headerColor) ? "white" : null}
           >
             {card.title}
           </Typography>
