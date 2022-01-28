@@ -107,6 +107,9 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
               aria-haspopup="true"
               onClick={handleClick}
               disabled={disabled}
+              style={{
+                color: isTooDark(headerColor) && "white",
+              }}
             >
               <MoreVertIcon />
             </IconButton>

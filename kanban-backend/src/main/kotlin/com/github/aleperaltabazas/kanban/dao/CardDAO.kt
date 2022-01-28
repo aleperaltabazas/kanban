@@ -24,6 +24,13 @@ class CardDAO(
         )
     }
 
+    fun deleteCardLabels(label: Label) {
+        coll.updateMany(
+            eq("labels.id", label.id.toString()),
+            Updates.pull("labels.id", label.id.toString()),
+        )
+    }
+
     companion object {
         private val CARD_REF = object : TypeReference<Card>() {}
     }

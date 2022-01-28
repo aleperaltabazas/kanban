@@ -38,6 +38,7 @@ class LabelMutation(
 
     fun deleteLabel(input: DeleteLabelInput): DeleteLabelPayload {
         val label = labelDao.delete(input.id) ?: throw NotFoundException("No label found with ID ${input.id}")
+        cardsDao.deleteCardLabels(label)
 
         return DeleteLabelPayload(
             id = label.id,
