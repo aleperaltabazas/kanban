@@ -1,7 +1,7 @@
 package com.github.aleperaltabazas.kanban.resolver.mutation
 
-import com.github.aleperaltabazas.kanban.dao.CardDAO
-import com.github.aleperaltabazas.kanban.dao.LabelDAO
+import com.github.aleperaltabazas.kanban.db.dao.CardDAO
+import com.github.aleperaltabazas.kanban.db.dao.LabelDAO
 import com.github.aleperaltabazas.kanban.domain.Label
 import com.github.aleperaltabazas.kanban.exception.NotFoundException
 import com.github.aleperaltabazas.kanban.input.CreateLabelInput

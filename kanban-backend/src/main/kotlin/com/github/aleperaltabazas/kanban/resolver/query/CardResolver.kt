@@ -1,6 +1,6 @@
 package com.github.aleperaltabazas.kanban.resolver.query
 
-import com.github.aleperaltabazas.kanban.dao.CardDAO
+import com.github.aleperaltabazas.kanban.db.dao.CardDAO
 import com.github.aleperaltabazas.kanban.domain.Card
 import graphql.kickstart.tools.GraphQLQueryResolver
 import org.springframework.stereotype.Component

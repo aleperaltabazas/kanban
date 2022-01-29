@@ -24,6 +24,8 @@
         <config.version>1.4.0</config.version>
         <mongo-driver.version>4.4.1</mongo-driver.version>
         <jackson.version>2.13.0</jackson.version>
+        <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
+        <exposed.version>0.37.3</exposed.version>
     </properties>
     <dependencies>
         <!-- Kotlin -->
@@ -140,6 +142,32 @@
             <version>${jackson.version}</version>
         </dependency>
         <!-- Jackson -->
+
+        <!-- Exposed -->
+        <dependency>
+            <groupId>org.jetbrains.exposed</groupId>
+            <artifactId>exposed-core</artifactId>
+            <version>${exposed.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.exposed</groupId>
+            <artifactId>exposed-dao</artifactId>
+            <version>${exposed.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.exposed</groupId>
+            <artifactId>exposed-jdbc</artifactId>
+            <version>${exposed.version}</version>
+        </dependency>
+        <!-- Exposed -->
+
+        <!-- MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+        <!-- MySQL -->
     </dependencies>
 
     <build>

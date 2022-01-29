@@ -6,6 +6,7 @@ import com.github.aleperaltabazas.kanban.input.CreateCardInput
 import com.github.aleperaltabazas.kanban.input.StatusInput
 import com.github.aleperaltabazas.kanban.input.TaskInput
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 data class Card(
@@ -55,25 +56,42 @@ data class Task(
 sealed interface Status {
     val ref: String
 
+    fun serialize(): String
+
     companion object {
         operator fun invoke(input: StatusInput) = when (input) {
             StatusInput.BACKLOG -> Backlog
             StatusInput.WIP -> WIP
             StatusInput.DONE -> Done(LocalDateTime.now())
         }
+
+        operator fun invoke(text: String) = when {
+            text.startsWith("Done") -> Done(
+                completionDate = LocalDateTime.parse(text.drop(5).dropLast(1), DateTimeFormatter.ISO_DATE),
+            )
+            text == "Backlog" -> Backlog
+            text == "WIP" -> WIP
+            else -> throw Exception("Unknown status text $text")
+        }
     }
 }
 
 object Backlog : Status {
     override val ref = "BACKLOG"
+
+    override fun serialize(): String = "Backlog"
 }
 
 object WIP : Status {
     override val ref: String = "WIP"
+
+    override fun serialize(): String = "WIP"
 }
 
 data class Done(
     val completionDate: LocalDateTime,
 ) : Status {
     override val ref: String = "DONE"
+
+    override fun serialize(): String = "Done(${completionDate.format(DateTimeFormatter.ISO_DATE)})"
 }

@@ -1,6 +1,7 @@
 package com.github.aleperaltabazas.kanban.resolver.mutation
 
-import com.github.aleperaltabazas.kanban.dao.CardDAO
+import com.github.aleperaltabazas.kanban.db.dao.CardDAO
+import com.github.aleperaltabazas.kanban.db.tables.CardDao
 import com.github.aleperaltabazas.kanban.domain.Card
 import com.github.aleperaltabazas.kanban.domain.Label
 import com.github.aleperaltabazas.kanban.domain.Status
@@ -23,7 +24,8 @@ class CardMutation(
 ) : GraphQLMutationResolver {
     fun createCard(input: CreateCardInput): CreateCardPayload = CreateCardPayload(
         Card(input = input)
-            .also { dao.insert(it) }
+            .also {
+                dao.insert(it) }
     )
 
     fun updateCard(input: UpdateCardInput): UpdateCardPayload {

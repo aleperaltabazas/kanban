@@ -1,4 +1,4 @@
-package com.github.aleperaltabazas.kanban.dao
+package com.github.aleperaltabazas.kanban.db.dao
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
