@@ -1,23 +1,28 @@
 import React from "react";
-import Header from "../components/Header";
-import Board from "../context/Board";
+import Layout from "../components/Layout";
+import BoardContext from "../context/Board";
 import KanbanColumns from "./KanbanColumns";
-import Modal from "../context/Modal";
-import Snackbar from "../context/Snackbar";
+import ModalContext from "../context/Modal";
+import SnackbarContext from "../context/Snackbar";
+import DrawerContext from "../context/Drawer";
+import MenuDrawer from "../components/MenuDrawer";
 
 type KanbanPageProps = {};
 
 const KanbanPage = ({}: KanbanPageProps) => {
   return (
     <>
-      <Header />
-      <Board>
-        <Snackbar>
-          <Modal>
-            <KanbanColumns />
-          </Modal>
-        </Snackbar>
-      </Board>
+      <BoardContext>
+        <DrawerContext>
+          <SnackbarContext>
+            <ModalContext>
+              <Layout>
+                <KanbanColumns />
+              </Layout>
+            </ModalContext>
+          </SnackbarContext>
+        </DrawerContext>
+      </BoardContext>
     </>
   );
 };
