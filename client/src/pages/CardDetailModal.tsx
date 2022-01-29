@@ -59,7 +59,9 @@ const CardDetailsModal = ({ card, status }: CardModalProps) => {
   }) => {
     setDisabled(true);
     hideModal();
+
     let response: any = {};
+
     if (card) {
       const res = await updateCard({
         id: card.id,
@@ -99,6 +101,7 @@ const CardDetailsModal = ({ card, status }: CardModalProps) => {
       response.errors = res.error;
       response.data = res.data.createCard.card;
     }
+
     if (!response.error) {
       const card = response.data as Card;
       setCards(cards.filter((c) => c.id != card.id).concat(card));
@@ -113,6 +116,7 @@ const CardDetailsModal = ({ card, status }: CardModalProps) => {
         actionChildren: <ErrorIcon style={{ color: "#e13333" }} />,
       });
     }
+
     setDisabled(false);
   };
 
@@ -179,158 +183,170 @@ const CardDetailsModal = ({ card, status }: CardModalProps) => {
           handleBlur,
           handleSubmit,
           setValues,
-        }) => (
-          <>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                <Grid container spacing={4}>
-                  <Grid item xs={12}>
-                    <Typography variant="h6">Title</Typography>
-                    <TextField
-                      fullWidth
-                      variant="standard"
-                      name="title"
-                      value={values.title}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.title != undefined}
-                      helperText={errors.title}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="h6">Description</Typography>
-                    <TextField
-                      fullWidth
-                      name="description"
-                      variant="standard"
-                      value={values.description}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      multiline
-                      rows={3}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="h6">Priority</Typography>
-                    <TextField
-                      fullWidth
-                      name="priority"
-                      variant="standard"
-                      value={values.priority}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      helperText={errors.priority}
-                      error={errors.priority != undefined}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="h6">Tasks</Typography>
-                    <List
-                      sx={{
-                        width: "100%",
-                        bgcolor: "background.paper",
-                      }}
-                    >
-                      {values.tasks.map((t, idx) => (
-                        <ListItem
-                          key={idx}
-                          disablePadding
-                          sx={{ width: "100%" }}
-                        >
-                          <ListItemButton
-                            role={undefined}
-                            onClick={() => {}}
-                            dense
+        }) => {
+          const handleNewTask = () => {
+            setAutofocusTarget(values.tasks.length);
+            setValues({
+              ...values,
+              tasks: values.tasks.concat({
+                description: "",
+                priority: 0,
+                completed: false,
+              } as Task),
+            });
+          };
+
+          const updateTask = (
+            taskIndex: number,
+            update: ((task: Task) => Partial<Task>) | Partial<Task>
+          ) => {
+            const updateFn: (t: Task) => Partial<Task> =
+              typeof update == typeof Function
+                ? (update as (task: Task) => Partial<Task>)
+                : () => update as Partial<Task>;
+            setValues({
+              ...values,
+              tasks: values.tasks.map((t, i) =>
+                i == taskIndex ? { ...t, ...updateFn(t) } : t
+              ),
+            });
+          };
+
+          return (
+            <>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <Grid container spacing={4}>
+                    <Grid item xs={12}>
+                      <Typography variant="h6">Title</Typography>
+                      <TextField
+                        fullWidth
+                        variant="standard"
+                        name="title"
+                        value={values.title}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.title != undefined}
+                        helperText={errors.title}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="h6">Description</Typography>
+                      <TextField
+                        fullWidth
+                        name="description"
+                        variant="standard"
+                        value={values.description}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        multiline
+                        rows={3}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="h6">Priority</Typography>
+                      <TextField
+                        fullWidth
+                        name="priority"
+                        variant="standard"
+                        value={values.priority}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        helperText={errors.priority}
+                        error={errors.priority != undefined}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="h6">Tasks</Typography>
+                      <List
+                        sx={{
+                          width: "100%",
+                          bgcolor: "background.paper",
+                        }}
+                      >
+                        {values.tasks.map((t, idx) => (
+                          <ListItem
+                            key={idx}
+                            disablePadding
+                            sx={{ width: "100%" }}
                           >
-                            <ListItemIcon>
-                              <Checkbox
-                                edge="start"
-                                checked={t.completed}
-                                tabIndex={-1}
-                                disableRipple
-                                onChange={() =>
-                                  setValues({
-                                    ...values,
-                                    tasks: values.tasks.map((t, i) =>
-                                      i == idx
-                                        ? { ...t, completed: !t.completed }
-                                        : t
-                                    ),
-                                  })
-                                }
-                              />
-                            </ListItemIcon>
-                            <ListItemText
-                              primary={
-                                <TextField
-                                  autoFocus={autofocusTarget == idx}
-                                  onFocus={() => setAutofocusTarget(undefined)}
-                                  fullWidth
-                                  variant="standard"
-                                  value={t.description}
-                                  helperText={
-                                    errors.tasks != undefined &&
-                                    errors.tasks[idx] != undefined &&
-                                    (errors.tasks[idx] as FormikErrors<Task>)
-                                      .description
-                                  }
-                                  error={
-                                    errors.tasks != undefined &&
-                                    errors.tasks[idx] != undefined
-                                  }
-                                  onChange={(e) =>
-                                    setValues({
-                                      ...values,
-                                      tasks: values.tasks.map((t, i) =>
-                                        i == idx
-                                          ? {
-                                              ...t,
-                                              description:
-                                                e.currentTarget.value,
-                                            }
-                                          : t
-                                      ),
-                                    })
+                            <ListItemButton
+                              role={undefined}
+                              onClick={() => {}}
+                              dense
+                            >
+                              <ListItemIcon>
+                                <Checkbox
+                                  edge="start"
+                                  checked={t.completed}
+                                  tabIndex={-1}
+                                  disableRipple
+                                  onChange={() =>
+                                    updateTask(idx, (t) => ({
+                                      completed: !t.completed,
+                                    }))
                                   }
                                 />
-                              }
-                            />
-                          </ListItemButton>
-                        </ListItem>
-                      ))}
-                    </List>
-                    <Button
-                      variant="contained"
-                      startIcon={<AddCircleIcon />}
-                      className={classnames(classes.textWhite, classes.mt1)}
-                      onClick={() => {
-                        setAutofocusTarget(values.tasks.length);
-                        setValues({
-                          ...values,
-                          tasks: values.tasks.concat({
-                            description: "",
-                            priority: 0,
-                            completed: false,
-                          } as Task),
-                        });
-                      }}
-                    >
-                      new task
-                    </Button>
+                              </ListItemIcon>
+                              <ListItemText
+                                primary={
+                                  <TextField
+                                    autoFocus={autofocusTarget == idx}
+                                    onFocus={() =>
+                                      setAutofocusTarget(undefined)
+                                    }
+                                    fullWidth
+                                    variant="standard"
+                                    value={t.description}
+                                    helperText={
+                                      errors.tasks != undefined &&
+                                      errors.tasks[idx] != undefined &&
+                                      (errors.tasks[idx] as FormikErrors<Task>)
+                                        .description
+                                    }
+                                    error={
+                                      errors.tasks != undefined &&
+                                      errors.tasks[idx] != undefined
+                                    }
+                                    onChange={(e) =>
+                                      updateTask(idx, {
+                                        description: e.currentTarget.value,
+                                      })
+                                    }
+                                  />
+                                }
+                              />
+                            </ListItemButton>
+                          </ListItem>
+                        ))}
+                      </List>
+                      <Button
+                        variant="contained"
+                        startIcon={<AddCircleIcon />}
+                        className={classnames(classes.textWhite, classes.mt1)}
+                        onClick={handleNewTask}
+                      >
+                        new task
+                      </Button>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={hideModal} color="error">
-                Cancel
-              </Button>
-              <Button onClick={() => handleSubmit()} autoFocus color="primary">
-                Save
-              </Button>
-            </DialogActions>
-          </>
-        )}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={hideModal} color="error">
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => handleSubmit()}
+                  autoFocus
+                  color="primary"
+                >
+                  Save
+                </Button>
+              </DialogActions>
+            </>
+          );
+        }}
       </Formik>
     </Dialog>
   );
