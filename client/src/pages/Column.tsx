@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography, Stack } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import { Card, StatusInput } from "../generated/graphql";
@@ -65,13 +65,11 @@ const Column = ({ title, moveTo, cards, status }: ColumnProps) => {
         </Grid>
       </Grid>
       <Container maxWidth="xl">
-        <Grid container rowSpacing={2}>
+        <Stack spacing={2}>
           {cards.map((c, i) => (
-            <Grid item xs={12} key={i}>
-              <KanbanCard status={status} card={c} moveTo={moveTo} />
-            </Grid>
+            <KanbanCard key={c.id} status={status} card={c} moveTo={moveTo} />
           ))}
-        </Grid>
+        </Stack>
       </Container>
     </div>
   );

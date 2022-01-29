@@ -1,4 +1,5 @@
 import { Container, Grid } from "@mui/material";
+import { Stack } from "@mui/material";
 import React from "react";
 import { StatusInput } from "../generated/graphql";
 import { useBoard } from "../context/Board";
@@ -33,32 +34,26 @@ const KanbanColumns = ({}: KanbanColumnsProps) => {
       )}
       maxWidth="lg"
     >
-      <Grid container spacing={2} className="h-100">
-        <Grid item xs={12} md={4}>
-          <Column
-            title="Backlog"
-            moveTo={[StatusInput.Wip]}
-            cards={cards.filter((c) => c.status.__typename == "Backlog")}
-            status={StatusInput.Backlog}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Column
-            title="WIP"
-            moveTo={[StatusInput.Backlog, StatusInput.Done]}
-            cards={cards.filter((c) => c.status.__typename == "WIP")}
-            status={StatusInput.Wip}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Column
-            title="Done"
-            moveTo={[StatusInput.Wip]}
-            cards={cards.filter((c) => c.status.__typename == "Done")}
-            status={StatusInput.Done}
-          />
-        </Grid>
-      </Grid>
+      <Stack spacing={2} className="h-100" direction="row">
+        <Column
+          title="Backlog"
+          moveTo={[StatusInput.Wip]}
+          cards={cards.filter((c) => c.status.__typename == "Backlog")}
+          status={StatusInput.Backlog}
+        />
+        <Column
+          title="WIP"
+          moveTo={[StatusInput.Backlog, StatusInput.Done]}
+          cards={cards.filter((c) => c.status.__typename == "WIP")}
+          status={StatusInput.Wip}
+        />
+        <Column
+          title="Done"
+          moveTo={[StatusInput.Wip]}
+          cards={cards.filter((c) => c.status.__typename == "Done")}
+          status={StatusInput.Done}
+        />
+      </Stack>
     </Container>
   );
 };
