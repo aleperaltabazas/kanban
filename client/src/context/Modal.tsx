@@ -30,7 +30,10 @@ const Modal = (props: Props): JSX.Element => {
     setModalShow(true);
   };
 
-  const hideModal = () => setModalShow(false);
+  const hideModal = () => {
+    setModalShow(false);
+    setModalChildren(undefined);
+  };
 
   const context: ModalContextProps = {
     modalShow: modalShow,
