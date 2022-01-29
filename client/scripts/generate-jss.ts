@@ -5,7 +5,7 @@ const sides = [
   { abbrev: "l", side: "Left" },
   { abbrev: "r", side: "Right" },
   { abbrev: "b", side: "Bottom" },
-  { abbrev: "t", side: "Bottom" },
+  { abbrev: "t", side: "Top" },
 ];
 
 type Style = {
