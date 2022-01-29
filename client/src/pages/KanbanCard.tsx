@@ -82,6 +82,17 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
 
   const headerColor = card.labels.length > 0 ? card.labels[0].color : "#ffffff";
 
+  const prettyOption = (option: StatusInput) => {
+    switch (option) {
+      case StatusInput.Backlog:
+        return "Backlog";
+      case StatusInput.Wip:
+        return "WIP";
+      case StatusInput.Done:
+        return "Done";
+    }
+  };
+
   return (
     <MuiCard
       sx={{ minWidth: 275 }}
@@ -133,7 +144,7 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
                   key={option}
                   onClick={(event) => moveCard(event, index)}
                 >
-                  Move to {option}
+                  Move to {prettyOption(option)}
                 </MenuItem>
               ))}
               <Divider />
