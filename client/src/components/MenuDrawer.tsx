@@ -1,16 +1,15 @@
 import { Box, Drawer, Toolbar } from "@mui/material";
-import React from "react";
-import { styled } from "@mui/material/styles";
+import React, { useState } from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { useDrawer } from "../context/Drawer";
 import { useBoard } from "../context/Board";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
+import { Label } from "../generated/graphql";
 
 type MenuDrawerProps = {};
 
@@ -19,6 +18,15 @@ const drawerWidth = 240;
 const MenuDrawer = ({}: MenuDrawerProps) => {
   const { open } = useDrawer();
   const { labels } = useBoard();
+  const [selectedLabels, setSelectedLabels] = useState<Array<string>>([]);
+
+  const selectLabel = (label: Label) => {
+    if (selectedLabels.includes(label.id)) {
+      setSelectedLabels(selectedLabels.filter((lid) => lid != label.id));
+    } else {
+      setSelectedLabels(selectedLabels.concat(label.id));
+    }
+  };
 
   return (
     <Drawer
@@ -36,8 +44,19 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
       <Toolbar />
       <Box sx={{ overflow: "auto" }}>
         <List>
-          {labels.map((label, idx) => (
-            <ListItem button key={label.id}>
+          <ListItem button key="all">
+            <ListItemIcon>
+              <ClearAllIcon />
+            </ListItemIcon>
+            <ListItemText primary="All" />
+          </ListItem>
+          {labels.map((label) => (
+            <ListItem
+              button
+              key={label.id}
+              onClick={() => selectLabel(label)}
+              selected={selectedLabels.includes(label.id)}
+            >
               <ListItemIcon>
                 <BookmarkIcon sx={{ color: label.color }} />
               </ListItemIcon>
