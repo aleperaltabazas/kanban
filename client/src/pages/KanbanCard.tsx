@@ -16,7 +16,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { CardHeader, Divider, Stack } from "@mui/material";
 import { useBoard } from "../context/Board";
 import { useSnackbar } from "../context/Snackbar";
-import DeleteCardModal from "./DeleteCardModal";
+import DeleteCardModal from "../components/modals/DeleteCardModal";
 import { isTooDark } from "../functions/color";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 

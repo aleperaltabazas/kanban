@@ -15,7 +15,7 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import LabelIcon from "@mui/icons-material/Label";
 import { makeStyles } from "@mui/styles";
 import baseStyles from "../styles";
-import classnames from "classnames";
+import DeleteLabelModal from "./modals/DeleteLabelModal";
 
 type LabelListItemProps = {
   label: Label;
@@ -41,7 +41,7 @@ const LabelListItem = ({ label }: LabelListItemProps) => {
   };
 
   const handleDeleteLabel = () => {
-    console.log(label.id);
+    showModal(<DeleteLabelModal label={label} />);
   };
 
   const longPressEvent = useLongPress(handleEditLabel, selectLabel, {

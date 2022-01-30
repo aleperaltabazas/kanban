@@ -13,7 +13,8 @@ import { useModal } from "../context/Modal";
 import LabelDetailModal from "./modals/LabelDetailModal";
 import LabelListItem from "./LabelListItem";
 import { makeStyles } from "@mui/styles";
-import classNames from "classnames";
+import classnames from "classnames";
+import baseStyles from "../styles";
 
 type MenuDrawerProps = {};
 
@@ -23,6 +24,7 @@ const useStyles = makeStyles({
   maxHeight360: {
     maxHeight: "360px",
   },
+  ...baseStyles,
 });
 
 const MenuDrawer = ({}: MenuDrawerProps) => {
@@ -53,8 +55,8 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
       open={open}
     >
       <Toolbar />
-      <Box sx={{ overflow: "auto" }}>
-        <List className={classNames(classes.maxHeight360)}>
+      <Box className={classnames(classes.mb1)} sx={{ overflow: "auto" }}>
+        <List className={classnames(classes.maxHeight360)}>
           <ListItem key={"all"} disablePadding>
             <ListItemButton dense onClick={clearLabelFilters}>
               <ListItemIcon>
