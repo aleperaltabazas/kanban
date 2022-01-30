@@ -20,6 +20,8 @@ import ClearAllIcon from "@mui/icons-material/ClearAll";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Label } from "../generated/graphql";
 import EditIcon from "@mui/icons-material/Edit";
+import { useModal } from "../context/Modal";
+import LabelDetailsModal from "./LabelDetailModal";
 
 type MenuDrawerProps = {};
 
@@ -28,6 +30,7 @@ const drawerWidth = 240;
 const MenuDrawer = ({}: MenuDrawerProps) => {
   const { open } = useDrawer();
   const { labels, selectedLabels, setSelectedLabels } = useBoard();
+  const { showModal } = useModal();
 
   const selectLabel = (label: Label) => {
     if (selectedLabels.includes(label.id)) {
@@ -41,8 +44,13 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
     setSelectedLabels([]);
   };
 
-  const handleNewLabel = () => {};
-  const handleEditLabel = (label: Label) => {};
+  const handleNewLabel = () => {
+    showModal(<LabelDetailsModal />);
+  };
+
+  const handleEditLabel = (label: Label) => {
+    showModal(<LabelDetailsModal label={label} />);
+  };
 
   return (
     <Drawer

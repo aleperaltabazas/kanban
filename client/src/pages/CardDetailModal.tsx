@@ -34,14 +34,14 @@ import baseStyles from "../styles";
 import classnames from "classnames";
 import { Formik, FormikErrors } from "formik";
 
-type CardModalProps = {
+type CardDetailsModalProps = {
   card?: Card;
   status: StatusInput;
 };
 
 const useStyles = makeStyles(baseStyles);
 
-const CardDetailsModal = ({ card, status }: CardModalProps) => {
+const CardDetailsModal = ({ card, status }: CardDetailsModalProps) => {
   const classes = useStyles();
   const { modalShow, hideModal } = useModal();
   const [, updateCard] = useUpdateCardMutation();
