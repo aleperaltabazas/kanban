@@ -13,11 +13,12 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { CardHeader, Divider } from "@mui/material";
+import { CardHeader, Divider, Stack } from "@mui/material";
 import { useBoard } from "../context/Board";
 import { useSnackbar } from "../context/Snackbar";
 import DeleteCardModal from "./DeleteCardModal";
 import { isTooDark } from "../functions/color";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 type KanbanCardProps = {
   card: Card;
@@ -163,7 +164,19 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
         }
       >
         <Typography
-          variant="body2"
+          variant="caption"
+          display="block"
+          sx={{ marginBottom: "5px" }}
+        >
+          Priority: {card.priority}
+          {/* <Stack direction="row">
+            {Array(card.priority).fill(
+              <FiberManualRecordIcon sx={{ fontSize: "8px" }} />
+            )}
+          </Stack> */}
+        </Typography>
+        <Typography
+          variant="subtitle1"
           display="block"
           className={classnames(classes.clamp3)}
         >
