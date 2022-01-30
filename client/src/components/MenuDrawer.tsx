@@ -1,4 +1,12 @@
-import { Box, Drawer, Toolbar } from "@mui/material";
+import {
+  Box,
+  Button,
+  Drawer,
+  IconButton,
+  ListItemAvatar,
+  ListItemButton,
+  Toolbar,
+} from "@mui/material";
 import React from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -9,7 +17,9 @@ import { useDrawer } from "../context/Drawer";
 import { useBoard } from "../context/Board";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Label } from "../generated/graphql";
+import EditIcon from "@mui/icons-material/Edit";
 
 type MenuDrawerProps = {};
 
@@ -30,6 +40,9 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
   const clearLabelFilters = () => {
     setSelectedLabels([]);
   };
+
+  const handleNewLabel = () => {};
+  const handleEditLabel = (label: Label) => {};
 
   return (
     <Drawer
@@ -57,17 +70,34 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
             <ListItem
               button
               key={label.id}
-              onClick={() => selectLabel(label)}
               selected={selectedLabels.includes(label.id)}
+              secondaryAction={
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => handleEditLabel(label)}
+                >
+                  <EditIcon />
+                </IconButton>
+              }
             >
-              <ListItemIcon>
+              <ListItemAvatar onClick={() => selectLabel(label)}>
                 <BookmarkIcon sx={{ color: label.color }} />
-              </ListItemIcon>
-              <ListItemText primary={label.name} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={label.name}
+                onClick={() => selectLabel(label)}
+              />
             </ListItem>
           ))}
+          <Divider />
+          <ListItem button key="new-task" onClick={handleNewLabel}>
+            <ListItemIcon>
+              <AddCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary={<Button variant="text">new label</Button>} />
+          </ListItem>
         </List>
-        <Divider />
       </Box>
     </Drawer>
   );
