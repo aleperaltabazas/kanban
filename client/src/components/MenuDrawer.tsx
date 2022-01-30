@@ -1,5 +1,5 @@
 import { Box, Drawer, Toolbar } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";

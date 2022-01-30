@@ -5,7 +5,6 @@ import KanbanColumns from "./KanbanColumns";
 import ModalContext from "../context/Modal";
 import SnackbarContext from "../context/Snackbar";
 import DrawerContext from "../context/Drawer";
-import MenuDrawer from "../components/MenuDrawer";
 
 type KanbanPageProps = {};
 
