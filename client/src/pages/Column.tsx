@@ -66,9 +66,11 @@ const Column = ({ title, moveTo, cards, status }: ColumnProps) => {
       </Grid>
       <Container maxWidth="xl">
         <Stack spacing={2}>
-          {cards.map((c, i) => (
-            <KanbanCard key={c.id} status={status} card={c} moveTo={moveTo} />
-          ))}
+          {cards
+            .sort((c1, c2) => c2.priority - c1.priority)
+            .map((c) => (
+              <KanbanCard key={c.id} status={status} card={c} moveTo={moveTo} />
+            ))}
         </Stack>
       </Container>
     </div>
