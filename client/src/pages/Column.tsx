@@ -7,7 +7,7 @@ import KanbanCard from "./KanbanCard";
 import baseStyles from "../styles";
 import AddIcon from "@mui/icons-material/Add";
 import { useModal } from "../context/Modal";
-import CardDetailsModal from "./CardDetailModal";
+import CardDetailModal from "../components/modals/CardDetailModal";
 
 type ColumnProps = {
   title: string;
@@ -60,7 +60,7 @@ const Column = ({ title, moveTo, cards, status }: ColumnProps) => {
               fontWeight: "bold",
             }}
             className="cursor-pointer"
-            onClick={() => showModal(<CardDetailsModal status={status} />)}
+            onClick={() => showModal(<CardDetailModal status={status} />)}
           />
         </Grid>
       </Grid>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useModal } from "../context/Modal";
+import { useModal } from "../../context/Modal";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,11 +12,11 @@ import {
   StatusInput,
   Task,
   Label,
-} from "../generated/graphql";
-import { useSnackbar } from "../context/Snackbar";
+} from "../../generated/graphql";
+import { useSnackbar } from "../../context/Snackbar";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
-import { useBoard } from "../context/Board";
+import { useBoard } from "../../context/Board";
 import {
   Checkbox,
   Grid,
@@ -30,18 +30,18 @@ import {
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { makeStyles } from "@mui/styles";
-import baseStyles from "../styles";
+import baseStyles from "../../styles";
 import classnames from "classnames";
 import { Formik, FormikErrors } from "formik";
 
-type CardDetailsModalProps = {
+type CardDetailModalProps = {
   card?: Card;
   status: StatusInput;
 };
 
 const useStyles = makeStyles(baseStyles);
 
-const CardDetailsModal = ({ card, status }: CardDetailsModalProps) => {
+const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
   const classes = useStyles();
   const { modalShow, hideModal } = useModal();
   const [, updateCard] = useUpdateCardMutation();
@@ -352,4 +352,4 @@ const CardDetailsModal = ({ card, status }: CardDetailsModalProps) => {
   );
 };
 
-export default CardDetailsModal;
+export default CardDetailModal;

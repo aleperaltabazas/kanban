@@ -7,7 +7,7 @@ import { makeStyles } from "@mui/styles";
 import styles from "../styles";
 import classnames from "classnames";
 import { useModal } from "../context/Modal";
-import CardDetailModal from "./CardDetailModal";
+import CardDetailModal from "../components/modals/CardDetailModal";
 import Label from "../components/commons/Label";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";

@@ -21,7 +21,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Label } from "../generated/graphql";
 import EditIcon from "@mui/icons-material/Edit";
 import { useModal } from "../context/Modal";
-import LabelDetailsModal from "./LabelDetailModal";
+import LabelDetailModal from "./modals/LabelDetailModal";
 
 type MenuDrawerProps = {};
 
@@ -45,11 +45,11 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
   };
 
   const handleNewLabel = () => {
-    showModal(<LabelDetailsModal />);
+    showModal(<LabelDetailModal />);
   };
 
   const handleEditLabel = (label: Label) => {
-    showModal(<LabelDetailsModal label={label} />);
+    showModal(<LabelDetailModal label={label} />);
   };
 
   return (

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useModal } from "../context/Modal";
+import React from "react";
+import { useModal } from "../../context/Modal";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -9,20 +9,20 @@ import {
   useUpdateLabelMutation,
   useCreateLabelMutation,
   Label,
-} from "../generated/graphql";
-import { useSnackbar } from "../context/Snackbar";
+} from "../../generated/graphql";
+import { useSnackbar } from "../../context/Snackbar";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
-import { useBoard } from "../context/Board";
+import { useBoard } from "../../context/Board";
 import { Grid, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import { ChromePicker } from "react-color";
 
-type LabelDetailsModalProps = {
+type LabelDetailModalProps = {
   label?: Label;
 };
 
-const LabelDetailsModal = ({ label }: LabelDetailsModalProps) => {
+const LabelDetailModal = ({ label }: LabelDetailModalProps) => {
   const { modalShow, hideModal } = useModal();
   const [, updateLabel] = useUpdateLabelMutation();
   const [, createLabel] = useCreateLabelMutation();
@@ -178,4 +178,4 @@ const LabelDetailsModal = ({ label }: LabelDetailsModalProps) => {
   );
 };
 
-export default LabelDetailsModal;
+export default LabelDetailModal;
