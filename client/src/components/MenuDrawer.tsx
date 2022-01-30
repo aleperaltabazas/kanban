@@ -17,8 +17,7 @@ const drawerWidth = 240;
 
 const MenuDrawer = ({}: MenuDrawerProps) => {
   const { open } = useDrawer();
-  const { labels } = useBoard();
-  const [selectedLabels, setSelectedLabels] = useState<Array<string>>([]);
+  const { labels, selectedLabels, setSelectedLabels } = useBoard();
 
   const selectLabel = (label: Label) => {
     if (selectedLabels.includes(label.id)) {
@@ -26,6 +25,10 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
     } else {
       setSelectedLabels(selectedLabels.concat(label.id));
     }
+  };
+
+  const clearLabelFilters = () => {
+    setSelectedLabels([]);
   };
 
   return (
@@ -44,7 +47,7 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
       <Toolbar />
       <Box sx={{ overflow: "auto" }}>
         <List>
-          <ListItem button key="all">
+          <ListItem button key="all" onClick={clearLabelFilters}>
             <ListItemIcon>
               <ClearAllIcon />
             </ListItemIcon>

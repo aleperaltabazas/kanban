@@ -14,18 +14,13 @@ type BoardContextProps = {
   setLoading: (loading: boolean) => void;
   disabled: boolean;
   setDisabled: (disabled: boolean) => void;
+  selectedLabels: Array<string>;
+  setSelectedLabels: (labelIds: Array<string>) => void;
 };
 
-const BoardContext = React.createContext<BoardContextProps>({
-  cards: [],
-  setCards: () => {},
-  labels: [],
-  setLabels: () => {},
-  loading: false,
-  setLoading: () => {},
-  disabled: false,
-  setDisabled: () => {},
-});
+const BoardContext = React.createContext<BoardContextProps>(
+  {} as BoardContextProps
+);
 
 export const useBoard = () => useContext(BoardContext);
 
@@ -35,6 +30,7 @@ const Board = ({ children }: Props) => {
   const [labels, setLabels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [disabled, setDisabled] = useState(false);
+  const [selectedLabels, setSelectedLabels] = useState([]);
 
   useEffect(() => {
     if (!fetching) {
@@ -53,6 +49,8 @@ const Board = ({ children }: Props) => {
     setLoading,
     disabled,
     setDisabled,
+    selectedLabels,
+    setSelectedLabels,
   };
 
   return (

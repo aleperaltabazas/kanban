@@ -14,7 +14,12 @@ type KanbanColumnsProps = {};
 const useStyles = makeStyles(styles);
 
 const KanbanColumns = ({}: KanbanColumnsProps) => {
-  const { cards, loading, disabled } = useBoard();
+  const { cards, loading, disabled, selectedLabels } = useBoard();
+  const filteredCards = cards.filter(
+    (c) =>
+      selectedLabels.length == 0 ||
+      c.labels.some((l) => selectedLabels.includes(l.id))
+  );
   const classes = useStyles();
 
   if (loading) {
@@ -38,19 +43,19 @@ const KanbanColumns = ({}: KanbanColumnsProps) => {
         <Column
           title="Backlog"
           moveTo={[StatusInput.Wip]}
-          cards={cards.filter((c) => c.status.__typename == "Backlog")}
+          cards={filteredCards.filter((c) => c.status.__typename == "Backlog")}
           status={StatusInput.Backlog}
         />
         <Column
           title="WIP"
           moveTo={[StatusInput.Backlog, StatusInput.Done]}
-          cards={cards.filter((c) => c.status.__typename == "WIP")}
+          cards={filteredCards.filter((c) => c.status.__typename == "WIP")}
           status={StatusInput.Wip}
         />
         <Column
           title="Done"
           moveTo={[StatusInput.Wip]}
-          cards={cards.filter((c) => c.status.__typename == "Done")}
+          cards={filteredCards.filter((c) => c.status.__typename == "Done")}
           status={StatusInput.Done}
         />
       </Stack>
