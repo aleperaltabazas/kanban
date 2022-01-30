@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Drawer,
-  IconButton,
-  ListItemAvatar,
-  ListItemButton,
-  Toolbar,
-} from "@mui/material";
+import { Box, Button, Drawer, ListItemButton, Toolbar } from "@mui/material";
 import React from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -15,30 +7,29 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useDrawer } from "../context/Drawer";
 import { useBoard } from "../context/Board";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Label } from "../generated/graphql";
-import EditIcon from "@mui/icons-material/Edit";
 import { useModal } from "../context/Modal";
 import LabelDetailModal from "./modals/LabelDetailModal";
+import LabelListItem from "./LabelListItem";
+import { makeStyles } from "@mui/styles";
+import classNames from "classnames";
 
 type MenuDrawerProps = {};
 
 const drawerWidth = 240;
 
+const useStyles = makeStyles({
+  maxHeight360: {
+    maxHeight: "360px",
+  },
+});
+
 const MenuDrawer = ({}: MenuDrawerProps) => {
   const { open } = useDrawer();
-  const { labels, selectedLabels, setSelectedLabels } = useBoard();
+  const { labels, setSelectedLabels } = useBoard();
   const { showModal } = useModal();
-
-  const selectLabel = (label: Label) => {
-    if (selectedLabels.includes(label.id)) {
-      setSelectedLabels(selectedLabels.filter((lid) => lid != label.id));
-    } else {
-      setSelectedLabels(selectedLabels.concat(label.id));
-    }
-  };
+  const classes = useStyles();
 
   const clearLabelFilters = () => {
     setSelectedLabels([]);
@@ -46,10 +37,6 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
 
   const handleNewLabel = () => {
     showModal(<LabelDetailModal />);
-  };
-
-  const handleEditLabel = (label: Label) => {
-    showModal(<LabelDetailModal label={label} />);
   };
 
   return (
@@ -67,36 +54,17 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
     >
       <Toolbar />
       <Box sx={{ overflow: "auto" }}>
-        <List>
-          <ListItem button key="all" onClick={clearLabelFilters}>
-            <ListItemIcon>
-              <ClearAllIcon />
-            </ListItemIcon>
-            <ListItemText primary="All" />
+        <List className={classNames(classes.maxHeight360)}>
+          <ListItem key={"all"} disablePadding>
+            <ListItemButton dense onClick={clearLabelFilters}>
+              <ListItemIcon>
+                <ClearAllIcon />
+              </ListItemIcon>
+              <ListItemText primary="All" />
+            </ListItemButton>
           </ListItem>
           {labels.map((label) => (
-            <ListItem
-              button
-              key={label.id}
-              selected={selectedLabels.includes(label.id)}
-              secondaryAction={
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => handleEditLabel(label)}
-                >
-                  <EditIcon />
-                </IconButton>
-              }
-            >
-              <ListItemAvatar onClick={() => selectLabel(label)}>
-                <BookmarkIcon sx={{ color: label.color }} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={label.name}
-                onClick={() => selectLabel(label)}
-              />
-            </ListItem>
+            <LabelListItem label={label} />
           ))}
           <Divider />
           <ListItem button key="new-task" onClick={handleNewLabel}>
@@ -107,6 +75,7 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
           </ListItem>
         </List>
       </Box>
+      <Divider />
     </Drawer>
   );
 };
