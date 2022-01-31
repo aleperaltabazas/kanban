@@ -17,7 +17,8 @@ type LabelModalProps = {
 const DeleteLabelModal = ({ label }: LabelModalProps) => {
   const { modalShow, hideModal } = useModal();
   const { showSnackbar } = useSnackbar();
-  const { disabled, setDisabled, setLabels, labels } = useBoard();
+  const { cards, setCards, disabled, setDisabled, setLabels, labels } =
+    useBoard();
   const [, deleteLabel] = useDeleteLabelMutation();
 
   const handleDelete = async () => {
@@ -28,7 +29,13 @@ const DeleteLabelModal = ({ label }: LabelModalProps) => {
     if (response.error) {
       showSnackbar({ text: "There was an error deleting the label" });
     } else {
-      setLabels(labels.filter((c) => c.id != label.id));
+      setLabels(labels.filter((l) => l.id != label.id));
+      setCards(
+        cards.map((c) => ({
+          ...c,
+          labels: c.labels.filter((l) => l.id != label.id),
+        }))
+      );
     }
     setDisabled(false);
   };

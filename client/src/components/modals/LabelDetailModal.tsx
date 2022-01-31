@@ -27,7 +27,8 @@ const LabelDetailModal = ({ label }: LabelDetailModalProps) => {
   const [, updateLabel] = useUpdateLabelMutation();
   const [, createLabel] = useCreateLabelMutation();
   const { showSnackbar } = useSnackbar();
-  const { labels, setLabels, disabled, setDisabled } = useBoard();
+  const { cards, setCards, labels, setLabels, disabled, setDisabled } =
+    useBoard();
 
   const saveChanges = async (values: { name: string; color: string }) => {
     setDisabled(true);
@@ -55,6 +56,12 @@ const LabelDetailModal = ({ label }: LabelDetailModalProps) => {
     if (!response.error) {
       const label = response.data as Label;
       setLabels(labels.filter((l) => l.id != label.id).concat(label));
+      setCards(
+        cards.map((c) => ({
+          ...c,
+          labels: c.labels.map((l) => (l.id == label.id ? label : l)),
+        }))
+      );
       const text = label
         ? "Changes saved correctly"
         : "Label created correctly";
