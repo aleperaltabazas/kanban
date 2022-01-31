@@ -15,6 +15,7 @@ class CardDAO(
     objectMapper: ObjectMapper,
 ) : DAO<Card>(cards, objectMapper, CARD_REF) {
     fun updateCardLabels(label: Label) {
+
         coll.updateMany(
             eq("labels.id", label.id.toString()),
             Updates.combine(
@@ -27,7 +28,10 @@ class CardDAO(
     fun deleteCardLabels(label: Label) {
         coll.updateMany(
             eq("labels.id", label.id.toString()),
-            Updates.pull("labels.id", label.id.toString()),
+            Updates.pull(
+                "labels",
+                eq("id", label.id.toString()),
+            ),
         )
     }
 
