@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useModal } from "../../context/Modal";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -25,6 +25,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -33,13 +34,27 @@ import { makeStyles } from "@mui/styles";
 import baseStyles from "../../styles";
 import classnames from "classnames";
 import { Formik, FormikErrors } from "formik";
+import Autocomplete from "@mui/material/Autocomplete";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CloseIcon from "@mui/icons-material/Close";
+import { isTooDark } from "../../functions/color";
 
 type CardDetailModalProps = {
   card?: Card;
   status: StatusInput;
 };
 
-const useStyles = makeStyles(baseStyles);
+const useStyles = makeStyles({
+  ...baseStyles,
+  labelChip: {
+    paddingTop: "1px",
+    paddingBottom: "1px",
+    paddingLeft: "8px",
+    paddingRight: "8px",
+    borderRadius: "10%",
+  },
+});
 
 const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
   const classes = useStyles();
@@ -47,7 +62,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
   const [, updateCard] = useUpdateCardMutation();
   const [, createCard] = useCreateCardMutation();
   const { showSnackbar } = useSnackbar();
-  const { cards, setCards, disabled, setDisabled } = useBoard();
+  const { cards, setCards, disabled, setDisabled, labels } = useBoard();
   const [autofocusTarget, setAutofocusTarget] = useState<number | undefined>();
 
   const saveChanges = async (values: {
@@ -95,7 +110,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
           color: l.color,
           name: l.name,
         })),
-        priority: 0,
+        priority: values.priority,
         status: status,
       });
       response.errors = res.error;
@@ -133,7 +148,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
         initialValues={{
           title: card?.title,
           description: card?.description,
-          priority: card?.priority?.toString() || "0",
+          priority: card?.priority?.toString(),
           tasks: card?.tasks || [],
           labels: card?.labels || [],
         }}
@@ -212,6 +227,9 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
             });
           };
 
+          const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+          const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
           return (
             <>
               <DialogContent>
@@ -254,6 +272,75 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
                         onBlur={handleBlur}
                         helperText={errors.priority}
                         error={errors.priority != undefined}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="h6">Labels</Typography>
+                      <Stack direction="row">
+                        {values.labels.map((l) => (
+                          <Typography
+                            variant="caption"
+                            key={l.id}
+                            style={{ backgroundColor: l.color }}
+                            color={isTooDark(l.color) ? "white" : null}
+                            className={classnames(
+                              classes.labelChip,
+                              "center",
+                              "cursor-pointer"
+                            )}
+                            onClick={() =>
+                              setValues({
+                                ...values,
+                                labels: values.labels.filter(
+                                  (l2) => l.id != l2.id
+                                ),
+                              })
+                            }
+                          >
+                            <span style={{ paddingRight: "5px" }}>
+                              {l.name}{" "}
+                            </span>
+                            <CloseIcon fontSize="inherit" />
+                          </Typography>
+                        ))}
+                      </Stack>
+                      <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        options={labels}
+                        value={null}
+                        getOptionLabel={(l) => l.name}
+                        fullWidth
+                        renderInput={(params) => (
+                          <TextField fullWidth variant="standard" {...params} />
+                        )}
+                        onChange={(_, label) => {
+                          if ((label as Label).id) {
+                            setValues({
+                              ...values,
+                              labels: values.labels.some(
+                                (l) => l.id == (label as Label).id
+                              )
+                                ? values.labels.filter(
+                                    (l) => l.id != (label as Label).id
+                                  )
+                                : values.labels.concat(label as Label),
+                            });
+                          }
+                        }}
+                        renderOption={(props, option) => (
+                          <li {...props}>
+                            <Checkbox
+                              icon={icon}
+                              checkedIcon={checkedIcon}
+                              style={{ marginRight: 8 }}
+                              checked={values.labels.some(
+                                (l) => l.id == option.id
+                              )}
+                            />
+                            {option.name}
+                          </li>
+                        )}
                       />
                     </Grid>
                     <Grid item xs={12}>

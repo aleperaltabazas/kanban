@@ -15,10 +15,10 @@ const typography = createStyles({
     overflow: "hidden",
   },
   textBlack: {
-    fontColor: "black",
+    color: "black",
   },
   textWhite: {
-    fontColor: "white",
+    color: "white",
   },
 });
 

@@ -13,20 +13,15 @@ import { Label } from "../generated/graphql";
 import LabelDetailModal from "./modals/LabelDetailModal";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import LabelIcon from "@mui/icons-material/Label";
-import { makeStyles } from "@mui/styles";
-import baseStyles from "../styles";
 import DeleteLabelModal from "./modals/DeleteLabelModal";
 
 type LabelListItemProps = {
   label: Label;
 };
 
-const useStyles = makeStyles({ ...baseStyles });
-
 const LabelListItem = ({ label }: LabelListItemProps) => {
-  const { labels, selectedLabels, setSelectedLabels } = useBoard();
+  const { selectedLabels, setSelectedLabels } = useBoard();
   const { showModal } = useModal();
-  const classes = useStyles();
 
   const selectLabel = () => {
     if (selectedLabels.includes(label.id)) {
