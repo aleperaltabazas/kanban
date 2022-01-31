@@ -52,7 +52,7 @@ const useStyles = makeStyles({
     paddingBottom: "1px",
     paddingLeft: "8px",
     paddingRight: "8px",
-    borderRadius: "10%",
+    borderRadius: "7px",
   },
 });
 
@@ -64,6 +64,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
   const { showSnackbar } = useSnackbar();
   const { cards, setCards, disabled, setDisabled, labels } = useBoard();
   const [autofocusTarget, setAutofocusTarget] = useState<number | undefined>();
+  const [labelAutocomplete, setLabelAutocomplete] = useState("");
 
   const saveChanges = async (values: {
     title: string;
@@ -276,7 +277,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="h6">Labels</Typography>
-                      <Stack direction="row">
+                      <Stack direction="row" spacing={1}>
                         {values.labels.map((l) => (
                           <Typography
                             variant="caption"
@@ -314,6 +315,9 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
                         renderInput={(params) => (
                           <TextField fullWidth variant="standard" {...params} />
                         )}
+                        disableCloseOnSelect
+                        inputValue={labelAutocomplete}
+                        onInputChange={(_, v) => setLabelAutocomplete(v)}
                         onChange={(_, label) => {
                           if ((label as Label).id) {
                             setValues({
@@ -326,6 +330,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
                                   )
                                 : values.labels.concat(label as Label),
                             });
+                            setLabelAutocomplete("");
                           }
                         }}
                         renderOption={(props, option) => (
