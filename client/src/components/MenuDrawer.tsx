@@ -22,7 +22,7 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles({
   maxHeight360: {
-    maxHeight: "360px",
+    // maxHeight: "360px",
   },
   ...baseStyles,
 });
@@ -55,7 +55,7 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
       open={open}
     >
       <Toolbar />
-      <Box className={classnames(classes.mb1)} sx={{ overflow: "auto" }}>
+      <Box sx={{ overflow: "auto" }}>
         <List className={classnames(classes.maxHeight360)}>
           <ListItem key={"all"} disablePadding>
             <ListItemButton dense onClick={clearLabelFilters}>
@@ -77,7 +77,6 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
           </ListItem>
         </List>
       </Box>
-      <Divider />
     </Drawer>
   );
 };

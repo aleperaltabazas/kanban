@@ -35,6 +35,13 @@ const useStyles = makeStyles({
     color: "#e61d1d",
     fontWeight: 420,
   },
+  cardHeader: {
+    WebkitLineClamp: "1",
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
 });
 
 const ITEM_HEIGHT = 48;
@@ -105,6 +112,7 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
           <Typography
             variant="h6"
             color={isTooDark(headerColor) ? "white" : null}
+            className={classnames(classes.cardHeader)}
           >
             {card.title}
           </Typography>
@@ -175,6 +183,16 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
             )}
           </Stack> */}
         </Typography>
+        {card.tasks.length > 0 && (
+          <Typography
+            variant="caption"
+            display="block"
+            sx={{ marginBottom: "5px" }}
+          >
+            Tasks: {card.tasks.filter((c) => c.completed).length}/
+            {card.tasks.length}
+          </Typography>
+        )}
         <Typography
           variant="subtitle1"
           display="block"

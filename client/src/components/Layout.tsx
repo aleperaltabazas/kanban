@@ -39,7 +39,10 @@ const Layout = ({ children }: LayoutProps) => {
         </Toolbar>
       </AppBar>
       <MenuDrawer />
-      <Box component="main" sx={{ flexGrow: 1, p: 3, overflow: "hidden" }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 3, overflow: "hidden", marginBottom: "15px" }}
+      >
         {children}
       </Box>
     </Box>

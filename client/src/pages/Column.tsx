@@ -17,9 +17,12 @@ type ColumnProps = {
 };
 
 const useStyles = makeStyles({
-  root: {
+  column: {
     backgroundColor: "#efefef",
-    overflow: "scroll",
+  },
+  cards: {
+    overflow: "auto",
+    maxHeight: "750px",
   },
   ...baseStyles,
 });
@@ -29,7 +32,7 @@ const Column = ({ title, moveTo, cards, status }: ColumnProps) => {
   const { showModal } = useModal();
 
   return (
-    <div className={classnames("w-100", "h-100", classes.root)}>
+    <div className={classnames("w-100", "h-100", classes.column)}>
       <Grid container justifyContent="space-between">
         <Grid item xs={6}>
           <Typography
@@ -64,7 +67,7 @@ const Column = ({ title, moveTo, cards, status }: ColumnProps) => {
           />
         </Grid>
       </Grid>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" className={classnames(classes.cards)}>
         <Stack spacing={2}>
           {cards
             .sort((c1, c2) => c2.priority - c1.priority)

@@ -11,7 +11,7 @@ import Loader from "../components/commons/Loader";
 
 type KanbanColumnsProps = {};
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles({ ...styles });
 
 const KanbanColumns = ({}: KanbanColumnsProps) => {
   const { cards, loading, disabled, selectedLabels } = useBoard();
@@ -34,7 +34,8 @@ const KanbanColumns = ({}: KanbanColumnsProps) => {
     <Container
       className={classnames(
         "h-100",
-        classes.mt3,
+        classes.mt4,
+        classes.mb1,
         disabled ? classes.disabled : undefined
       )}
       maxWidth="lg"
