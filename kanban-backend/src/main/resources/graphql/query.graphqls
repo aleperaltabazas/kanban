@@ -2,41 +2,6 @@ type Query {
     card(id: ID): Card
     cards: [Card!]!
     labels: [Label!]!
-}
-
-type Card {
-    id: ID!
-    title: String!
-    description: String
-    priority: Int!
-    tasks: [Task!]!
-    status: Status!
-    labels: [Label!]!
-}
-
-type Task {
-    description: String!
-    completed: Boolean!
-    priority: Int
-}
-
-type Label {
-    id: ID!
-    name: String!
-    color: String!
-}
-
-union Status = Backlog | WIP | Done
-
-type Backlog {
-    ref: String
-}
-
-type WIP {
-    ref: String
-}
-
-type Done {
-    ref: String
-    completionDate: String
+    board(id: ID!): Board
+    boards: [Board!]!
 }

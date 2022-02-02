@@ -1,0 +1,15 @@
+type CreateCardPayload {
+    card: Card!
+}
+
+type UpdateCardPayload {
+    card: Card
+}
+
+type MoveCardPayload {
+    card: Card!
+}
+
+type DeleteCardPayload {
+    id: ID!
+}

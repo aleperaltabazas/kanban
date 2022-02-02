@@ -1,6 +1,7 @@
 package com.github.aleperaltabazas.kanban.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.aleperaltabazas.kanban.dao.BoardDAO
 import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.dao.LabelDAO
 import org.springframework.beans.factory.annotation.Qualifier
@@ -11,7 +12,7 @@ import org.springframework.data.mongodb.core.MongoTemplate
 @Configuration
 class DAOConfig {
     @Bean
-    fun cardDAO(
+    fun cardDao(
         @Qualifier("objectMapperSnakeCase") objectMapper: ObjectMapper,
         mongo: MongoTemplate,
     ) = CardDAO(
@@ -20,11 +21,20 @@ class DAOConfig {
     )
 
     @Bean
-    fun labelDAO(
+    fun labelDao(
         @Qualifier("objectMapperSnakeCase") objectMapper: ObjectMapper,
         mongo: MongoTemplate,
     ) = LabelDAO(
         labels = mongo.db.getCollection("labels"),
+        objectMapper = objectMapper,
+    )
+
+    @Bean
+    fun boardDao(
+        @Qualifier("objectMapperSnakeCase") objectMapper: ObjectMapper,
+        mongo: MongoTemplate,
+    ) = BoardDAO(
+        boards = mongo.db.getCollection("boards"),
         objectMapper = objectMapper,
     )
 }

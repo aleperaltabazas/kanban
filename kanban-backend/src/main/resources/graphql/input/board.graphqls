@@ -1,0 +1,12 @@
+input CreateBoardInput {
+    title: String!
+}
+
+input UpdateBoardInput {
+    id: ID!
+    title: String!
+}
+
+input DeleteBoardInput {
+    id: ID!
+}

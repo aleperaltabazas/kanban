@@ -1,0 +1,11 @@
+type CreateLabelPayload {
+    label: Label!
+}
+
+type UpdateLabelPayload {
+    label: Label!
+}
+
+type DeleteLabelPayload {
+    id: ID!
+}
