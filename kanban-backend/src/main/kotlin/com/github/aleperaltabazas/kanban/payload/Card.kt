@@ -1,18 +1,18 @@
 package com.github.aleperaltabazas.kanban.payload
 
-import com.github.aleperaltabazas.kanban.domain.Card
+import com.github.aleperaltabazas.kanban.dto.CardDTO
 import java.util.*
 
 data class CreateCardPayload(
-    val card: Card,
+    val card: CardDTO,
 )
 
 data class UpdateCardPayload(
-    val card: Card,
+    val card: CardDTO,
 )
 
 data class MoveCardPayload(
-    val card: Card,
+    val card: CardDTO,
 )
 
 data class DeleteLabelPayload(

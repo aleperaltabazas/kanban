@@ -3,6 +3,7 @@ package com.github.aleperaltabazas.kanban.resolver.mutation
 import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.dao.LabelDAO
 import com.github.aleperaltabazas.kanban.domain.Label
+import com.github.aleperaltabazas.kanban.dto.LabelDTO
 import com.github.aleperaltabazas.kanban.exception.NotFoundException
 import com.github.aleperaltabazas.kanban.input.CreateLabelInput
 import com.github.aleperaltabazas.kanban.input.DeleteLabelInput
@@ -19,7 +20,7 @@ class LabelMutation(
     private val cardsDao: CardDAO,
 ) : GraphQLMutationResolver {
     fun createLabel(input: CreateLabelInput): CreateLabelPayload = CreateLabelPayload(
-        Label(input).also { labelDao.insert(it) }
+        LabelDTO(Label(input).also { labelDao.insert(it) })
     )
 
     fun updateLabel(input: UpdateLabelInput): UpdateLabelPayload {
@@ -33,6 +34,7 @@ class LabelMutation(
                 labelDao.replace(it)
                 cardsDao.updateCardLabels(it)
             }
+                .let { LabelDTO(it) }
         )
     }
 
