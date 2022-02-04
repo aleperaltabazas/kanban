@@ -5,7 +5,6 @@ import com.github.aleperaltabazas.kanban.domain.Card
 import com.github.aleperaltabazas.kanban.domain.Label
 import com.github.aleperaltabazas.kanban.domain.Status
 import com.github.aleperaltabazas.kanban.domain.Task
-import com.github.aleperaltabazas.kanban.dto.CardDTO
 import com.github.aleperaltabazas.kanban.exception.NotFoundException
 import com.github.aleperaltabazas.kanban.input.CreateCardInput
 import com.github.aleperaltabazas.kanban.input.DeleteCardInput
@@ -25,7 +24,6 @@ class CardMutation(
     fun createCard(input: CreateCardInput): CreateCardPayload = CreateCardPayload(
         Card(input = input)
             .also { dao.insert(it) }
-            .let { CardDTO(it) }
     )
 
     fun updateCard(input: UpdateCardInput): UpdateCardPayload {
@@ -40,7 +38,6 @@ class CardMutation(
                 priority = input.priority,
                 status = input.status?.let { Status(it) } ?: card.status,
             ).also { dao.replace(it) }
-                .let { CardDTO(it) }
         )
     }
 
@@ -52,7 +49,6 @@ class CardMutation(
                 status = Status(input.to),
             )
                 .also { dao.replace(it) }
-                .let { CardDTO(it) }
         )
     }
 
