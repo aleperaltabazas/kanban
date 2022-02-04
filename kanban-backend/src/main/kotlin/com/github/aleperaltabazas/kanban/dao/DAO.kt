@@ -8,8 +8,10 @@ import com.github.aleperaltabazas.kanban.extension.eq
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.eq
 import com.mongodb.client.model.Filters.not
+import com.mongodb.client.model.Projections.include
 import com.mongodb.client.model.Updates.set
 import org.bson.Document
+import org.bson.conversions.Bson
 import java.util.*
 
 abstract class DAO<T : Entity>(
@@ -19,13 +21,22 @@ abstract class DAO<T : Entity>(
 ) {
     private val notDeleted = not(eq("deleted", true))
 
-    fun findByID(id: UUID): T? = coll.find(
+    fun findByID(
+        id: UUID,
+        selectedFields: List<String> = emptyList(),
+    ): T? = coll.find(
         "id" eq id.toString() and notDeleted,
     )
+        .limit(1)
+        .projection(include(selectedFields))
         .firstOrNull()
         ?.let { deserialize(it) }
 
-    fun findAll(): List<T> = coll.find(notDeleted)
+    fun findAll(
+        filter: Bson = Document(),
+        selectedFields: List<String> = emptyList(),
+    ): List<T> = coll.find(filter)
+        .projection(include(selectedFields))
         .map { objectMapper.convertValue(it, ref) }
         .toList()
 
@@ -40,7 +51,7 @@ abstract class DAO<T : Entity>(
     }
 
     fun replace(input: T) {
-        coll.replaceOne(eq("id", input.id.toString()), serialize(input))
+        coll.replaceOne(eq("id", input.id!!.toString()), serialize(input))
     }
 
     protected open fun deserialize(it: Document): T = objectMapper.convertValue(it, ref)

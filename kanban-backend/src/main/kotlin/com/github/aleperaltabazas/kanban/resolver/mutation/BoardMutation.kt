@@ -2,7 +2,6 @@ package com.github.aleperaltabazas.kanban.resolver.mutation
 
 import com.github.aleperaltabazas.kanban.dao.BoardDAO
 import com.github.aleperaltabazas.kanban.domain.Board
-import com.github.aleperaltabazas.kanban.dto.BoardDTO
 import com.github.aleperaltabazas.kanban.exception.NotFoundException
 import com.github.aleperaltabazas.kanban.input.CreateBoardInput
 import com.github.aleperaltabazas.kanban.input.DeleteBoardInput
@@ -22,7 +21,7 @@ class BoardMutation(
         boardDao.insert(board)
 
         return CreateBoardPayload(
-            board = BoardDTO(board),
+            board = board,
         )
     }
 
@@ -31,7 +30,7 @@ class BoardMutation(
         boardDao.replace(board)
 
         return UpdateBoardPayload(
-            board = BoardDTO(board),
+            board = board,
         )
     }
 

@@ -5,9 +5,9 @@ import com.github.aleperaltabazas.kanban.input.UpdateBoardInput
 import java.util.*
 
 data class Board(
-    override val id: UUID,
-    val title: String,
-    val alias: String,
+    override val id: UUID?,
+    val title: String?,
+    val alias: String?,
 ) : Entity {
     constructor(input: CreateBoardInput) : this(
         id = UUID.randomUUID(),

@@ -9,13 +9,13 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class Card(
-    override val id: UUID,
-    val title: String,
+    override val id: UUID?,
+    val title: String?,
     val description: String?,
-    val priority: Int,
-    val status: Status,
-    val tasks: List<Task> = emptyList(),
-    val labels: List<Label> = emptyList(),
+    val priority: Int?,
+    val status: Status?,
+    val tasks: List<Task>? = emptyList(),
+    val labels: List<Label>? = emptyList(),
 ) : Entity {
     constructor(
         input: CreateCardInput,
@@ -31,8 +31,8 @@ data class Card(
 }
 
 data class Task(
-    val description: String,
-    val completed: Boolean,
+    val description: String?,
+    val completed: Boolean?,
     val priority: Int?,
 ) {
     constructor(input: TaskInput) : this(

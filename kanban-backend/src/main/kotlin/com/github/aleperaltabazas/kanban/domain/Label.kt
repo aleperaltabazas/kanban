@@ -5,9 +5,9 @@ import com.github.aleperaltabazas.kanban.input.LabelInput
 import java.util.*
 
 data class Label(
-    override val id: UUID,
-    val name: String,
-    val color: String,
+    override val id: UUID?,
+    val name: String?,
+    val color: String?,
 ) : Entity {
     constructor(input: LabelInput) : this(
         id = input.id,

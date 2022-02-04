@@ -10,5 +10,9 @@ import org.springframework.stereotype.Component
 class LabelResolver(
     private val dao: LabelDAO,
 ) : GraphQLQueryResolver {
-    fun labels(environment: DataFetchingEnvironment): List<Label> = dao.findAll()
+    fun labels(environment: DataFetchingEnvironment): List<Label> = dao.findAll(
+        selectedFields = environment.labelSelectionSet(),
+    )
+
+    private fun DataFetchingEnvironment.labelSelectionSet() = selectionSet.fields.map { it.name }
 }

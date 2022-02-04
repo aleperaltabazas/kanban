@@ -17,7 +17,7 @@ class CardDAO(
     fun updateCardLabels(label: Label) {
 
         coll.updateMany(
-            eq("labels.id", label.id.toString()),
+            eq("labels.id", label.id!!.toString()),
             Updates.combine(
                 set("labels.$.name", label.name),
                 set("labels.$.color", label.color),
@@ -27,7 +27,7 @@ class CardDAO(
 
     fun deleteCardLabels(label: Label) {
         coll.updateMany(
-            eq("labels.id", label.id.toString()),
+            eq("labels.id", label.id!!.toString()),
             Updates.pull(
                 "labels",
                 eq("id", label.id.toString()),
