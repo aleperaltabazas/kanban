@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView
 class FrontendController(
     @Value("\${app.version}") private val version: String,
 ) {
-    @GetMapping(value = ["/", "/kanban"])
+    @GetMapping(value = ["/", "/boards/{id}"])
     fun index() = ModelAndView(
         "index",
         mapOf(

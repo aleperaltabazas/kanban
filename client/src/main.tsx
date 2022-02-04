@@ -9,7 +9,7 @@ const App = () => {
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
         <Switch>
-          <Route exact path={["/kanban", "/", ""]} component={KanbanPage} />
+          <Route exact path={["/boards/:id", "/", ""]} component={KanbanPage} />
         </Switch>
       </Suspense>
     </BrowserRouter>

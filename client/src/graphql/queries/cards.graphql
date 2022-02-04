@@ -1,5 +1,5 @@
-query Cards {
-  cards {
+query Cards($boardId: ID!) {
+  cards(boardId: $boardId) {
     ...RegularCard
   }
 }

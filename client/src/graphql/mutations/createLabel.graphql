@@ -1,5 +1,5 @@
-mutation CreateLabel($name: String!, $color: String!) {
-  createLabel(input: { name: $name, color: $color }) {
+mutation CreateLabel($boardId: ID!, $name: String!, $color: String!) {
+  createLabel(input: { boardId: $boardId, name: $name, color: $color }) {
     label {
       ...RegularLabel
     }

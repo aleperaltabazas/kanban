@@ -1,0 +1,8 @@
+query BoardData($boardId: ID!) {
+  cards(boardId: $boardId) {
+    ...RegularCard
+  }
+  labels(boardId: $boardId) {
+    ...RegularLabel
+  }
+}
