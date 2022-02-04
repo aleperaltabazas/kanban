@@ -2,6 +2,7 @@ package com.github.aleperaltabazas.kanban.resolver.query
 
 import com.github.aleperaltabazas.kanban.dao.BoardDAO
 import com.github.aleperaltabazas.kanban.domain.Board
+import com.github.aleperaltabazas.kanban.extension.boardSelectionSet
 import graphql.kickstart.tools.GraphQLQueryResolver
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.stereotype.Component
@@ -19,6 +20,4 @@ class BoardResolver(
     fun boards(environment: DataFetchingEnvironment): List<Board> = boardDao.findAll(
         selectedFields = environment.boardSelectionSet(),
     )
-
-    private fun DataFetchingEnvironment.boardSelectionSet() = selectionSet.fields.map { it.name }
 }

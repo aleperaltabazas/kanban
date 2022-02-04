@@ -8,6 +8,7 @@ import com.github.aleperaltabazas.kanban.extension.eq
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.eq
 import com.mongodb.client.model.Filters.not
+import com.mongodb.client.model.FindOneAndUpdateOptions
 import com.mongodb.client.model.Projections.include
 import com.mongodb.client.model.Updates.set
 import org.bson.Document
@@ -40,22 +41,36 @@ abstract class DAO<T : Entity>(
         .map { objectMapper.convertValue(it, ref) }
         .toList()
 
-    fun delete(id: UUID) = coll.findOneAndUpdate(
-        "id" eq id.toString() and notDeleted,
-        set("deleted", true),
+    fun delete(
+        id: UUID,
+        selectedFields: List<String> = emptyList(),
+    ) = update(
+        id = id,
+        changes = set("deleted", true),
+        selectedFields = selectedFields,
     )
-        ?.let { objectMapper.convertValue(it, ref) }
 
     fun insert(input: T) {
         coll.insertOne(serialize(input))
     }
+
+    fun update(
+        id: UUID,
+        changes: Bson,
+        selectedFields: List<String> = emptyList(),
+    ): T? = coll.findOneAndUpdate(
+        "id" eq id,
+        changes,
+        FindOneAndUpdateOptions().projection(include(selectedFields)),
+    )
+        ?.let { objectMapper.convertValue(it, ref) }
 
     fun replace(input: T) {
         coll.replaceOne(eq("id", input.id!!.toString()), serialize(input))
     }
 
     protected open fun deserialize(it: Document): T = objectMapper.convertValue(it, ref)
-    protected open fun serialize(input: Any) = Document(objectMapper.convertValue(input, MAP_REF))
+    protected open fun serialize(input: Any): Document = Document(objectMapper.convertValue(input, MAP_REF))
 
     companion object {
         private val MAP_REF = object : TypeReference<Map<String, Any?>>() {}

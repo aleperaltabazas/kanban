@@ -3,6 +3,9 @@ package com.github.aleperaltabazas.kanban.resolver.mutation
 import com.github.aleperaltabazas.kanban.dao.BoardDAO
 import com.github.aleperaltabazas.kanban.domain.Board
 import com.github.aleperaltabazas.kanban.exception.NotFoundException
+import com.github.aleperaltabazas.kanban.extension.boardSelectionSet
+import com.github.aleperaltabazas.kanban.extension.cardSelectionSet
+import com.github.aleperaltabazas.kanban.extension.documentOf
 import com.github.aleperaltabazas.kanban.input.CreateBoardInput
 import com.github.aleperaltabazas.kanban.input.DeleteBoardInput
 import com.github.aleperaltabazas.kanban.input.UpdateBoardInput
@@ -10,6 +13,7 @@ import com.github.aleperaltabazas.kanban.payload.CreateBoardPayload
 import com.github.aleperaltabazas.kanban.payload.DeleteBoardPayload
 import com.github.aleperaltabazas.kanban.payload.UpdateBoardPayload
 import graphql.kickstart.tools.GraphQLQueryResolver
+import graphql.schema.DataFetchingEnvironment
 import org.springframework.stereotype.Component
 
 @Component
@@ -25,9 +29,15 @@ class BoardMutation(
         )
     }
 
-    fun updateBoard(input: UpdateBoardInput): UpdateBoardPayload {
-        val board = Board(input)
-        boardDao.replace(board)
+    fun updateBoard(input: UpdateBoardInput, environment: DataFetchingEnvironment): UpdateBoardPayload {
+        val board = boardDao.update(
+            id = input.id,
+            changes = documentOf(
+                "title" to input.title,
+            ),
+            selectedFields = environment.boardSelectionSet(),
+        )
+            ?: throw NotFoundException("No such board ${input.id}")
 
         return UpdateBoardPayload(
             board = board,

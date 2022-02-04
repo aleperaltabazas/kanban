@@ -2,6 +2,7 @@ package com.github.aleperaltabazas.kanban.resolver.query
 
 import com.github.aleperaltabazas.kanban.dao.LabelDAO
 import com.github.aleperaltabazas.kanban.domain.Label
+import com.github.aleperaltabazas.kanban.extension.labelSelectionSet
 import graphql.kickstart.tools.GraphQLQueryResolver
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.stereotype.Component
@@ -13,6 +14,4 @@ class LabelResolver(
     fun labels(environment: DataFetchingEnvironment): List<Label> = dao.findAll(
         selectedFields = environment.labelSelectionSet(),
     )
-
-    private fun DataFetchingEnvironment.labelSelectionSet() = selectionSet.fields.map { it.name }
 }

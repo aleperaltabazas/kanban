@@ -2,7 +2,7 @@ package com.github.aleperaltabazas.kanban.resolver.query
 
 import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.domain.Card
-import com.github.aleperaltabazas.kanban.extension.excluding
+import com.github.aleperaltabazas.kanban.extension.cardSelectionSet
 import graphql.kickstart.tools.GraphQLQueryResolver
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.stereotype.Component
@@ -20,8 +20,4 @@ class CardResolver(
     fun cards(environment: DataFetchingEnvironment): List<Card> = dao.findAll(
         selectedFields = environment.cardSelectionSet(),
     )
-
-    private fun DataFetchingEnvironment.cardSelectionSet() = selectionSet.fields
-        .map { it.qualifiedName.replace("/", ".") }
-        .excluding("labels", "tasks")
 }
