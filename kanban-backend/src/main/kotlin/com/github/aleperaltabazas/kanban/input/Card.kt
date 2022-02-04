@@ -3,6 +3,7 @@ package com.github.aleperaltabazas.kanban.input
 import java.util.*
 
 data class CreateCardInput(
+    val boardId: UUID,
     val title: String,
     val description: String?,
     val priority: Int,

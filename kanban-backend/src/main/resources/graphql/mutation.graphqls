@@ -6,4 +6,7 @@ type Mutation {
     createLabel(input: CreateLabelInput): CreateLabelPayload
     updateLabel(input: UpdateLabelInput): UpdateLabelPayload
     deleteLabel(input: DeleteLabelInput): DeleteLabelPayload
+    createBoard(input: CreateBoardInput!): CreateBoardPayload
+    updateBoard(input: UpdateBoardInput!): UpdateBoardPayload
+    deleteBoard(input: DeleteBoardInput!): DeleteBoardPayload
 }

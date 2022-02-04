@@ -1,4 +1,5 @@
 input CreateCardInput {
+    boardId: ID!
     title: String!
     description: String
     priority: Int!

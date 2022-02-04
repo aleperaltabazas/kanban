@@ -1,4 +1,5 @@
 input CreateLabelInput {
+    boardId: ID!
     name: String!
     color: String!
 }

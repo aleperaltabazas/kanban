@@ -6,6 +6,7 @@ import java.util.*
 
 data class Card(
     override val id: UUID?,
+    val boardId: UUID?,
     val title: String?,
     val description: String?,
     val priority: Int?,
@@ -17,12 +18,13 @@ data class Card(
         input: CreateCardInput,
     ) : this(
         id = UUID.randomUUID(),
+        boardId = input.boardId,
         title = input.title,
         description = input.description,
         priority = input.priority,
         status = Status(input.status),
         tasks = input.tasks.map { Task(it) },
-        labels = input.labels.map { Label(it) },
+        labels = input.labels.map { Label(input.boardId, it) },
     )
 }
 

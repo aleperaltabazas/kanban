@@ -9,6 +9,7 @@ data class LabelInput(
 )
 
 data class CreateLabelInput(
+    val boardId: UUID,
     val name: String,
     val color: String,
 )
