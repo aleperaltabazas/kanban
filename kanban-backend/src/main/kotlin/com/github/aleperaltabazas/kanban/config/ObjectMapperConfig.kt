@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Primary
 class ObjectMapperConfig {
     @Bean
     @Qualifier("objectMapperSnakeCase")
-    @Primary
     fun objectMapperSnakeCase(): ObjectMapper = mapper(PropertyNamingStrategies.SNAKE_CASE)
 
     @Bean
+    @Primary
     @Qualifier("objectMapperCamelCase")
     fun objectMapperCamelCase(): ObjectMapper = mapper(PropertyNamingStrategies.LOWER_CAMEL_CASE)
 

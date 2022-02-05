@@ -59,7 +59,7 @@ abstract class DAO<T : Entity>(
         changes: Bson,
         selectedFields: List<String> = emptyList(),
     ): T? = coll.findOneAndUpdate(
-        "id" eq id,
+        "id" eq id.toString(),
         changes,
         FindOneAndUpdateOptions().projection(include(selectedFields)),
     )

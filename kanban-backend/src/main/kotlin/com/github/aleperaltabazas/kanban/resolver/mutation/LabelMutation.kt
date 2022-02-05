@@ -4,7 +4,6 @@ import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.dao.LabelDAO
 import com.github.aleperaltabazas.kanban.domain.Label
 import com.github.aleperaltabazas.kanban.exception.NotFoundException
-import com.github.aleperaltabazas.kanban.extension.documentOf
 import com.github.aleperaltabazas.kanban.extension.labelSelectionSet
 import com.github.aleperaltabazas.kanban.input.CreateLabelInput
 import com.github.aleperaltabazas.kanban.input.DeleteLabelInput
@@ -12,6 +11,8 @@ import com.github.aleperaltabazas.kanban.input.UpdateLabelInput
 import com.github.aleperaltabazas.kanban.payload.CreateLabelPayload
 import com.github.aleperaltabazas.kanban.payload.DeleteLabelPayload
 import com.github.aleperaltabazas.kanban.payload.UpdateLabelPayload
+import com.mongodb.client.model.Updates.combine
+import com.mongodb.client.model.Updates.set
 import graphql.kickstart.tools.GraphQLMutationResolver
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.stereotype.Component
@@ -28,9 +29,9 @@ class LabelMutation(
     fun updateLabel(input: UpdateLabelInput, environment: DataFetchingEnvironment): UpdateLabelPayload {
         val label = labelDao.update(
             id = input.id,
-            changes = documentOf(
-                "name" to input.name,
-                "color" to input.color,
+            changes = combine(
+                set("name", input.name),
+                set("color", input.color),
             ),
             selectedFields = environment.labelSelectionSet(),
         )
