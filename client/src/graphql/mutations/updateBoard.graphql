@@ -1,0 +1,9 @@
+mutation UpdateBoard($id: ID!, $title: String!) {
+  updateBoard(input: { id: $id, title: $title }) {
+    board {
+      id
+      title
+      alias
+    }
+  }
+}

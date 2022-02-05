@@ -10,6 +10,7 @@ import com.mongodb.client.model.Filters.eq
 import com.mongodb.client.model.Filters.not
 import com.mongodb.client.model.FindOneAndUpdateOptions
 import com.mongodb.client.model.Projections.include
+import com.mongodb.client.model.ReturnDocument
 import com.mongodb.client.model.Updates.set
 import org.bson.Document
 import org.bson.conversions.Bson
@@ -61,7 +62,9 @@ abstract class DAO<T : Entity>(
     ): T? = coll.findOneAndUpdate(
         "id" eq id.toString(),
         changes,
-        FindOneAndUpdateOptions().projection(include(selectedFields)),
+        FindOneAndUpdateOptions()
+            .returnDocument(ReturnDocument.AFTER)
+            .projection(include(selectedFields)),
     )
         ?.let { objectMapper.convertValue(it, ref) }
 

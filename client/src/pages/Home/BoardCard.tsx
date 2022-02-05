@@ -8,6 +8,7 @@ import { useModal } from "../../context/Modal";
 import DeleteBoardModal from "../../components/modals/DeleteBoardModal";
 import { makeStyles } from "@mui/styles";
 import baseStyles from "../../styles";
+import BoardDetailModal from "../../components/modals/BoardDetailModal";
 
 type BoardCardProps = {
   board: Board;
@@ -35,6 +36,11 @@ const BoardCard = ({ board }: BoardCardProps) => {
 
   const handleClose = () => {
     closeMenu();
+  };
+
+  const handleEdit = () => {
+    closeMenu();
+    showModal(<BoardDetailModal board={board} />);
   };
 
   return (
@@ -65,6 +71,7 @@ const BoardCard = ({ board }: BoardCardProps) => {
                 },
               }}
             >
+              <MenuItem onClick={handleEdit}>Edit</MenuItem>
               <MenuItem
                 onClick={handleDelete}
                 className={classNames(classes.delete)}
