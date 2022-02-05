@@ -2,8 +2,11 @@ package com.github.aleperaltabazas.kanban.resolver.query
 
 import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.domain.Card
+import com.github.aleperaltabazas.kanban.extension.and
 import com.github.aleperaltabazas.kanban.extension.cardSelectionSet
 import com.github.aleperaltabazas.kanban.extension.eq
+import com.mongodb.client.model.Filters
+import com.mongodb.client.model.Filters.*
 import graphql.kickstart.tools.GraphQLQueryResolver
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.stereotype.Component
@@ -19,7 +22,7 @@ class CardResolver(
     )
 
     fun cards(boardId: UUID, environment: DataFetchingEnvironment): List<Card> = dao.findAll(
-        filter = "board_id" eq boardId.toString(),
+        filter = "board_id" eq boardId.toString() and not("deleted" eq true),
         selectedFields = environment.cardSelectionSet(),
     )
 }

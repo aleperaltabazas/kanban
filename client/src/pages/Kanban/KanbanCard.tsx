@@ -34,10 +34,6 @@ const useStyles = makeStyles({
   labels: {
     overflow: "hidden",
   },
-  delete: {
-    color: "#e61d1d",
-    fontWeight: 420,
-  },
   cardHeader: {
     WebkitLineClamp: "1",
     display: "-webkit-box",
