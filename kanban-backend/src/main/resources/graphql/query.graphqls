@@ -1,7 +1,7 @@
 type Query {
-    card(id: ID!): Card
+    card(id: ID!): Card!
     cards(boardId: ID!): [Card!]!
     labels(boardId: ID!): [Label!]!
-    board(id: ID!): Board
+    board(id: ID!): Board!
     boards: [Board!]!
 }

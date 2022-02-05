@@ -5,18 +5,18 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { useDrawer } from "../context/Drawer";
-import { useBoard } from "../context/Board";
+import { useDrawer } from "../../context/Drawer";
+import { useBoard } from "../../context/Board";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useModal } from "../context/Modal";
-import LabelDetailModal from "./modals/LabelDetailModal";
-import LabelListItem from "./LabelListItem";
+import { useModal } from "../../context/Modal";
+import LabelDetailModal from "../modals/LabelDetailModal";
+import LabelListItem from "../LabelListItem";
 import { makeStyles } from "@mui/styles";
 import classnames from "classnames";
-import baseStyles from "../styles";
+import baseStyles from "../../styles";
 
-type MenuDrawerProps = {};
+type BoardDrawerProps = {};
 
 const drawerWidth = 240;
 
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   ...baseStyles,
 });
 
-const MenuDrawer = ({}: MenuDrawerProps) => {
+const BoardDrawer = ({}: BoardDrawerProps) => {
   const { open } = useDrawer();
   const { labels, setSelectedLabels } = useBoard();
   const { showModal } = useModal();
@@ -81,4 +81,4 @@ const MenuDrawer = ({}: MenuDrawerProps) => {
   );
 };
 
-export default MenuDrawer;
+export default BoardDrawer;

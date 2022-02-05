@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Card, Label, useBoardDataQuery } from "../generated/graphql";
+import { Board, Card, Label, useBoardDataQuery } from "../generated/graphql";
 
 interface Props {
   boardId: string;
@@ -7,7 +7,7 @@ interface Props {
 }
 
 type BoardContextProps = {
-  boardId: string;
+  board: Board;
   cards: Array<Card>;
   setCards: (cards: Array<Card>) => void;
   labels: Array<Label>;
@@ -27,8 +27,11 @@ const BoardContext = React.createContext<BoardContextProps>(
 export const useBoard = () => useContext(BoardContext);
 
 const Board = ({ children, boardId }: Props) => {
-  const [{ data, fetching }] = useBoardDataQuery({ variables: { boardId } });
+  const [{ data, fetching }] = useBoardDataQuery({
+    variables: { boardId: boardId },
+  });
   const [cards, setCards] = useState([]);
+  const [board, setBoard] = useState<Board>();
   const [labels, setLabels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [disabled, setDisabled] = useState(false);
@@ -36,14 +39,16 @@ const Board = ({ children, boardId }: Props) => {
 
   useEffect(() => {
     if (!fetching) {
+      data.board;
       setCards(data.cards);
       setLabels(data.labels);
+      setBoard(data.board as Board);
       setLoading(false);
     }
   }, [fetching]);
 
   const context: BoardContextProps = {
-    boardId,
+    board,
     cards,
     labels,
     setCards,

@@ -2,23 +2,26 @@ import React from "react";
 import MuiCard from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Card, StatusInput, useMoveCardMutation } from "../generated/graphql";
+import {
+  Card,
+  StatusInput,
+  useMoveCardMutation,
+} from "../../generated/graphql";
 import { makeStyles } from "@mui/styles";
-import styles from "../styles";
+import styles from "../../styles";
 import classnames from "classnames";
-import { useModal } from "../context/Modal";
-import CardDetailModal from "../components/modals/CardDetailModal";
-import Label from "../components/commons/Label";
+import { useModal } from "../../context/Modal";
+import CardDetailModal from "../../components/modals/CardDetailModal";
+import Label from "../../components/commons/Label";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { CardHeader, Divider, Stack } from "@mui/material";
-import { useBoard } from "../context/Board";
-import { useSnackbar } from "../context/Snackbar";
-import DeleteCardModal from "../components/modals/DeleteCardModal";
-import { isTooDark } from "../functions/color";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import { CardHeader, Divider } from "@mui/material";
+import { useBoard } from "../../context/Board";
+import { useSnackbar } from "../../context/Snackbar";
+import DeleteCardModal from "../../components/modals/DeleteCardModal";
+import { isTooDark } from "../../functions/color";
 
 type KanbanCardProps = {
   card: Card;

@@ -1,36 +1,31 @@
 import React from "react";
-import Layout from "../components/Layout";
 import BoardContext from "../context/Board";
-import KanbanColumns from "./KanbanColumns";
+import KanbanPage from "./Kanban/KanbanPage";
 import ModalContext from "../context/Modal";
 import SnackbarContext from "../context/Snackbar";
 import DrawerContext from "../context/Drawer";
 import { useParams } from "react-router";
 
-type KanbanPageProps = {};
+type KanbanWrapperProps = {};
 
 type BoardRouterProps = {
   id: string;
 };
 
-const KanbanPage = ({}: KanbanPageProps) => {
+const KanbanWrapper = ({}: KanbanWrapperProps) => {
   const { id } = useParams<BoardRouterProps>();
-  console.log(id);
+
   return (
-    <>
-      <BoardContext boardId={id}>
-        <DrawerContext>
-          <SnackbarContext>
-            <ModalContext>
-              <Layout>
-                <KanbanColumns />
-              </Layout>
-            </ModalContext>
-          </SnackbarContext>
-        </DrawerContext>
-      </BoardContext>
-    </>
+    <BoardContext boardId={id}>
+      <DrawerContext>
+        <SnackbarContext>
+          <ModalContext>
+            <KanbanPage />
+          </ModalContext>
+        </SnackbarContext>
+      </DrawerContext>
+    </BoardContext>
   );
 };
 
-export default KanbanPage;
+export default KanbanWrapper;

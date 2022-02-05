@@ -62,7 +62,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
   const [, updateCard] = useUpdateCardMutation();
   const [, createCard] = useCreateCardMutation();
   const { showSnackbar } = useSnackbar();
-  const { cards, setCards, boardId, setDisabled, labels } = useBoard();
+  const { cards, setCards, board, setDisabled, labels } = useBoard();
   const [autofocusTarget, setAutofocusTarget] = useState<number | undefined>();
   const [labelAutocomplete, setLabelAutocomplete] = useState("");
 
@@ -99,7 +99,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
       response.data = res.data.updateCard.card;
     } else {
       const res = await createCard({
-        boardId,
+        boardId: board.id,
         title: values.title,
         description: values.description,
         tasks: values.tasks.map((t) => ({

@@ -27,8 +27,7 @@ const LabelDetailModal = ({ label }: LabelDetailModalProps) => {
   const [, updateLabel] = useUpdateLabelMutation();
   const [, createLabel] = useCreateLabelMutation();
   const { showSnackbar } = useSnackbar();
-  const { cards, setCards, labels, setLabels, boardId, setDisabled } =
-    useBoard();
+  const { cards, setCards, labels, setLabels, board, setDisabled } = useBoard();
 
   const saveChanges = async (values: { name: string; color: string }) => {
     setDisabled(true);
@@ -46,7 +45,7 @@ const LabelDetailModal = ({ label }: LabelDetailModalProps) => {
       response.data = res.data.updateLabel.label;
     } else {
       const res = await createLabel({
-        boardId,
+        boardId: board.id,
         name: values.name,
         color: values.color,
       });
