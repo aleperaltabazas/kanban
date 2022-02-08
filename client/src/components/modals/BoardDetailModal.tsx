@@ -16,6 +16,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import { Grid, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import { useHome } from "../../context/Home";
+import { useHistory } from "react-router";
 
 type BoardDetailModalProps = {
   board?: Board;
@@ -31,6 +32,7 @@ const BoardDetailModal = ({ board }: BoardDetailModalProps) => {
   const [, createBoard] = useCreateBoardMutation();
   const { showSnackbar } = useSnackbar();
   const { boards, setBoards } = useHome();
+  const history = useHistory();
 
   const saveChanges = async (values: BoardValues) => {
     hideModal();
@@ -63,6 +65,7 @@ const BoardDetailModal = ({ board }: BoardDetailModalProps) => {
         text: text,
         actionChildren: <CheckCircleIcon style={{ color: "#23ae23" }} />,
       });
+      history.push(`/boards/${board.id}`);
     } else {
       showSnackbar({
         text: "There was an error saving your changes",
