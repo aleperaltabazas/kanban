@@ -86,12 +86,23 @@ const BoardDetailModal = ({ board }: BoardDetailModalProps) => {
       <Formik
         initialValues={{
           title: board?.title,
+          alias: board?.alias,
         }}
         validate={(values) => {
           const errors: Partial<typeof values> = {};
 
           if (!values.title) {
             errors.title = "Title is required";
+          }
+
+          if (!values.alias) {
+            errors.alias = "Alias is required";
+          }
+          if (values.alias.toLowerCase() != values.alias) {
+            errors.alias = "Alias must be lowercase";
+          }
+          if (values.alias.includes(" ")) {
+            errors.alias = "Alias cannot include spaces";
           }
 
           return errors;
@@ -102,7 +113,14 @@ const BoardDetailModal = ({ board }: BoardDetailModalProps) => {
           });
         }}
       >
-        {({ values, errors, handleChange, handleBlur, handleSubmit }) => {
+        {({
+          values,
+          errors,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          setValues,
+        }) => {
           return (
             <>
               <DialogContent>
@@ -115,10 +133,30 @@ const BoardDetailModal = ({ board }: BoardDetailModalProps) => {
                         variant="standard"
                         name="title"
                         value={values.title}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          const title = e.currentTarget.value;
+                          setValues({
+                            ...values,
+                            title: title,
+                            alias: title.replace(/\s+/g, "-").toLowerCase(),
+                          });
+                        }}
                         onBlur={handleBlur}
                         error={errors.title != undefined}
                         helperText={errors.title}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="h6">Board Alias</Typography>
+                      <TextField
+                        fullWidth
+                        variant="standard"
+                        name="alias"
+                        value={values.alias}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.alias != undefined}
+                        helperText={errors.alias}
                       />
                     </Grid>
                   </Grid>
