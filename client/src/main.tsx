@@ -7,11 +7,14 @@ import Home from "./pages/Home";
 import { Provider } from "react-redux";
 import store from "./store";
 import Header from "./components/Header";
+import { createBrowserHistory } from "history";
 
 const App = () => {
+  const history = createBrowserHistory();
+
   return (
     <Provider store={store}>
-      <Header />
+      <Header history={history} />
       <BrowserRouter>
         <Suspense fallback={<Loader />}>
           <Switch>
