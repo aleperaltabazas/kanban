@@ -9,7 +9,7 @@ import store from "./store";
 import Header from "./components/Header";
 import { createBrowserHistory } from "history";
 
-const App = () => {
+const AppWrapper = () => {
   const history = createBrowserHistory();
 
   return (
@@ -27,4 +27,4 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("main"));
+ReactDOM.render(<AppWrapper />, document.getElementById("main"));

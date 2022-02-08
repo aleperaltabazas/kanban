@@ -9,7 +9,9 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 const defaultState: RootState = {
   common: {
-    title: "Kanban",
+    screen: {
+      type: "HOME",
+    },
   },
 };
 

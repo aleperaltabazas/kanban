@@ -10,7 +10,7 @@ type HomeWrapperProps = {};
 
 const HomeWrapper = ({}: HomeWrapperProps) => {
   useEffect(() => {
-    store.dispatch({ type: UPDATE_TITLE, payload: "Kanban" });
+    store.dispatch({ type: UPDATE_TITLE, payload: { type: "HOME" } });
   }, []);
 
   return (

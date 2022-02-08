@@ -25,7 +25,11 @@ const KanbanPage = ({}: KanbanPageProps) => {
   const classes = useStyles();
 
   useEffect(() => {
-    board && store.dispatch({ type: UPDATE_TITLE, payload: board.title });
+    board &&
+      store.dispatch({
+        type: UPDATE_TITLE,
+        payload: { type: "BOARD", title: board.title },
+      });
   }, [board]);
 
   if (loading) {

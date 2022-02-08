@@ -1,20 +1,31 @@
-import { useHistory } from "react-router";
+export type Screen = HomePage | BoardPage;
+
+type HomePage = {
+  type: "HOME";
+};
+
+type BoardPage = {
+  type: "BOARD";
+  title: string;
+};
 
 export type CommonState = {
-  title: string;
+  screen: Screen;
 };
 
 export const UPDATE_TITLE = "UPDATE_TITLE";
 
-interface UpdateTitle {
+interface UpdateScreen {
   type: typeof UPDATE_TITLE;
-  payload: string;
+  payload: Screen;
 }
 
-export type CommonAction = UpdateTitle;
+export type CommonAction = UpdateScreen;
 
 const defaultCommonState: CommonState = {
-  title: "Kanban",
+  screen: {
+    type: "HOME",
+  },
 };
 
 export default function commonReducer(
@@ -23,11 +34,9 @@ export default function commonReducer(
 ) {
   switch (action.type) {
     case UPDATE_TITLE:
-      document.title = action.payload;
-
       return {
         ...state,
-        title: action.payload,
+        screen: action.payload,
       };
     default:
       return state;

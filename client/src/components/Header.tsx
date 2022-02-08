@@ -4,26 +4,42 @@ import { RootState } from "../store";
 import { connect } from "react-redux";
 import { createBrowserHistory } from "history";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Screen } from "../reducers/common";
 
 type HeaderProps = {
-  title: string;
+  screen: Screen;
   history: ReturnType<typeof createBrowserHistory>;
 };
 
-const Header = ({ title, history }: HeaderProps) => {
+const Header = ({ screen, history }: HeaderProps) => {
+  let title: string;
+
+  switch (screen.type) {
+    case "HOME":
+      title = "Kanban";
+      break;
+    case "BOARD":
+      title = screen.title;
+      break;
+  }
+
+  document.title = title;
+
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-          onClick={history.goBack}
-        >
-          <ArrowBackIcon />
-        </IconButton>
+        {screen.type != "HOME" && (
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={history.goBack}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+        )}
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           {title}
         </Typography>
@@ -65,7 +81,7 @@ const Header = ({ title, history }: HeaderProps) => {
 };
 
 const mapStateToProps = (root: RootState) => ({
-  title: root.common.title,
+  screen: root.common.screen,
 });
 
 export default connect(mapStateToProps)(Header);
