@@ -22,6 +22,11 @@ type LabelDetailModalProps = {
   label?: Label;
 };
 
+type LabelValues = {
+  name: string;
+  color: string;
+};
+
 const LabelDetailModal = ({ label }: LabelDetailModalProps) => {
   const { modalShow, hideModal } = useModal();
   const [, updateLabel] = useUpdateLabelMutation();
@@ -29,7 +34,7 @@ const LabelDetailModal = ({ label }: LabelDetailModalProps) => {
   const { showSnackbar } = useSnackbar();
   const { cards, setCards, labels, setLabels, board, setDisabled } = useBoard();
 
-  const saveChanges = async (values: { name: string; color: string }) => {
+  const saveChanges = async (values: LabelValues) => {
     setDisabled(true);
     hideModal();
 

@@ -21,6 +21,10 @@ type BoardDetailModalProps = {
   board?: Board;
 };
 
+type BoardValues = {
+  title: string;
+};
+
 const BoardDetailModal = ({ board }: BoardDetailModalProps) => {
   const { modalShow, hideModal } = useModal();
   const [, updateBoard] = useUpdateBoardMutation();
@@ -28,7 +32,7 @@ const BoardDetailModal = ({ board }: BoardDetailModalProps) => {
   const { showSnackbar } = useSnackbar();
   const { boards, setBoards } = useHome();
 
-  const saveChanges = async (values: { title: string }) => {
+  const saveChanges = async (values: BoardValues) => {
     hideModal();
 
     let response: any = {};

@@ -45,6 +45,14 @@ type CardDetailModalProps = {
   status: StatusInput;
 };
 
+type CardValues = {
+  title: string;
+  description?: string;
+  priority: number;
+  labels: Array<Label>;
+  tasks: Array<Task>;
+};
+
 const useStyles = makeStyles({
   ...baseStyles,
   labelChip: {
@@ -66,13 +74,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
   const [autofocusTarget, setAutofocusTarget] = useState<number | undefined>();
   const [labelAutocomplete, setLabelAutocomplete] = useState("");
 
-  const saveChanges = async (values: {
-    title: string;
-    description: string;
-    priority: number;
-    tasks: Task[];
-    labels: Label[];
-  }) => {
+  const saveChanges = async (values: CardValues) => {
     setDisabled(true);
     hideModal();
 

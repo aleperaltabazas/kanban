@@ -1,9 +1,8 @@
 import React from "react";
-import BoardContext from "../context/Board";
+import BoardProvider from "../context/Board";
 import KanbanPage from "./Kanban/KanbanPage";
-import ModalContext from "../context/Modal";
-import SnackbarContext from "../context/Snackbar";
-import DrawerContext from "../context/Drawer";
+import ModalProvider from "../context/Modal";
+import SnackbarProvider from "../context/Snackbar";
 import { useParams } from "react-router";
 
 type KanbanWrapperProps = {};
@@ -16,15 +15,13 @@ const KanbanWrapper = ({}: KanbanWrapperProps) => {
   const { id } = useParams<BoardRouterProps>();
 
   return (
-    <BoardContext boardId={id}>
-      <DrawerContext>
-        <SnackbarContext>
-          <ModalContext>
-            <KanbanPage />
-          </ModalContext>
-        </SnackbarContext>
-      </DrawerContext>
-    </BoardContext>
+    <BoardProvider boardId={id}>
+      <SnackbarProvider>
+        <ModalProvider>
+          <KanbanPage />
+        </ModalProvider>
+      </SnackbarProvider>
+    </BoardProvider>
   );
 };
 
