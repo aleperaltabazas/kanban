@@ -22,6 +22,7 @@ import { useBoard } from "../../context/Board";
 import { useSnackbar } from "../../context/Snackbar";
 import DeleteCardModal from "../../components/modals/DeleteCardModal";
 import { isTooDark } from "../../functions/color";
+import { DateTime } from "luxon";
 
 type KanbanCardProps = {
   card: Card;
@@ -190,6 +191,18 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
           >
             Tasks: {card.tasks.filter((c) => c.completed).length}/
             {card.tasks.length}
+          </Typography>
+        )}
+        {card.status.__typename == "Done" && (
+          <Typography
+            variant="caption"
+            display="block"
+            sx={{ marginBottom: "5px" }}
+          >
+            Finished:{" "}
+            {DateTime.fromISO(card.status.completionDate).toLocaleString(
+              DateTime.DATETIME_MED
+            )}
           </Typography>
         )}
         <Typography
