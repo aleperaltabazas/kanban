@@ -1,5 +1,7 @@
 package com.github.aleperaltabazas.kanban.resolver.mutation
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.aleperaltabazas.kanban.constants.MAP_REF
 import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.domain.Card
 import com.github.aleperaltabazas.kanban.domain.Status
@@ -18,11 +20,13 @@ import com.mongodb.client.model.Updates.set
 import graphql.kickstart.tools.GraphQLMutationResolver
 import graphql.schema.DataFetchingEnvironment
 import org.bson.Document
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 
 @Component
 class CardMutation(
     private val dao: CardDAO,
+    @Qualifier("objectMapperSnakeCase") private val objectMapper: ObjectMapper,
 ) : GraphQLMutationResolver {
     fun createCard(input: CreateCardInput): CreateCardPayload = CreateCardPayload(
         Card(input = input).also { dao.insert(it) }
@@ -35,7 +39,12 @@ class CardMutation(
                 set("title", input.title),
                 set("description", input.description),
                 set("priority", input.priority),
-                input.status?.let { set("status", Status(it)) } ?: Document(),
+                input.status?.let {
+                    set(
+                        "status",
+                        objectMapper.convertValue(Status(it), MAP_REF),
+                    )
+                } ?: Document(),
                 set("tasks", input.tasks),
                 set("labels", input.labels),
             ),
@@ -49,8 +58,9 @@ class CardMutation(
     fun moveCard(input: MoveCardInput, environment: DataFetchingEnvironment): MoveCardPayload {
         val card = dao.update(
             id = input.id,
-            changes = combine(
-                set("status", Status(input.to)),
+            changes = set(
+                "status",
+                objectMapper.convertValue(Status(input.to), MAP_REF),
             ),
             selectedFields = environment.cardSelectionSet(),
         )

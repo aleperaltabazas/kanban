@@ -2,6 +2,7 @@ package com.github.aleperaltabazas.kanban.dao
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.aleperaltabazas.kanban.constants.MAP_REF
 import com.github.aleperaltabazas.kanban.domain.Entity
 import com.github.aleperaltabazas.kanban.extension.and
 import com.github.aleperaltabazas.kanban.extension.eq
@@ -74,8 +75,4 @@ abstract class DAO<T : Entity>(
 
     protected open fun deserialize(it: Document): T = objectMapper.convertValue(it, ref)
     protected open fun serialize(input: Any): Document = Document(objectMapper.convertValue(input, MAP_REF))
-
-    companion object {
-        private val MAP_REF = object : TypeReference<Map<String, Any?>>() {}
-    }
 }
