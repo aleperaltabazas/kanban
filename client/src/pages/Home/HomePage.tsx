@@ -1,21 +1,15 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import Loader from "../../components/commons/Loader";
 import { useHome } from "../../context/Home";
 import baseStyles from "../../styles";
 import classnames from "classnames";
 import { makeStyles } from "@mui/styles";
-import AddIcon from "@mui/icons-material/Add";
 import BoardCard from "./BoardCard";
 import { useModal } from "../../context/Modal";
 import BoardDetailModal from "../../components/modals/BoardDetailModal";
+import { DateTime } from "luxon";
+import { compareLuxonDates } from "../../functions/date";
 
 type HomePageProps = {};
 
@@ -55,11 +49,19 @@ const HomePage = ({}: HomePageProps) => {
         </Grid>
       </Grid>
       <Grid container spacing={10}>
-        {boards.map((b) => (
-          <Grid item xs={12} md={4} key={b.id}>
-            <BoardCard board={b} />
-          </Grid>
-        ))}
+        {boards
+          .sort(
+            (b1, b2) =>
+              compareLuxonDates(
+                DateTime.fromISO(b1.lastUpdated),
+                DateTime.fromISO(b2.lastUpdated)
+              ) * -1
+          )
+          .map((b) => (
+            <Grid item xs={12} md={4} key={b.id}>
+              <BoardCard board={b} />
+            </Grid>
+          ))}
       </Grid>
     </Container>
   );
