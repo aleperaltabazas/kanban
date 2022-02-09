@@ -35,7 +35,7 @@ const HomePage = ({}: HomePageProps) => {
             <BoardCard board={b} />
           </Grid>
         ))}
-        <Grid item xs={4} key="new">
+        <Grid item xs={4} key="new" className="cursor-pointer">
           <Card onClick={() => showModal(<BoardDetailModal />)}>
             <CardContent>
               <Typography variant="h5">

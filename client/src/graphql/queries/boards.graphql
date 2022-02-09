@@ -3,5 +3,6 @@ query Boards {
     id
     title
     alias
+    lastUpdated
   }
 }

@@ -1,5 +1,6 @@
 type Board {
     id: ID!
+    lastUpdated: String!
     title: String!
     alias: String!
 }

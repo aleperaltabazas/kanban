@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { createBrowserHistory } from "history";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Screen } from "../reducers/common";
+import { Link } from "react-router-dom";
 
 type HeaderProps = {
   screen: Screen;

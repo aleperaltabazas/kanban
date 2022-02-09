@@ -1,4 +1,12 @@
-import { Card, CardHeader, IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import { Board } from "../../generated/graphql";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -9,6 +17,7 @@ import DeleteBoardModal from "../../components/modals/DeleteBoardModal";
 import { makeStyles } from "@mui/styles";
 import baseStyles from "../../styles";
 import BoardDetailModal from "../../components/modals/BoardDetailModal";
+import { DateTime } from "luxon";
 
 type BoardCardProps = {
   board: Board;
@@ -86,10 +95,18 @@ const BoardCard = ({ board }: BoardCardProps) => {
             to={`/boards/${board.id}`}
             className={classNames("normalize-link", "h-100", "d-block")}
           >
-            {board.title}
+            <Typography variant="h6">{board.title}</Typography>
           </Link>
         }
       />
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          Last updated:{" "}
+          {DateTime.fromISO(board.lastUpdated).toLocaleString(
+            DateTime.DATETIME_MED
+          )}
+        </Typography>
+      </CardContent>
     </Card>
   );
 };
