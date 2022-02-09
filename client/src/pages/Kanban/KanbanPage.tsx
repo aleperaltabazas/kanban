@@ -34,7 +34,7 @@ const KanbanPage = ({}: KanbanPageProps) => {
 
   if (loading) {
     return (
-      <div className="h-100 w-100 center">
+      <div className="h-100 w-100 d-flex center">
         <Loader />
       </div>
     );

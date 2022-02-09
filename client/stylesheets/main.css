@@ -3,22 +3,19 @@ body {
 }
 
 html {
-  background-color: #bbbbbb;
+  background-color: #cccccc;
 }
 
 .center {
-  display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .center-v {
-  display: flex;
   align-items: center;
 }
 
 .center-h {
-  display: flex;
   justify-content: center;
 }
 
@@ -85,4 +82,12 @@ html {
 
 .d-block {
   display: block;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-end {
+  justify-content: end;
 }

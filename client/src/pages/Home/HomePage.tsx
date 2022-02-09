@@ -1,4 +1,11 @@
-import { Card, CardContent, Container, Grid, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import Loader from "../../components/commons/Loader";
 import { useHome } from "../../context/Home";
@@ -21,7 +28,7 @@ const HomePage = ({}: HomePageProps) => {
 
   if (loading) {
     return (
-      <div className="h-100 w-100 center">
+      <div className="h-100 w-100 d-flex center">
         <Loader />
       </div>
     );
@@ -29,21 +36,30 @@ const HomePage = ({}: HomePageProps) => {
 
   return (
     <Container className={classnames(classes.mt4)}>
+      <Grid container justifyContent={"space-between"} className={classes.mb3}>
+        <Grid item xs={6}>
+          <Typography variant="h4">Boards</Typography>
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          justifyContent="flex-end"
+          className="d-flex center-v justify-content-end"
+        >
+          <Button
+            variant="contained"
+            onClick={() => showModal(<BoardDetailModal />)}
+          >
+            New board
+          </Button>
+        </Grid>
+      </Grid>
       <Grid container spacing={10}>
         {boards.map((b) => (
-          <Grid item xs={4} key={b.id}>
+          <Grid item xs={12} md={4} key={b.id}>
             <BoardCard board={b} />
           </Grid>
         ))}
-        <Grid item xs={4} key="new" className="cursor-pointer">
-          <Card onClick={() => showModal(<BoardDetailModal />)}>
-            <CardContent>
-              <Typography variant="h5">
-                <AddIcon />
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
       </Grid>
     </Container>
   );

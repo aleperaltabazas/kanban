@@ -18,7 +18,7 @@ type ColumnProps = {
 
 const useStyles = makeStyles({
   column: {
-    backgroundColor: "#efefef",
+    backgroundColor: "#ececec",
   },
   cards: {
     overflow: "auto",
@@ -53,7 +53,7 @@ const Column = ({ title, moveTo, cards, status }: ColumnProps) => {
         <Grid
           item
           xs={6}
-          className="center-v"
+          className="d-flex center-v"
           style={{ justifyContent: "flex-end", paddingBottom: 8 }}
         >
           <AddIcon

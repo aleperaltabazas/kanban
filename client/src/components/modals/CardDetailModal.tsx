@@ -289,7 +289,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
                             color={isTooDark(l.color) ? "white" : null}
                             className={classnames(
                               classes.labelChip,
-                              "center",
+                              "d-flex center",
                               "cursor-pointer"
                             )}
                             onClick={() =>
