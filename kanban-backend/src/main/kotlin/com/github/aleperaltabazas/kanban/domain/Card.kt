@@ -24,7 +24,7 @@ data class Card(
         priority = input.priority,
         status = Status(input.status),
         tasks = input.tasks.map { Task(it) },
-        labels = input.labels.map { Label(input.boardId, it) },
+        labels = input.labels.map { Label(it) },
     )
 }
 

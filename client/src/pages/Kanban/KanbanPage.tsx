@@ -82,7 +82,7 @@ const KanbanPage = ({}: KanbanPageProps) => {
       )}
     >
       <Grid item xs={3} sx={{ background: "white" }}>
-        <List className={classnames("h-100", classes.pt3)}>
+        <List className={classnames("h-100", classes.pt2)}>
           <ListItem key={"all"} disablePadding>
             <ListItemButton dense onClick={clearLabelFilters}>
               <ListItemIcon>

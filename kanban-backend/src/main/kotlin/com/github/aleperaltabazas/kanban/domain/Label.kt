@@ -10,9 +10,9 @@ data class Label(
     val name: String?,
     val color: String?,
 ) : Entity {
-    constructor(boardId: UUID, input: LabelInput) : this(
+    constructor(input: LabelInput) : this(
         id = input.id,
-        boardId = boardId,
+        boardId = null,
         name = input.name,
         color = input.color,
     )

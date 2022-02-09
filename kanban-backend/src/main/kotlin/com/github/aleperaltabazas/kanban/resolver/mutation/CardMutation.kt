@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.aleperaltabazas.kanban.constants.MAP_REF
 import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.domain.Card
+import com.github.aleperaltabazas.kanban.domain.Label
 import com.github.aleperaltabazas.kanban.domain.Status
+import com.github.aleperaltabazas.kanban.domain.Task
 import com.github.aleperaltabazas.kanban.exception.NotFoundException
 import com.github.aleperaltabazas.kanban.extension.cardSelectionSet
 import com.github.aleperaltabazas.kanban.input.CreateCardInput
@@ -45,8 +47,18 @@ class CardMutation(
                         objectMapper.convertValue(Status(it), MAP_REF),
                     )
                 } ?: Document(),
-                set("tasks", input.tasks),
-                set("labels", input.labels),
+                set(
+                    "tasks",
+                    input.tasks.map {
+                        objectMapper.convertValue(Task(it), MAP_REF)
+                    },
+                ),
+                set(
+                    "labels",
+                    input.labels.map {
+                        objectMapper.convertValue(Label(it), MAP_REF)
+                    },
+                ),
             ),
             selectedFields = environment.cardSelectionSet(),
         )
