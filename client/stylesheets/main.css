@@ -91,3 +91,11 @@ html {
 .justify-content-end {
   justify-content: end;
 }
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}

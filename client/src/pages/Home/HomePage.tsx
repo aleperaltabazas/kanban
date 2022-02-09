@@ -30,7 +30,7 @@ const HomePage = ({}: HomePageProps) => {
 
   return (
     <Container className={classnames(classes.mt4)}>
-      <Grid container justifyContent={"space-between"} className={classes.mb3}>
+      <Grid container justifyContent={"space-between"}>
         <Grid item xs={6}>
           <Typography variant="h4">Boards</Typography>
         </Grid>
