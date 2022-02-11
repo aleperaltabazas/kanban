@@ -6,7 +6,6 @@ import com.github.aleperaltabazas.kanban.domain.Card
 import com.github.aleperaltabazas.kanban.domain.Label
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.eq
-import com.mongodb.client.model.Updates
 import com.mongodb.client.model.Updates.*
 import org.bson.Document
 

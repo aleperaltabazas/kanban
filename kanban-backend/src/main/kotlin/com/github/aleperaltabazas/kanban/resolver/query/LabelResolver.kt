@@ -14,7 +14,7 @@ import java.util.*
 class LabelResolver(
     private val dao: LabelDAO,
 ) : GraphQLQueryResolver {
-    fun labels(boardId: UUID, environment: DataFetchingEnvironment): List<Label> = dao.findAll(
+    fun labels(boardId: UUID, boardAlias: String?, environment: DataFetchingEnvironment): List<Label> = dao.findAll(
         filter = "board_id" eq boardId.toString(),
         selectedFields = environment.labelSelectionSet(),
     )

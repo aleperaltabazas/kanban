@@ -15,10 +15,18 @@ import java.util.*
 class BoardResolver(
     private val boardDao: BoardDAO,
 ) : GraphQLQueryResolver {
-    fun board(id: UUID, environment: DataFetchingEnvironment): Board? = boardDao.findByID(
-        id = id,
-        selectedFields = environment.boardSelectionSet(),
-    )
+    fun board(id: UUID?, alias: String?, environment: DataFetchingEnvironment): Board? = when {
+        id != null ->
+            boardDao.findByID(
+                id = id,
+                selectedFields = environment.boardSelectionSet(),
+            )
+        alias != null -> boardDao.findOneBy(
+            filter = "alias" eq alias,
+            selectedFields = environment.boardSelectionSet(),
+        )
+        else -> throw IllegalArgumentException("Both 'id' and 'alias' can't be null simultaneously")
+    }
 
     fun boards(environment: DataFetchingEnvironment): List<Board> = boardDao.findAll(
         filter = not("deleted" eq true) and not("deleted" eq true),

@@ -1,7 +1,7 @@
 type Query {
     card(id: ID!): Card!
-    cards(boardId: ID!): [Card!]!
-    labels(boardId: ID!): [Label!]!
-    board(id: ID!): Board!
+    cards(boardId: ID = null, boardAlias: String = null): [Card!]!
+    labels(boardId: ID = null, boardAlias: String = null): [Label!]!
+    board(id: ID = null, alias: String = null): Board!
     boards: [Board!]!
 }

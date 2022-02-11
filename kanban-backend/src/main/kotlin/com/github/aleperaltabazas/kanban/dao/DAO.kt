@@ -21,15 +21,21 @@ abstract class DAO<T : Entity>(
     protected val coll: MongoCollection<Document>,
     protected val objectMapper: ObjectMapper,
     private val ref: TypeReference<T>,
-) {
+) : MongoCollection<Document> by coll {
     private val notDeleted = not(eq("deleted", true))
 
     fun findByID(
         id: UUID,
         selectedFields: List<String> = emptyList(),
-    ): T? = coll.find(
+    ): T? = findOneBy(
         "id" eq id.toString() and notDeleted,
+        selectedFields,
     )
+
+    fun findOneBy(
+        filter: Bson,
+        selectedFields: List<String> = emptyList(),
+    ): T? = coll.find(filter)
         .limit(1)
         .projection(include(selectedFields))
         .firstOrNull()
@@ -73,6 +79,6 @@ abstract class DAO<T : Entity>(
         coll.replaceOne(eq("id", input.id!!.toString()), serialize(input))
     }
 
-    protected open fun deserialize(it: Document): T = objectMapper.convertValue(it, ref)
-    protected open fun serialize(input: Any): Document = Document(objectMapper.convertValue(input, MAP_REF))
+    open fun deserialize(it: Document): T = objectMapper.convertValue(it, ref)
+    open fun serialize(input: Any): Document = Document(objectMapper.convertValue(input, MAP_REF))
 }
