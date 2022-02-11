@@ -15,6 +15,8 @@ import com.mongodb.client.model.Updates.set
 import graphql.kickstart.tools.GraphQLMutationResolver
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.stereotype.Component
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Component
 class BoardMutation(
@@ -34,6 +36,7 @@ class BoardMutation(
             id = input.id,
             changes = combine(
                 set("title", input.title),
+                set("last_updated", LocalDateTime.now()),
             ),
             selectedFields = environment.boardSelectionSet(),
         )

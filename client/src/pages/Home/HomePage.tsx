@@ -48,7 +48,7 @@ const HomePage = ({}: HomePageProps) => {
           </Button>
         </Grid>
       </Grid>
-      <Grid container spacing={10}>
+      <Grid container spacing={10} className={classes.pt1}>
         {boards
           .sort(
             (b1, b2) =>

@@ -36,7 +36,7 @@ const Header = ({ screen, history }: HeaderProps) => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={history.goBack}
+            onClick={() => history.push("/")}
           >
             <ArrowBackIcon />
           </IconButton>

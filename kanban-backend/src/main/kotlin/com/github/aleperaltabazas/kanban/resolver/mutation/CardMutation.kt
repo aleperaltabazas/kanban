@@ -2,6 +2,7 @@ package com.github.aleperaltabazas.kanban.resolver.mutation
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.aleperaltabazas.kanban.constants.MAP_REF
+import com.github.aleperaltabazas.kanban.dao.BoardDAO
 import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.domain.Card
 import com.github.aleperaltabazas.kanban.domain.Label
@@ -27,15 +28,19 @@ import org.springframework.stereotype.Component
 
 @Component
 class CardMutation(
-    private val dao: CardDAO,
+    private val cardDao: CardDAO,
+    private val boardDao: BoardDAO,
     @Qualifier("objectMapperSnakeCase") private val objectMapper: ObjectMapper,
 ) : GraphQLMutationResolver {
     fun createCard(input: CreateCardInput): CreateCardPayload = CreateCardPayload(
-        Card(input = input).also { dao.insert(it) }
+        Card(input = input).also {
+            cardDao.insert(it)
+            boardDao.updateBoardLastUpdated(boardId = input.boardId)
+        }
     )
 
     fun updateCard(input: UpdateCardInput, environment: DataFetchingEnvironment): UpdateCardPayload {
-        val card = dao.update(
+        val card = cardDao.update(
             id = input.id,
             changes = combine(
                 set("title", input.title),
@@ -60,32 +65,38 @@ class CardMutation(
                     },
                 ),
             ),
-            selectedFields = environment.cardSelectionSet(),
+            selectedFields = environment.cardSelectionSet() + "board_id",
         )
             ?: throw NotFoundException("No card found with ID ${input.id}")
+
+        boardDao.updateBoardLastUpdated(boardId = card.boardId!!)
 
         return UpdateCardPayload(card)
     }
 
     fun moveCard(input: MoveCardInput, environment: DataFetchingEnvironment): MoveCardPayload {
-        val card = dao.update(
+        val card = cardDao.update(
             id = input.id,
             changes = set(
                 "status",
                 objectMapper.convertValue(Status(input.to), MAP_REF),
             ),
-            selectedFields = environment.cardSelectionSet(),
+            selectedFields = environment.cardSelectionSet() + "board_id",
         )
             ?: throw NotFoundException("No card found with ID ${input.id}")
+
+        boardDao.updateBoardLastUpdated(boardId = card.boardId!!)
 
         return MoveCardPayload(card)
     }
 
     fun deleteCard(input: DeleteCardInput): DeleteCardPayload {
-        val card = dao.delete(
+        val card = cardDao.delete(
             id = input.id,
-            selectedFields = listOf("id"),
+            selectedFields = listOf("id", "board_id"),
         ) ?: throw NotFoundException("No card found with ID ${input.id}")
+
+        boardDao.updateBoardLastUpdated(boardId = card.boardId!!)
 
         return DeleteCardPayload(
             card.id,

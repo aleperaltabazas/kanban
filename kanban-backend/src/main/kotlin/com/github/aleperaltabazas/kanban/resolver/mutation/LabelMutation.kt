@@ -1,5 +1,6 @@
 package com.github.aleperaltabazas.kanban.resolver.mutation
 
+import com.github.aleperaltabazas.kanban.dao.BoardDAO
 import com.github.aleperaltabazas.kanban.dao.CardDAO
 import com.github.aleperaltabazas.kanban.dao.LabelDAO
 import com.github.aleperaltabazas.kanban.domain.Label
@@ -21,9 +22,13 @@ import org.springframework.stereotype.Component
 class LabelMutation(
     private val labelDao: LabelDAO,
     private val cardsDao: CardDAO,
+    private val boardDao: BoardDAO,
 ) : GraphQLMutationResolver {
     fun createLabel(input: CreateLabelInput): CreateLabelPayload = CreateLabelPayload(
-        Label(input).also { labelDao.insert(it) }
+        Label(input).also {
+            labelDao.insert(it)
+            boardDao.updateBoardLastUpdated(boardId = input.boardId)
+        }
     )
 
     fun updateLabel(input: UpdateLabelInput, environment: DataFetchingEnvironment): UpdateLabelPayload {
@@ -33,11 +38,12 @@ class LabelMutation(
                 set("name", input.name),
                 set("color", input.color),
             ),
-            selectedFields = environment.labelSelectionSet(),
+            selectedFields = environment.labelSelectionSet() + "board_id",
         )
             ?: throw NotFoundException("No label found with ID ${input.id}")
 
         cardsDao.updateCardLabels(label)
+        boardDao.updateBoardLastUpdated(boardId = label.boardId!!)
 
         return UpdateLabelPayload(
             label.copy(
@@ -48,8 +54,13 @@ class LabelMutation(
     }
 
     fun deleteLabel(input: DeleteLabelInput): DeleteLabelPayload {
-        val label = labelDao.delete(input.id) ?: throw NotFoundException("No label found with ID ${input.id}")
+        val label = labelDao.delete(
+            id = input.id,
+            selectedFields = listOf("id", "board_id")
+        ) ?: throw NotFoundException("No label found with ID ${input.id}")
+
         cardsDao.deleteCardLabels(label)
+        boardDao.updateBoardLastUpdated(boardId = label.boardId!!)
 
         return DeleteLabelPayload(
             id = label.id,

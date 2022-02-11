@@ -28,7 +28,12 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 type KanbanPageProps = {};
 
-const useStyles = makeStyles({ ...styles });
+const useStyles = makeStyles({
+  ...styles,
+  height320: {
+    height: "320px",
+  },
+});
 
 const KanbanPage = ({}: KanbanPageProps) => {
   const {
@@ -81,8 +86,14 @@ const KanbanPage = ({}: KanbanPageProps) => {
         disabled ? classes.disabled : undefined
       )}
     >
-      <Grid item xs={3} sx={{ background: "white" }}>
-        <List className={classnames("h-100", classes.pt2)}>
+      <Grid className="h-100" item xs={2} sx={{ background: "white" }}>
+        <List
+          className={classnames(
+            classes.pt2,
+            classes.height320,
+            "overflow-scroll"
+          )}
+        >
           <ListItem key={"all"} disablePadding>
             <ListItemButton dense onClick={clearLabelFilters}>
               <ListItemIcon>
@@ -94,8 +105,10 @@ const KanbanPage = ({}: KanbanPageProps) => {
           {labels.map((label) => (
             <LabelListItem label={label} />
           ))}
-          <Divider />
-          <ListItem button key="new-task" onClick={handleNewLabel}>
+        </List>
+        <Divider />
+        <List onClick={handleNewLabel}>
+          <ListItem button>
             <ListItemIcon>
               <AddCircleIcon />
             </ListItemIcon>
@@ -103,7 +116,7 @@ const KanbanPage = ({}: KanbanPageProps) => {
           </ListItem>
         </List>
       </Grid>
-      <Grid item xs={9} className="h-100" sx={{ overflow: "auto" }}>
+      <Grid item xs={10} className="h-100" sx={{ overflow: "auto" }}>
         <Container className={classnames("h-100")} maxWidth="xl">
           <Stack
             spacing={2}

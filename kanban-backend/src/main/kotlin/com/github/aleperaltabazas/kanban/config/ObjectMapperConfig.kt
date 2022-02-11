@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.github.aleperaltabazas.kanban.json.localDateTimeModule
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -32,7 +32,8 @@ class ObjectMapperConfig {
             AfterburnerModule(),
             KotlinModule.Builder().build(),
             Jdk8Module(),
-            JavaTimeModule(),
+            localDateTimeModule,
         )
+        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         .build()
 }
