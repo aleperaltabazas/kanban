@@ -10,6 +10,7 @@ import com.mongodb.client.model.Filters.not
 import graphql.kickstart.tools.GraphQLQueryResolver
 import graphql.schema.DataFetchingEnvironment
 import org.bson.Document
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -24,19 +25,29 @@ class CardResolver(
     )
 
     fun cards(boardId: UUID?, boardAlias: String?, environment: DataFetchingEnvironment): List<Card> = when {
-        boardId != null ->
+        boardId != null -> {
+            LOGGER.info("Fetch cards by id $boardId")
             cardDao.findAll(
                 filter = "board_id" eq boardId.toString() and not("deleted" eq true),
                 selectedFields = environment.cardSelectionSet(),
             )
-        boardAlias != null -> boardDao.lookup(
-            alias = boardAlias,
-            lookupTo = "cards",
-            selectedFields = environment.cardSelectionSet(),
-        )
-            .map { cardDao.deserialize((it["cards"] as? Document)!!) }
-            .toList()
+        }
+
+        boardAlias != null -> {
+            LOGGER.info("Fetch cards by alias $boardAlias")
+            boardDao.lookup(
+                alias = boardAlias,
+                lookupTo = "cards",
+                selectedFields = environment.cardSelectionSet(),
+            )
+                .map { cardDao.deserialize((it["cards"] as? Document)!!) }
+                .toList()
+        }
 
         else -> throw IllegalArgumentException("Both 'boardId' and 'boardAlias' can't be null simultaneously")
+    }
+
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(CardResolver::class.java)
     }
 }

@@ -92,7 +92,7 @@ const BoardCard = ({ board }: BoardCardProps) => {
         }
         title={
           <Link
-            to={`/boards/${board.id}`}
+            to={{ pathname: `/boards/${board.alias}`, state: { id: board.id } }}
             className={classNames("normalize-link", "h-100", "d-block")}
           >
             <Typography variant="h6">{board.title}</Typography>

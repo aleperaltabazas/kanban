@@ -19,7 +19,7 @@ const AppWrapper = () => {
         <Suspense fallback={<Loader />}>
           <Switch>
             <Route exact path={["/", ""]} component={Home} />
-            <Route exact path={["/boards/:id"]} component={Kanban} />
+            <Route exact path={["/boards/:alias"]} component={Kanban} />
           </Switch>
         </Suspense>
       </Router>
