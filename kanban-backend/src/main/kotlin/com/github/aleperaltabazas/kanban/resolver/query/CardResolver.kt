@@ -6,7 +6,6 @@ import com.github.aleperaltabazas.kanban.domain.Card
 import com.github.aleperaltabazas.kanban.extension.and
 import com.github.aleperaltabazas.kanban.extension.cardSelectionSet
 import com.github.aleperaltabazas.kanban.extension.eq
-import com.mongodb.client.model.Aggregates.*
 import com.mongodb.client.model.Filters.not
 import graphql.kickstart.tools.GraphQLQueryResolver
 import graphql.schema.DataFetchingEnvironment
@@ -30,26 +29,10 @@ class CardResolver(
                 filter = "board_id" eq boardId.toString() and not("deleted" eq true),
                 selectedFields = environment.cardSelectionSet(),
             )
-        boardAlias != null -> boardDao.aggregate(
-            listOf(
-                match(
-                    "alias" eq boardAlias
-                ),
-                limit(1),
-                lookup(
-                    "cards",
-                    "id",
-                    "board_id",
-                    "cards",
-                ),
-                unwind("\$cards"),
-                project(
-                    Document(
-                        environment.cardSelectionSet()
-                            .map { "cards.$it" }
-                            .associateWith { 1 })
-                )
-            )
+        boardAlias != null -> boardDao.lookup(
+            alias = boardAlias,
+            lookupTo = "cards",
+            selectedFields = environment.cardSelectionSet(),
         )
             .map { cardDao.deserialize((it["cards"] as? Document)!!) }
             .toList()
