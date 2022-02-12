@@ -1,5 +1,5 @@
-query Labels {
-  labels {
+query Labels($boardId: ID, $boardAlias: String) {
+  labels(boardId: $boardId, boardAlias: $boardAlias) {
     ...RegularLabel
   }
 }

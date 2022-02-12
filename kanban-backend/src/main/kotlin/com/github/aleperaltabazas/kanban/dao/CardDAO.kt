@@ -6,8 +6,7 @@ import com.github.aleperaltabazas.kanban.domain.Card
 import com.github.aleperaltabazas.kanban.domain.Label
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.eq
-import com.mongodb.client.model.Updates
-import com.mongodb.client.model.Updates.set
+import com.mongodb.client.model.Updates.*
 import org.bson.Document
 
 class CardDAO(
@@ -15,10 +14,9 @@ class CardDAO(
     objectMapper: ObjectMapper,
 ) : DAO<Card>(cards, objectMapper, CARD_REF) {
     fun updateCardLabels(label: Label) {
-
         coll.updateMany(
-            eq("labels.id", label.id.toString()),
-            Updates.combine(
+            eq("labels.id", label.id!!.toString()),
+            combine(
                 set("labels.$.name", label.name),
                 set("labels.$.color", label.color),
             )
@@ -27,8 +25,8 @@ class CardDAO(
 
     fun deleteCardLabels(label: Label) {
         coll.updateMany(
-            eq("labels.id", label.id.toString()),
-            Updates.pull(
+            eq("labels.id", label.id!!.toString()),
+            pull(
                 "labels",
                 eq("id", label.id.toString()),
             ),

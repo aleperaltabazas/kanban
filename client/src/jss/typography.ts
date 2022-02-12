@@ -20,6 +20,10 @@ const typography = createStyles({
   textWhite: {
     color: "white",
   },
+  delete: {
+    color: "#e61d1d",
+    fontWeight: 420,
+  },
 });
 
 export default typography;

@@ -1,4 +1,4 @@
-<html class="h-100 w-100">
+<html class="h-100 w-100 overflow-hidden">
 <head>
     <meta charset="utf-8">
     <meta name="viewport"
@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 </head>
 <body class="h-100 w-100">
-<header>
-</header>
 <div id="main" class="h-100 w-100">
 </div>
 <script type="text/javascript" src="/kanban/versions/${version}/build/vendor.chunk.bundle.js"></script>

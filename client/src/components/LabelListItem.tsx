@@ -14,14 +14,20 @@ import LabelDetailModal from "./modals/LabelDetailModal";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import LabelIcon from "@mui/icons-material/Label";
 import DeleteLabelModal from "./modals/DeleteLabelModal";
+import classnames from "classnames";
+import styles from "../styles";
+import { makeStyles } from "@mui/styles";
 
 type LabelListItemProps = {
   label: Label;
 };
 
+const useStyles = makeStyles({ ...styles });
+
 const LabelListItem = ({ label }: LabelListItemProps) => {
   const { selectedLabels, setSelectedLabels } = useBoard();
   const { showModal } = useModal();
+  const classes = useStyles();
 
   const selectLabel = () => {
     if (selectedLabels.includes(label.id)) {

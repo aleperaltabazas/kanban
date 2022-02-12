@@ -1,0 +1,11 @@
+type CreateBoardPayload {
+    board: Board!
+}
+
+type UpdateBoardPayload {
+    board: Board!
+}
+
+type DeleteBoardPayload {
+    id: ID!
+}

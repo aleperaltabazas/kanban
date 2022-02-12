@@ -1,0 +1,13 @@
+query BoardData($boardId: ID, $boardAlias: String) {
+  cards(boardId: $boardId, boardAlias: $boardAlias) {
+    ...RegularCard
+  }
+  labels(boardId: $boardId, boardAlias: $boardAlias) {
+    ...RegularLabel
+  }
+  board(id: $boardId, alias: $boardAlias) {
+    id
+    title
+    alias
+  }
+}

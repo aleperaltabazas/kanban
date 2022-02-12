@@ -17,7 +17,7 @@ type Style = {
 };
 
 const toStyleString = (s: Style) =>
-  `${s.className}:{${s.style.key}:"${s.style.value}"}`;
+  `${s.className}: { ${s.style.key}: "${s.style.value}" }`;
 
 function generate(property: string) {
   const styles = [1, 2, 3, 4, 5]
@@ -35,15 +35,18 @@ function generate(property: string) {
         } as Style;
       })
     )
-    .reduce((acc, next) => `${acc}${toStyleString(next)},`, "");
+    .map(toStyleString)
+    .join(",\n  ");
 
   return `
 import { createStyles } from "@mui/styles";
 
-const ${property} = createStyles({${styles.toString()}});
+const ${property} = createStyles({
+  ${styles.toString()}
+});
 
 export default ${property};
-    `;
+    `.trim();
 }
 
 const paddings = generate("padding");

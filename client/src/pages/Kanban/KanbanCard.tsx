@@ -2,23 +2,27 @@ import React from "react";
 import MuiCard from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Card, StatusInput, useMoveCardMutation } from "../generated/graphql";
+import {
+  Card,
+  StatusInput,
+  useMoveCardMutation,
+} from "../../generated/graphql";
 import { makeStyles } from "@mui/styles";
-import styles from "../styles";
+import styles from "../../styles";
 import classnames from "classnames";
-import { useModal } from "../context/Modal";
-import CardDetailModal from "../components/modals/CardDetailModal";
-import Label from "../components/commons/Label";
+import { useModal } from "../../context/Modal";
+import CardDetailModal from "../../components/modals/CardDetailModal";
+import Label from "../../components/commons/Label";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { CardHeader, Divider, Stack } from "@mui/material";
-import { useBoard } from "../context/Board";
-import { useSnackbar } from "../context/Snackbar";
-import DeleteCardModal from "../components/modals/DeleteCardModal";
-import { isTooDark } from "../functions/color";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import { CardHeader, Divider } from "@mui/material";
+import { useBoard } from "../../context/Board";
+import { useSnackbar } from "../../context/Snackbar";
+import DeleteCardModal from "../../components/modals/DeleteCardModal";
+import { isTooDark } from "../../functions/color";
+import { DateTime } from "luxon";
 
 type KanbanCardProps = {
   card: Card;
@@ -30,10 +34,6 @@ const useStyles = makeStyles({
   ...styles,
   labels: {
     overflow: "hidden",
-  },
-  delete: {
-    color: "#e61d1d",
-    fontWeight: 420,
   },
   cardHeader: {
     WebkitLineClamp: "1",
@@ -191,6 +191,18 @@ const KanbanCard = ({ card, moveTo, status }: KanbanCardProps) => {
           >
             Tasks: {card.tasks.filter((c) => c.completed).length}/
             {card.tasks.length}
+          </Typography>
+        )}
+        {card.status.__typename == "Done" && (
+          <Typography
+            variant="caption"
+            display="block"
+            sx={{ marginBottom: "5px" }}
+          >
+            Finished:{" "}
+            {DateTime.fromISO(card.status.completionDate).toLocaleString(
+              DateTime.DATETIME_MED
+            )}
           </Typography>
         )}
         <Typography

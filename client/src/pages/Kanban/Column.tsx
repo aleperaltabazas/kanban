@@ -1,13 +1,13 @@
 import { Container, Grid, Typography, Stack } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
-import { Card, StatusInput } from "../generated/graphql";
+import { Card, StatusInput } from "../../generated/graphql";
 import classnames from "classnames";
 import KanbanCard from "./KanbanCard";
-import baseStyles from "../styles";
+import baseStyles from "../../styles";
 import AddIcon from "@mui/icons-material/Add";
-import { useModal } from "../context/Modal";
-import CardDetailModal from "../components/modals/CardDetailModal";
+import { useModal } from "../../context/Modal";
+import CardDetailModal from "../../components/modals/CardDetailModal";
 
 type ColumnProps = {
   title: string;
@@ -18,7 +18,7 @@ type ColumnProps = {
 
 const useStyles = makeStyles({
   column: {
-    backgroundColor: "#efefef",
+    backgroundColor: "#ececec",
   },
   cards: {
     overflow: "auto",
@@ -53,7 +53,7 @@ const Column = ({ title, moveTo, cards, status }: ColumnProps) => {
         <Grid
           item
           xs={6}
-          className="center-v"
+          className="d-flex center-v"
           style={{ justifyContent: "flex-end", paddingBottom: 8 }}
         >
           <AddIcon

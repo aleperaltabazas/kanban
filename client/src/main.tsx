@@ -1,19 +1,32 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import Loader from "./components/commons/Loader";
-import KanbanPage from "./pages/Kanban";
+import Kanban from "./pages/Kanban";
+import Home from "./pages/Home";
+import { Provider } from "react-redux";
+import store from "./store";
+import Header from "./components/Header";
+import { createBrowserHistory } from "history";
+import NotFound from "./pages/NotFound";
 
-const App = () => {
+const AppWrapper = () => {
+  const history = createBrowserHistory();
+
   return (
-    <BrowserRouter>
-      <Suspense fallback={<Loader />}>
-        <Switch>
-          <Route exact path={["/kanban", "/", ""]} component={KanbanPage} />
-        </Switch>
-      </Suspense>
-    </BrowserRouter>
+    <Provider store={store}>
+      <Header history={history} />
+      <Router history={history}>
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            <Route exact path={["/", ""]} component={Home} />
+            <Route exact path={["/boards/:alias"]} component={Kanban} />
+            <Route component={NotFound} />
+          </Switch>
+        </Suspense>
+      </Router>
+    </Provider>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("main"));
+ReactDOM.render(<AppWrapper />, document.getElementById("main"));

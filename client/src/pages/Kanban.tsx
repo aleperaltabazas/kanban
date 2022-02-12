@@ -1,29 +1,39 @@
 import React from "react";
-import Layout from "../components/Layout";
-import BoardContext from "../context/Board";
-import KanbanColumns from "./KanbanColumns";
-import ModalContext from "../context/Modal";
-import SnackbarContext from "../context/Snackbar";
-import DrawerContext from "../context/Drawer";
+import BoardProvider from "../context/Board";
+import KanbanPage from "./Kanban/KanbanPage";
+import ModalProvider from "../context/Modal";
+import SnackbarProvider from "../context/Snackbar";
+import { useLocation, useParams } from "react-router";
 
-type KanbanPageProps = {};
+type KanbanWrapperProps = {};
 
-const KanbanPage = ({}: KanbanPageProps) => {
+type BoardRouterProps = {
+  alias: string;
+};
+
+type BoardLinkStateProps = {
+  id: string;
+};
+
+const KanbanWrapper = ({}: KanbanWrapperProps) => {
+  const { alias } = useParams<BoardRouterProps>();
+  const data = useLocation<BoardLinkStateProps>();
+
   return (
-    <>
-      <BoardContext>
-        <DrawerContext>
-          <SnackbarContext>
-            <ModalContext>
-              <Layout>
-                <KanbanColumns />
-              </Layout>
-            </ModalContext>
-          </SnackbarContext>
-        </DrawerContext>
-      </BoardContext>
-    </>
+    <BoardProvider
+      boardFetch={
+        data.state
+          ? { type: "ID", id: data.state.id }
+          : { type: "ALIAS", alias }
+      }
+    >
+      <SnackbarProvider>
+        <ModalProvider>
+          <KanbanPage />
+        </ModalProvider>
+      </SnackbarProvider>
+    </BoardProvider>
   );
 };
 
-export default KanbanPage;
+export default KanbanWrapper;

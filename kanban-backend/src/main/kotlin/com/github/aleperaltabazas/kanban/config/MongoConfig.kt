@@ -14,11 +14,11 @@ class MongoConfig {
     @Bean
     fun mongo(): MongoClient = MongoClients.create(
         MongoClientSettings.builder()
-            .applyConnectionString(ConnectionString("mongodb://localhost:27017/kanban"))
+            .applyConnectionString(ConnectionString("mongodb://localhost:27017/kanban-dev"))
             .uuidRepresentation(UuidRepresentation.STANDARD)
             .build()
     )
 
     @Bean
-    fun mongoTemplate(mongo: MongoClient): MongoTemplate = MongoTemplate(mongo, "kanban")
+    fun mongoTemplate(mongo: MongoClient): MongoTemplate = MongoTemplate(mongo, "kanban-dev")
 }

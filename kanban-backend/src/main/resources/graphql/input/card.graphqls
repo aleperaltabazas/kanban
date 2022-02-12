@@ -1,0 +1,46 @@
+input CreateCardInput {
+    boardId: ID!
+    title: String!
+    description: String
+    priority: Int!
+    tasks: [TaskInput] = []
+    labels: [LabelInput] = []
+    status: StatusInput = BACKLOG
+}
+
+input TaskInput {
+    description: String!
+    completed: Boolean!
+    priority: Int
+}
+
+input LabelInput {
+    id: ID!
+    name: String!
+    color: String!
+}
+
+input UpdateCardInput {
+    id: ID!
+    description: String
+    title: String!
+    priority: Int!
+    tasks: [TaskInput] = []
+    labels: [LabelInput] = []
+    status: StatusInput
+}
+
+input MoveCardInput {
+    id: ID!
+    to: StatusInput!
+}
+
+enum StatusInput {
+    BACKLOG,
+    WIP,
+    DONE,
+}
+
+input DeleteCardInput {
+    id: ID!
+}

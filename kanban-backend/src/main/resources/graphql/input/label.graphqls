@@ -1,0 +1,15 @@
+input CreateLabelInput {
+    boardId: ID!
+    name: String!
+    color: String!
+}
+
+input UpdateLabelInput {
+    id: ID!
+    name: String!
+    color: String!
+}
+
+input DeleteLabelInput {
+    id: ID!
+}

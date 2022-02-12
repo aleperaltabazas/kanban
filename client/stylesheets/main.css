@@ -3,22 +3,19 @@ body {
 }
 
 html {
-  background-color: #bbbbbb;
+  background-color: #cccccc;
 }
 
 .center {
-  display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .center-v {
-  display: flex;
   align-items: center;
 }
 
 .center-h {
-  display: flex;
   justify-content: center;
 }
 
@@ -56,4 +53,57 @@ html {
 
 .text-align-left {
   text-align: left;
+}
+
+.normalize-link {
+  color: inherit;
+  text-decoration: none !important;
+}
+
+.normalize-link:visited {
+  color: inherit;
+  text-decoration: none !important;
+}
+
+.normalize-link:hover {
+  color: inherit;
+  text-decoration: none !important;
+}
+
+.normalize-link:focus {
+  color: inherit;
+  text-decoration: none !important;
+}
+
+.normalize-link:active {
+  color: inherit;
+  text-decoration: none !important;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-end {
+  justify-content: end;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.flex-direction-column {
+  flex-direction: column;
 }

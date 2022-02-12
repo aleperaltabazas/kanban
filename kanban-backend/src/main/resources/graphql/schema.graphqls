@@ -1,0 +1,43 @@
+type Board {
+    id: ID!
+    lastUpdated: String!
+    title: String!
+    alias: String!
+}
+
+type Card {
+    id: ID!
+    title: String!
+    description: String
+    priority: Int!
+    tasks: [Task!]!
+    status: Status!
+    labels: [Label!]!
+}
+
+type Task {
+    description: String!
+    completed: Boolean!
+    priority: Int
+}
+
+type Label {
+    id: ID!
+    name: String!
+    color: String!
+}
+
+union Status = Backlog | WIP | Done
+
+type Backlog {
+    ref: String
+}
+
+type WIP {
+    ref: String
+}
+
+type Done {
+    ref: String
+    completionDate: String
+}

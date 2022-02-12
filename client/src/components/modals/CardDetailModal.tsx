@@ -45,6 +45,14 @@ type CardDetailModalProps = {
   status: StatusInput;
 };
 
+type CardValues = {
+  title: string;
+  description?: string;
+  priority: number;
+  labels: Array<Label>;
+  tasks: Array<Task>;
+};
+
 const useStyles = makeStyles({
   ...baseStyles,
   labelChip: {
@@ -62,17 +70,11 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
   const [, updateCard] = useUpdateCardMutation();
   const [, createCard] = useCreateCardMutation();
   const { showSnackbar } = useSnackbar();
-  const { cards, setCards, disabled, setDisabled, labels } = useBoard();
+  const { cards, setCards, board, setDisabled, labels } = useBoard();
   const [autofocusTarget, setAutofocusTarget] = useState<number | undefined>();
   const [labelAutocomplete, setLabelAutocomplete] = useState("");
 
-  const saveChanges = async (values: {
-    title: string;
-    description: string;
-    priority: number;
-    tasks: Task[];
-    labels: Label[];
-  }) => {
+  const saveChanges = async (values: CardValues) => {
     setDisabled(true);
     hideModal();
 
@@ -99,6 +101,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
       response.data = res.data.updateCard.card;
     } else {
       const res = await createCard({
+        boardId: board.id,
         title: values.title,
         description: values.description,
         tasks: values.tasks.map((t) => ({
@@ -286,7 +289,7 @@ const CardDetailModal = ({ card, status }: CardDetailModalProps) => {
                             color={isTooDark(l.color) ? "white" : null}
                             className={classnames(
                               classes.labelChip,
-                              "center",
+                              "d-flex center",
                               "cursor-pointer"
                             )}
                             onClick={() =>

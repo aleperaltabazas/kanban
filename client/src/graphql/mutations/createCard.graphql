@@ -1,4 +1,5 @@
 mutation CreateCard(
+  $boardId: ID!
   $title: String!
   $description: String
   $priority: Int!
@@ -8,6 +9,7 @@ mutation CreateCard(
 ) {
   createCard(
     input: {
+      boardId: $boardId
       title: $title
       priority: $priority
       description: $description

@@ -22,15 +22,19 @@ type LabelDetailModalProps = {
   label?: Label;
 };
 
+type LabelValues = {
+  name: string;
+  color: string;
+};
+
 const LabelDetailModal = ({ label }: LabelDetailModalProps) => {
   const { modalShow, hideModal } = useModal();
   const [, updateLabel] = useUpdateLabelMutation();
   const [, createLabel] = useCreateLabelMutation();
   const { showSnackbar } = useSnackbar();
-  const { cards, setCards, labels, setLabels, disabled, setDisabled } =
-    useBoard();
+  const { cards, setCards, labels, setLabels, board, setDisabled } = useBoard();
 
-  const saveChanges = async (values: { name: string; color: string }) => {
+  const saveChanges = async (values: LabelValues) => {
     setDisabled(true);
     hideModal();
 
@@ -46,6 +50,7 @@ const LabelDetailModal = ({ label }: LabelDetailModalProps) => {
       response.data = res.data.updateLabel.label;
     } else {
       const res = await createLabel({
+        boardId: board.id,
         name: values.name,
         color: values.color,
       });
