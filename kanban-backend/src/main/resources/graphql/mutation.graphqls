@@ -9,4 +9,5 @@ type Mutation {
     createBoard(input: CreateBoardInput!): CreateBoardPayload
     updateBoard(input: UpdateBoardInput!): UpdateBoardPayload
     deleteBoard(input: DeleteBoardInput!): DeleteBoardPayload
+    restoreBoard(input: RestoreBoardInput!): RestoreBoardPayload
 }

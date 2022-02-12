@@ -1,6 +1,7 @@
 type Query {
     card(id: ID!): Card!
     cards(boardId: ID = null, boardAlias: String = null): [Card!]!
+    deletedBoards: [Board!]!
     labels(boardId: ID = null, boardAlias: String = null): [Label!]!
     board(id: ID = null, alias: String = null): Board!
     boards: [Board!]!

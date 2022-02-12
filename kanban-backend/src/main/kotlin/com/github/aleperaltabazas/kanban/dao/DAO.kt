@@ -22,13 +22,12 @@ abstract class DAO<T : Entity>(
     protected val objectMapper: ObjectMapper,
     private val ref: TypeReference<T>,
 ) : MongoCollection<Document> by coll {
-    private val notDeleted = not(eq("deleted", true))
-
     fun findByID(
         id: UUID,
+        additionalFilters: Bson = Document(),
         selectedFields: List<String> = emptyList(),
     ): T? = findOneBy(
-        "id" eq id.toString() and notDeleted,
+        "id" eq id.toString() and additionalFilters,
         selectedFields,
     )
 

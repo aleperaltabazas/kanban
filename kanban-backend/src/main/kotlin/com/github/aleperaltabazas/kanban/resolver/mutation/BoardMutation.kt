@@ -9,9 +9,11 @@ import com.github.aleperaltabazas.kanban.extension.boardSelectionSet
 import com.github.aleperaltabazas.kanban.extension.eq
 import com.github.aleperaltabazas.kanban.input.CreateBoardInput
 import com.github.aleperaltabazas.kanban.input.DeleteBoardInput
+import com.github.aleperaltabazas.kanban.input.RestoreBoardInput
 import com.github.aleperaltabazas.kanban.input.UpdateBoardInput
 import com.github.aleperaltabazas.kanban.payload.CreateBoardPayload
 import com.github.aleperaltabazas.kanban.payload.DeleteBoardPayload
+import com.github.aleperaltabazas.kanban.payload.RestoreBoardPayload
 import com.github.aleperaltabazas.kanban.payload.UpdateBoardPayload
 import com.mongodb.client.model.Updates.combine
 import com.mongodb.client.model.Updates.set
@@ -69,5 +71,18 @@ class BoardMutation(
             ?: throw NotFoundException("Board ${input.id} not found")
 
         return DeleteBoardPayload(board.id)
+    }
+
+    fun restoreBoard(input: RestoreBoardInput, environment: DataFetchingEnvironment): RestoreBoardPayload {
+        val board = boardDao.update(
+            id = input.id,
+            changes = combine(
+                set("deleted", false),
+            ),
+            selectedFields = environment.boardSelectionSet(),
+        )
+            ?: throw NotFoundException("Board ${input.id} not found")
+
+        return RestoreBoardPayload(board)
     }
 }

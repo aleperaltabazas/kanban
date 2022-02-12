@@ -14,3 +14,7 @@ data class UpdateBoardPayload(
 data class DeleteBoardPayload(
     val id: UUID?,
 )
+
+data class RestoreBoardPayload(
+    val board: Board,
+)

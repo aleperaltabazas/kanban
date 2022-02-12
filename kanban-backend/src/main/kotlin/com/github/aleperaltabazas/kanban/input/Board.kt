@@ -14,3 +14,7 @@ data class UpdateBoardInput(
 data class DeleteBoardInput(
     val id: UUID,
 )
+
+data class RestoreBoardInput(
+    val id: UUID,
+)

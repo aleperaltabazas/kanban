@@ -10,3 +10,7 @@ input UpdateBoardInput {
 input DeleteBoardInput {
     id: ID!
 }
+
+input RestoreBoardInput {
+    id: ID!
+}

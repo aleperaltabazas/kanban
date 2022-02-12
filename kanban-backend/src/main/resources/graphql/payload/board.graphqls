@@ -9,3 +9,7 @@ type UpdateBoardPayload {
 type DeleteBoardPayload {
     id: ID!
 }
+
+type RestoreBoardPayload {
+    board: Board!
+}
