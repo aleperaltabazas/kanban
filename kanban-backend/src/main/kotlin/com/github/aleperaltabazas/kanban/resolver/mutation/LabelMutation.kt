@@ -24,12 +24,20 @@ class LabelMutation(
     private val cardsDao: CardDAO,
     private val boardDao: BoardDAO,
 ) : GraphQLMutationResolver {
-    fun createLabel(input: CreateLabelInput): CreateLabelPayload = CreateLabelPayload(
-        Label(input).also {
-            labelDao.insert(it)
-            boardDao.updateBoardLastUpdated(boardId = input.boardId)
-        }
-    )
+    fun createLabel(input: CreateLabelInput): CreateLabelPayload {
+        val board = boardDao.findByID(id = input.boardId, selectedFields = listOf("alias"))
+            ?: throw NotFoundException("No board found with id ${input.boardId}")
+
+        val label = Label(
+            input = input,
+            boardAlias = board.alias!!,
+        )
+
+        labelDao.insert(label)
+        boardDao.updateBoardLastUpdated(boardId = input.boardId)
+
+        return CreateLabelPayload(label)
+    }
 
     fun updateLabel(input: UpdateLabelInput, environment: DataFetchingEnvironment): UpdateLabelPayload {
         val label = labelDao.update(

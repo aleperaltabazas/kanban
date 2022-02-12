@@ -7,6 +7,7 @@ import java.util.*
 data class Card(
     override val id: UUID?,
     val boardId: UUID?,
+    val boardAlias: String?,
     val title: String?,
     val description: String?,
     val priority: Int?,
@@ -16,8 +17,10 @@ data class Card(
 ) : Entity {
     constructor(
         input: CreateCardInput,
+        boardAlias: String,
     ) : this(
         id = UUID.randomUUID(),
+        boardAlias = boardAlias,
         boardId = input.boardId,
         title = input.title,
         description = input.description,

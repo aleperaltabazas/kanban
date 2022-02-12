@@ -32,12 +32,20 @@ class CardMutation(
     private val boardDao: BoardDAO,
     @Qualifier("objectMapperSnakeCase") private val objectMapper: ObjectMapper,
 ) : GraphQLMutationResolver {
-    fun createCard(input: CreateCardInput): CreateCardPayload = CreateCardPayload(
-        Card(input = input).also {
-            cardDao.insert(it)
-            boardDao.updateBoardLastUpdated(boardId = input.boardId)
-        }
-    )
+    fun createCard(input: CreateCardInput): CreateCardPayload {
+        val board = boardDao.findByID(id = input.boardId, selectedFields = listOf("alias"))
+            ?: throw NotFoundException("No board found with id ${input.boardId}")
+
+        val card = Card(
+            input = input,
+            boardAlias = board.alias!!,
+        )
+
+        cardDao.insert(card)
+        boardDao.updateBoardLastUpdated(boardId = input.boardId)
+
+        return CreateCardPayload(card)
+    }
 
     fun updateCard(input: UpdateCardInput, environment: DataFetchingEnvironment): UpdateCardPayload {
         val card = cardDao.update(
