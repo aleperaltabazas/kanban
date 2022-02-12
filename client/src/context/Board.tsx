@@ -18,6 +18,7 @@ type BoardContextProps = {
   setDisabled: (disabled: boolean) => void;
   selectedLabels: Array<string>;
   setSelectedLabels: (labelIds: Array<string>) => void;
+  notFound: boolean;
 };
 
 const BoardContext = React.createContext<BoardContextProps>(
@@ -27,7 +28,7 @@ const BoardContext = React.createContext<BoardContextProps>(
 export const useBoard = () => useContext(BoardContext);
 
 const Board = ({ children, boardFetch }: Props) => {
-  const [{ data, fetching }] = useBoardDataQuery({
+  const [{ data, fetching, error }] = useBoardDataQuery({
     variables:
       boardFetch.type == "ID"
         ? { boardId: boardFetch.id }
@@ -39,14 +40,18 @@ const Board = ({ children, boardFetch }: Props) => {
   const [loading, setLoading] = useState(true);
   const [disabled, setDisabled] = useState(false);
   const [selectedLabels, setSelectedLabels] = useState([]);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     if (!fetching) {
-      data.board;
-      setCards(data.cards);
-      setLabels(data.labels);
-      setBoard(data.board as Board);
       setLoading(false);
+      if (error) {
+        setNotFound(true);
+      } else {
+        setCards(data.cards);
+        setLabels(data.labels);
+        setBoard(data.board as Board);
+      }
     }
   }, [fetching]);
 
@@ -62,6 +67,7 @@ const Board = ({ children, boardFetch }: Props) => {
     setDisabled,
     selectedLabels,
     setSelectedLabels,
+    notFound,
   };
 
   return (

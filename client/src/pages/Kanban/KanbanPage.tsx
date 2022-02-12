@@ -25,6 +25,7 @@ import LabelDetailModal from "../../components/modals/LabelDetailModal";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import LabelListItem from "../../components/LabelListItem";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import NotFound from "../NotFound";
 
 type KanbanPageProps = {};
 
@@ -44,6 +45,7 @@ const KanbanPage = ({}: KanbanPageProps) => {
     labels,
     selectedLabels,
     setSelectedLabels,
+    notFound,
   } = useBoard();
   const { showModal } = useModal();
   const filteredCards = cards.filter(
@@ -75,6 +77,10 @@ const KanbanPage = ({}: KanbanPageProps) => {
         <Loader />
       </div>
     );
+  }
+
+  if (notFound) {
+    return <NotFound />;
   }
 
   return (

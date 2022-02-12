@@ -103,3 +103,7 @@ html {
 .overflow-scroll {
   overflow: scroll;
 }
+
+.flex-direction-column {
+  flex-direction: column;
+}
