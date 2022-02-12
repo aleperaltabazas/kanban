@@ -20,5 +20,5 @@ In no particular order:
 * Trash bin
 * Night theme
 * Login
-* Multiple boards per user
+* ~Multiple boards per user~
 * Deliver completed cards/check delivered work
