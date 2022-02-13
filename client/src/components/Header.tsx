@@ -4,8 +4,7 @@ import { RootState } from "../store";
 import { connect } from "react-redux";
 import { createBrowserHistory } from "history";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Screen } from "../reducers/common";
-import { Link } from "react-router-dom";
+import { Screen } from "../store/state/common";
 
 type HeaderProps = {
   screen: Screen;
@@ -22,6 +21,8 @@ const Header = ({ screen, history }: HeaderProps) => {
     case "BOARD":
       title = screen.title;
       break;
+    case "TRASH":
+      title = "Trash";
   }
 
   document.title = title;

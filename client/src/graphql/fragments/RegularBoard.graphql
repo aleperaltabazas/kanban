@@ -1,0 +1,6 @@
+fragment RegularBoard on Board {
+  id
+  title
+  alias
+  lastUpdated
+}

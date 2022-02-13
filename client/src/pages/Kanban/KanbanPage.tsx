@@ -19,13 +19,13 @@ import { makeStyles } from "@mui/styles";
 import styles from "../../styles";
 import Loader from "../../components/commons/Loader";
 import store from "../../store";
-import { UPDATE_TITLE } from "../../reducers/common";
 import { useModal } from "../../context/Modal";
 import LabelDetailModal from "../../components/modals/LabelDetailModal";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import LabelListItem from "../../components/LabelListItem";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import NotFound from "../NotFound";
+import { updateScreenBoardPage } from "../../store/actions/common";
 
 type KanbanPageProps = {};
 
@@ -64,11 +64,7 @@ const KanbanPage = ({}: KanbanPageProps) => {
   };
 
   useEffect(() => {
-    board &&
-      store.dispatch({
-        type: UPDATE_TITLE,
-        payload: { type: "BOARD", title: board.title },
-      });
+    board && store.dispatch(updateScreenBoardPage(board.title));
   }, [board]);
 
   if (loading) {

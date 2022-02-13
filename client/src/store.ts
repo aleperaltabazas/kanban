@@ -1,5 +1,5 @@
 import { combineReducers, createStore, compose } from "redux";
-import commonReducer from "./reducers/common";
+import commonReducer from "./store/reducers/common";
 
 const rootReducer = combineReducers({
   common: commonReducer,

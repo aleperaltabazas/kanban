@@ -10,6 +10,8 @@ import { useModal } from "../../context/Modal";
 import BoardDetailModal from "../../components/modals/BoardDetailModal";
 import { DateTime } from "luxon";
 import { compareLuxonDates } from "../../functions/date";
+import { useHistory } from "react-router";
+import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 
 type HomePageProps = {};
 
@@ -19,6 +21,7 @@ const HomePage = ({}: HomePageProps) => {
   const { boards, loading } = useHome();
   const { showModal } = useModal();
   const classes = useStyles();
+  const history = useHistory();
 
   if (loading) {
     return (
@@ -45,6 +48,15 @@ const HomePage = ({}: HomePageProps) => {
             onClick={() => showModal(<BoardDetailModal />)}
           >
             New board
+          </Button>
+          <Button
+            variant="contained"
+            color="info"
+            className={classes.ml1}
+            onClick={() => history.push("/trash")}
+            sx={{ backgroundColor: "#6c6c6c" }}
+          >
+            <RestoreFromTrashIcon />
           </Button>
         </Grid>
       </Grid>
