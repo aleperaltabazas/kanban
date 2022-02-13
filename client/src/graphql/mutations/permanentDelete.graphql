@@ -1,0 +1,5 @@
+mutation PermanentDeleteBoard($ids: [ID!]!) {
+  permanentDeleteBoard(input: { ids: $ids }) {
+    ids
+  }
+}

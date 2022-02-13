@@ -18,3 +18,7 @@ data class DeleteBoardInput(
 data class RestoreBoardInput(
     val id: UUID,
 )
+
+data class PermanentDeleteBoardInput(
+    val ids: List<UUID>,
+)

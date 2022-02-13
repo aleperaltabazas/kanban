@@ -7,14 +7,8 @@ import com.github.aleperaltabazas.kanban.domain.Board
 import com.github.aleperaltabazas.kanban.exception.NotFoundException
 import com.github.aleperaltabazas.kanban.extension.boardSelectionSet
 import com.github.aleperaltabazas.kanban.extension.eq
-import com.github.aleperaltabazas.kanban.input.CreateBoardInput
-import com.github.aleperaltabazas.kanban.input.DeleteBoardInput
-import com.github.aleperaltabazas.kanban.input.RestoreBoardInput
-import com.github.aleperaltabazas.kanban.input.UpdateBoardInput
-import com.github.aleperaltabazas.kanban.payload.CreateBoardPayload
-import com.github.aleperaltabazas.kanban.payload.DeleteBoardPayload
-import com.github.aleperaltabazas.kanban.payload.RestoreBoardPayload
-import com.github.aleperaltabazas.kanban.payload.UpdateBoardPayload
+import com.github.aleperaltabazas.kanban.input.*
+import com.github.aleperaltabazas.kanban.payload.*
 import com.mongodb.client.model.Updates.combine
 import com.mongodb.client.model.Updates.set
 import graphql.kickstart.tools.GraphQLMutationResolver
@@ -84,5 +78,11 @@ class BoardMutation(
             ?: throw NotFoundException("Board ${input.id} not found")
 
         return RestoreBoardPayload(board)
+    }
+
+    fun permanentDeleteBoard(input: PermanentDeleteBoardInput): PermanentDeleteBoardPayload {
+        boardDao.permanentDelete(input.ids)
+
+        return PermanentDeleteBoardPayload(input.ids)
     }
 }

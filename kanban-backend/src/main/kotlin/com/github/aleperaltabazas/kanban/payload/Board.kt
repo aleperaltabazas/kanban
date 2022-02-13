@@ -18,3 +18,7 @@ data class DeleteBoardPayload(
 data class RestoreBoardPayload(
     val board: Board,
 )
+
+data class PermanentDeleteBoardPayload(
+    val ids: List<UUID>,
+)

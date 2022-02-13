@@ -13,3 +13,7 @@ type DeleteBoardPayload {
 type RestoreBoardPayload {
     board: Board!
 }
+
+type PermanentDeleteBoardPayload {
+    ids: [ID!]
+}

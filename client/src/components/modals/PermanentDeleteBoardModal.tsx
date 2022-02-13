@@ -6,7 +6,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Board, useDeleteBoardMutation } from "../../generated/graphql";
+import {
+  Board,
+  usePermanentDeleteBoardMutation,
+} from "../../generated/graphql";
 import { useSnackbar } from "../../context/Snackbar";
 import { useRecycleBin } from "../../context/RecycleBin";
 
@@ -20,11 +23,11 @@ const PermanentDeleteBoardModal = ({
   const { modalShow, hideModal } = useModal();
   const { showSnackbar } = useSnackbar();
   const { boards, setBoards } = useRecycleBin();
-  const [, deleteBoard] = useDeleteBoardMutation();
+  const [, deleteBoard] = usePermanentDeleteBoardMutation();
 
   const handleDelete = async () => {
     hideModal();
-    const response = await deleteBoard({ id: board.id });
+    const response = await deleteBoard({ ids: [board.id] });
 
     if (response.error) {
       showSnackbar({ text: "There was an error deleting the board" });

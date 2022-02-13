@@ -14,3 +14,7 @@ input DeleteBoardInput {
 input RestoreBoardInput {
     id: ID!
 }
+
+input PermanentDeleteBoardInput {
+    ids: [ID!]
+}

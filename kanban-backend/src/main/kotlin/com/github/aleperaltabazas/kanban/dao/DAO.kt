@@ -7,8 +7,8 @@ import com.github.aleperaltabazas.kanban.domain.Entity
 import com.github.aleperaltabazas.kanban.extension.and
 import com.github.aleperaltabazas.kanban.extension.eq
 import com.mongodb.client.MongoCollection
+import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Filters.eq
-import com.mongodb.client.model.Filters.not
 import com.mongodb.client.model.FindOneAndUpdateOptions
 import com.mongodb.client.model.Projections.include
 import com.mongodb.client.model.ReturnDocument
@@ -56,6 +56,10 @@ abstract class DAO<T : Entity>(
         changes = set("deleted", true),
         selectedFields = selectedFields,
     )
+
+    fun permanentDelete(
+        ids: List<UUID>,
+    ) = coll.deleteOne(Filters.`in`("id", ids.map { it.toString() }))
 
     fun insert(input: T) {
         coll.insertOne(serialize(input))
