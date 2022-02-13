@@ -4,52 +4,33 @@ import {
   CardHeader,
   IconButton,
   Menu,
-  MenuItem,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Board } from "../../generated/graphql";
+import { Board } from "../generated/graphql";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
-import { useModal } from "../../context/Modal";
-import DeleteBoardModal from "../../components/modals/DeleteBoardModal";
-import { makeStyles } from "@mui/styles";
-import baseStyles from "../../styles";
-import BoardDetailModal from "../../components/modals/BoardDetailModal";
 import { DateTime } from "luxon";
 
 type BoardCardProps = {
   board: Board;
+  options: (closeMenu: () => void) => React.ReactNode[];
 };
 
 const ITEM_HEIGHT = 48;
 
-const useStyles = makeStyles({ ...baseStyles });
-
-const BoardCard = ({ board }: BoardCardProps) => {
-  const classes = useStyles();
-  const { showModal } = useModal();
+const BoardCard = ({ board, options }: BoardCardProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleDelete = async () => {
-    closeMenu();
-    showModal(<DeleteBoardModal board={board} />);
-  };
-
   const closeMenu = () => setAnchorEl(null);
 
   const handleClose = () => {
     closeMenu();
-  };
-
-  const handleEdit = () => {
-    closeMenu();
-    showModal(<BoardDetailModal board={board} />);
   };
 
   return (
@@ -80,13 +61,7 @@ const BoardCard = ({ board }: BoardCardProps) => {
                 },
               }}
             >
-              <MenuItem onClick={handleEdit}>Edit</MenuItem>
-              <MenuItem
-                onClick={handleDelete}
-                className={classNames(classes.delete)}
-              >
-                Delete
-              </MenuItem>
+              {options(closeMenu)}
             </Menu>
           </>
         }

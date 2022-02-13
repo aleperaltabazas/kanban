@@ -1,0 +1,7 @@
+mutation RestoreBoard($id: ID!) {
+  restoreBoard(input: { id: $id }) {
+    board {
+      ...RegularBoard
+    }
+  }
+}

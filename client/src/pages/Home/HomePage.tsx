@@ -1,17 +1,20 @@
-import { Button, Container, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, MenuItem, Typography } from "@mui/material";
 import React from "react";
 import Loader from "../../components/commons/Loader";
 import { useHome } from "../../context/Home";
 import baseStyles from "../../styles";
 import classnames from "classnames";
 import { makeStyles } from "@mui/styles";
-import BoardCard from "./BoardCard";
+import BoardCard from "../../components/BoardCard";
 import { useModal } from "../../context/Modal";
 import BoardDetailModal from "../../components/modals/BoardDetailModal";
 import { DateTime } from "luxon";
 import { compareLuxonDates } from "../../functions/date";
 import { useHistory } from "react-router";
 import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
+import classNames from "classnames";
+import { Board } from "../../generated/graphql";
+import DeleteBoardModal from "../../components/modals/DeleteBoardModal";
 
 type HomePageProps = {};
 
@@ -22,6 +25,16 @@ const HomePage = ({}: HomePageProps) => {
   const { showModal } = useModal();
   const classes = useStyles();
   const history = useHistory();
+
+  const handleEdit = (closeMenu: () => void, board: Board) => {
+    closeMenu();
+    showModal(<BoardDetailModal board={board} />);
+  };
+
+  const handleDelete = async (closeMenu: () => void, board: Board) => {
+    closeMenu();
+    showModal(<DeleteBoardModal board={board} />);
+  };
 
   if (loading) {
     return (
@@ -71,7 +84,20 @@ const HomePage = ({}: HomePageProps) => {
           )
           .map((b) => (
             <Grid item xs={12} md={4} key={b.id}>
-              <BoardCard board={b} />
+              <BoardCard
+                board={b}
+                options={(closeMenu) => [
+                  <MenuItem onClick={() => handleEdit(closeMenu, b)}>
+                    Edit
+                  </MenuItem>,
+                  <MenuItem
+                    onClick={() => handleDelete(closeMenu, b)}
+                    className={classNames(classes.delete)}
+                  >
+                    Delete
+                  </MenuItem>,
+                ]}
+              />
             </Grid>
           ))}
       </Grid>
